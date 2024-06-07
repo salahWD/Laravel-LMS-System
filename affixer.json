@@ -1,0 +1,8 @@
+{
+  "folder": "resources/views",
+  "allowed": ".blade.php",
+  "prefix": "{{ __('",
+  "suffix": "') }}",
+  "ignore": ["#", "_", ">", "^", "*", "="],
+  "warnings": ["%", "{", "(", "}", ")", "$", "'"]
+}

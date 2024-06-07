@@ -1,0 +1,76 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+#certificate-preview {
+  overflow: hidden;
+  color: black;
+  font-family: Georgia, serif;
+  font-size: 24px;
+  text-align: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  border: 20px solid tan;
+  display: grid;
+  place-items: center;
+}
+#certificate-preview .container {
+  width: 100%;
+  height: fit-content;
+  margin: auto;
+}
+#certificate-preview .logo {
+  margin-top: 80px;
+  color: tan;
+}
+#certificate-preview .marquee {
+  color: tan;
+  font-size: 48px;
+  margin: 20px;
+}
+#certificate-preview .assignment {
+  margin: 20px;
+}
+#certificate-preview .person {
+  border-bottom: 2px solid black;
+  font-size: 32px;
+  font-style: italic;
+  margin: 20px auto;
+  width: 400px;
+}
+#certificate-preview .reason {
+  margin: 20px 20px 80px;
+}
+@media (max-width: 600px) {
+  #certificate-preview {
+    font-size: 12px;
+    text-align: center;
+  }
+  #certificate-preview .container {
+    border-width: 10px;
+    height: fit-content;
+  }
+  #certificate-preview .logo {
+    margin-top: 30px;
+  }
+  #certificate-preview .marquee {
+    font-size: 24px;
+    margin: 10px;
+  }
+  #certificate-preview .assignment {
+    margin: 10px;
+  }
+  #certificate-preview .person {
+    border-width: 1px;
+    font-size: 16px;
+    margin: 10px auto;
+    width: 200px;
+  }
+  #certificate-preview .reason {
+    margin: 10px 10px 40px;
+  }
+}
+@media (min-width: 601px) {
+}

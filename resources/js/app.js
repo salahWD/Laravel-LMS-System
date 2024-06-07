@@ -1,0 +1,17 @@
+// import "./dashboard/on-screen.umd.min.js";
+// import "./dashboard/volt.js";
+// import "./dashboard/nouislider.min.js";
+// import "./dashboard/smooth-scroll.polyfills.min.js";
+// import "./dashboard/chartist.min.js";
+// import "./dashboard/chartist-plugin-tooltip.min.js";
+// import "./dashboard/datepicker.min.js";
+// import "./dashboard/sweetalert2.all.min.js";
+// import "./dashboard/notyf.min.js";
+// import "./dashboard/simplebar.min.js";
+// import "./dashboard/volt.js";
+import "./jquery.min.js";
+import "./popper.min.js";
+import "./jquery.sticky-sidebar.min.js";
+import "./bootstrap.min.js";
+import "./slick.min.js";
+import "./custom";

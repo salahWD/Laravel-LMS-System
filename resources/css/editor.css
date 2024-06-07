@@ -1,0 +1,105 @@
+.article-content {
+  line-height: 1.5;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+.article-content * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+.article-content h1 {
+  font-size: 1.2em;
+  line-height: 1.2;
+}
+.article-content blockquote {
+  border: 0 solid #ccc;
+  border-left-width: 0.3em;
+  margin-left: 0.3em;
+  padding-left: 0.6em;
+}
+.article-content [dir="rtl"] blockquote,
+.article-content blockquote[dir="rtl"] {
+  border-width: 0;
+  border-right-width: 0.3em;
+  margin-right: 0.3em;
+  padding-right: 0.6em;
+}
+.article-content li {
+  margin-left: 1em;
+}
+.article-content [dir="rtl"] li {
+  margin-right: 1em;
+}
+.article-content pre {
+  display: inline-block;
+  width: 100%;
+  vertical-align: top;
+  font-family: monospace;
+  font-size: 0.9em;
+  padding: 0.5em;
+  white-space: pre;
+  background-color: #eee;
+  overflow-x: auto;
+}
+.article-content img {
+  max-width: 100%;
+  height: auto;
+}
+.article-content .attachment {
+  display: inline-block;
+  position: relative;
+  max-width: 100%;
+}
+.article-content .attachment a {
+  color: inherit;
+  text-decoration: none;
+}
+.article-content .attachment a:hover,
+.article-content .attachment a:visited:hover {
+  color: inherit;
+}
+.article-content .attachment__caption {
+  text-align: center;
+}
+.article-content
+  .attachment__caption
+  .attachment__name
+  + .attachment__size::before {
+  content: " \2022 ";
+}
+.article-content .attachment--preview {
+  margin: 5px 40px;
+  max-width: 100%;
+  text-align: center;
+}
+.article-content .attachment--preview .attachment__caption {
+  color: #666;
+  font-size: 0.9em;
+  line-height: 1.2;
+}
+.article-content .attachment--file {
+  color: #333;
+  line-height: 1;
+  margin: 0 2px 2px 2px;
+  padding: 0.4em 1em;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+}
+.article-content .attachment-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  margin: 5px 40px;
+}
+.article-content .attachment-gallery .attachment {
+  flex: 1 0 33%;
+  padding: 0 0.5em;
+  max-width: 33%;
+  margin: 0;
+}
+.article-content .attachment-gallery.attachment-gallery--2 .attachment,
+.article-content .attachment-gallery.attachment-gallery--4 .attachment {
+  flex-basis: 50%;
+  max-width: 50%;
+}

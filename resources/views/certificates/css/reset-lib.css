@@ -1,0 +1,430 @@
+#certificate-preview {
+  box-sizing: border-box;
+}
+#certificate-preview html {
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+}
+#certificate-preview body {
+  margin: 0;
+}
+#certificate-preview main {
+  display: block;
+}
+#certificate-preview h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+#certificate-preview hr {
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+}
+#certificate-preview pre {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+#certificate-preview a {
+  background-color: transparent;
+}
+#certificate-preview abbr[title] {
+  border-bottom: none;
+  text-decoration: underline;
+  text-decoration: underline dotted;
+}
+#certificate-preview b,
+#certificate-preview strong {
+  font-weight: bolder;
+}
+#certificate-preview code,
+#certificate-preview kbd,
+#certificate-preview samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+#certificate-preview small {
+  font-size: 80%;
+}
+#certificate-preview sub,
+#certificate-preview sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+#certificate-preview sub {
+  bottom: -0.25em;
+}
+#certificate-preview sup {
+  top: -0.5em;
+}
+#certificate-preview img {
+  border-style: none;
+}
+#certificate-preview button,
+#certificate-preview input,
+#certificate-preview optgroup,
+#certificate-preview select,
+#certificate-preview textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+}
+#certificate-preview button,
+#certificate-preview input {
+  overflow: visible;
+}
+#certificate-preview button,
+#certificate-preview select {
+  text-transform: none;
+}
+#certificate-preview button,
+#certificate-preview [type="button"],
+#certificate-preview [type="reset"],
+#certificate-preview [type="submit"] {
+  -webkit-appearance: button;
+}
+#certificate-preview button::-moz-focus-inner,
+#certificate-preview [type="button"]::-moz-focus-inner,
+#certificate-preview [type="reset"]::-moz-focus-inner,
+#certificate-preview [type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+#certificate-preview button:-moz-focusring,
+#certificate-preview [type="button"]:-moz-focusring,
+#certificate-preview [type="reset"]:-moz-focusring,
+#certificate-preview [type="submit"]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+#certificate-preview fieldset {
+  padding: 0.35em 0.75em 0.625em;
+}
+#certificate-preview legend {
+  box-sizing: border-box;
+  color: inherit;
+  display: table;
+  max-width: 100%;
+  padding: 0;
+  white-space: normal;
+}
+#certificate-preview progress {
+  vertical-align: baseline;
+}
+#certificate-preview textarea {
+  overflow: auto;
+}
+#certificate-preview [type="checkbox"],
+#certificate-preview [type="radio"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+#certificate-preview [type="number"]::-webkit-inner-spin-button,
+#certificate-preview [type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+#certificate-preview [type="search"] {
+  -webkit-appearance: textfield;
+  outline-offset: -2px;
+}
+#certificate-preview [type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+#certificate-preview ::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  font: inherit;
+}
+#certificate-preview details {
+  display: block;
+}
+#certificate-preview summary {
+  display: list-item;
+}
+#certificate-preview template {
+  display: none;
+}
+#certificate-preview [hidden] {
+  display: none;
+}
+#certificate-preview * {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#certificate-preview *,
+#certificate-preview *:before,
+#certificate-preview *:after,
+#certificate-preview p:first-letter,
+#certificate-preview div:first-letter,
+#certificate-preview blockquote:first-letter,
+#certificate-preview li:first-letter,
+#certificate-preview p:first-line,
+#certificate-preview div:first-line,
+#certificate-preview blockquote:first-line,
+#certificate-preview li:first-line {
+  background: rgba(0, 0, 0, 0) !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+#certificate-preview html {
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+}
+#certificate-preview body {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  background: #fff !important;
+  color: #000 !important;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0 auto;
+  text-rendering: optimizeLegibility;
+}
+#certificate-preview p,
+#certificate-preview blockquote,
+#certificate-preview table,
+#certificate-preview ul,
+#certificate-preview ol,
+#certificate-preview dl {
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+}
+#certificate-preview p:last-child,
+#certificate-preview ul:last-child,
+#certificate-preview ol:last-child {
+  margin-bottom: 0;
+}
+#certificate-preview h1,
+#certificate-preview h2,
+#certificate-preview h3,
+#certificate-preview h4,
+#certificate-preview h5,
+#certificate-preview h6 {
+  color: #000;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+  margin-top: 0;
+}
+#certificate-preview h1 {
+  font-size: 2.5rem;
+}
+#certificate-preview h2 {
+  font-size: 2rem;
+}
+#certificate-preview h3 {
+  font-size: 1.75rem;
+}
+#certificate-preview h4 {
+  font-size: 1.5rem;
+}
+#certificate-preview h5 {
+  font-size: 1.25rem;
+}
+#certificate-preview h6 {
+  font-size: 1rem;
+}
+#certificate-preview a,
+#certificate-preview a:visited {
+  color: #000;
+  text-decoration: underline;
+  word-wrap: break-word;
+}
+#certificate-preview table {
+  border-collapse: collapse;
+}
+#certificate-preview thead {
+  display: table-header-group;
+}
+#certificate-preview table,
+#certificate-preview th,
+#certificate-preview td {
+  border-bottom: 1px solid #000;
+}
+#certificate-preview td,
+#certificate-preview th {
+  padding: 8px 16px;
+  page-break-inside: avoid;
+}
+#certificate-preview code,
+#certificate-preview pre,
+#certificate-preview kbd {
+  border: 1px solid #bbb;
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-size: 85%;
+}
+#certificate-preview code,
+#certificate-preview kbd {
+  padding: 3px;
+}
+#certificate-preview pre {
+  margin-bottom: 1.5rem;
+  padding: 10px 12px;
+}
+#certificate-preview pre code,
+#certificate-preview pre kbd {
+  border: 0;
+}
+#certificate-preview ::-webkit-input-placeholder {
+  color: rgba(0, 0, 0, 0);
+}
+#certificate-preview :-moz-placeholder {
+  color: rgba(0, 0, 0, 0);
+}
+#certificate-preview ::-moz-placeholder {
+  color: rgba(0, 0, 0, 0);
+}
+#certificate-preview :-ms-input-placeholder {
+  color: rgba(0, 0, 0, 0);
+}
+#certificate-preview blockquote {
+  border: 0;
+  border-left: 5px solid #bbb;
+  margin-left: 1px;
+  padding: 12px 1.5rem;
+}
+#certificate-preview [dir="rtl"] blockquote {
+  border-left: 0;
+  border-right: 5px solid #bbb;
+  margin-left: 0;
+  margin-right: 1px;
+}
+#certificate-preview blockquote:first-child {
+  margin-top: 0;
+}
+#certificate-preview blockquote p:last-child,
+#certificate-preview blockquote ul:last-child,
+#certificate-preview blockquote ol:last-child {
+  margin-bottom: 0;
+}
+#certificate-preview blockquote footer {
+  display: block;
+  font-size: 80%;
+}
+#certificate-preview img {
+  border: 0;
+  display: block;
+  max-width: 100% !important;
+  vertical-align: middle;
+}
+#certificate-preview hr {
+  border: 0;
+  border-bottom: 2px solid #bbb;
+  height: 0;
+  margin: 2.25rem 0;
+  padding: 0;
+}
+#certificate-preview dt {
+  font-weight: bold;
+}
+#certificate-preview dd {
+  margin: 0;
+  margin-bottom: 0.75rem;
+}
+#certificate-preview abbr[title],
+#certificate-preview acronym[title] {
+  border: 0;
+  text-decoration: none;
+}
+#certificate-preview table,
+#certificate-preview blockquote,
+#certificate-preview pre,
+#certificate-preview code,
+#certificate-preview figure,
+#certificate-preview li,
+#certificate-preview hr,
+#certificate-preview ul,
+#certificate-preview ol,
+#certificate-preview a,
+#certificate-preview tr {
+  page-break-inside: avoid;
+}
+#certificate-preview h2,
+#certificate-preview h3,
+#certificate-preview h4,
+#certificate-preview p,
+#certificate-preview a {
+  orphans: 3;
+  widows: 3;
+}
+#certificate-preview h1,
+#certificate-preview h2,
+#certificate-preview h3,
+#certificate-preview h4,
+#certificate-preview h5,
+#certificate-preview h6 {
+  page-break-after: avoid;
+  page-break-inside: avoid;
+}
+#certificate-preview h1 + p,
+#certificate-preview h2 + p,
+#certificate-preview h3 + p {
+  page-break-before: avoid;
+}
+#certificate-preview img {
+  page-break-after: auto;
+  page-break-before: auto;
+  page-break-inside: avoid;
+}
+#certificate-preview pre {
+  white-space: pre-wrap !important;
+  word-wrap: break-word;
+}
+#certificate-preview body {
+  padding-bottom: 2.54cm;
+  padding-left: 1.8cm;
+  padding-right: 1.8cm;
+  padding-top: 2.54cm;
+}
+#certificate-preview a[href^="http"]:after,
+#certificate-preview a[href^="ftp"]:after {
+  content: " (" attr(href) ")";
+  font-size: 80%;
+}
+#certificate-preview a[href$=".jpg"]:after,
+#certificate-preview a[href$=".jpeg"]:after,
+#certificate-preview a[href$=".gif"]:after,
+#certificate-preview a[href$=".png"]:after {
+  display: none;
+}
+#certificate-preview .no-print {
+  display: none;
+}
+#certificate-preview h1,
+#certificate-preview h2,
+#certificate-preview h3,
+#certificate-preview h4,
+#certificate-preview h5,
+#certificate-preview h6 {
+  font-family: "Crimson Text", Baskerville, "Baskerville Old Face",
+    "Hoefler Text", Garamond, "Times New Roman", serif;
+}
+#certificate-preview body {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  text-align: justify;
+}
+#certificate-preview h1 {
+  text-align: center;
+}
+#certificate-preview pre {
+  border: 1px solid #000;
+}
+#certificate-preview th,
+#certificate-preview td {
+  border-bottom: 1px solid #000;
+}
+#certificate-preview thead {
+  border-bottom: 3px double #000;
+}
+#certificate-preview blockquote {
+  border-left: 1px dashed #000;
+  font-variant: small-caps;
+  margin-left: 1.5rem;
+  padding-left: 1rem;
+}
+#certificate-preview blockquote p:first-letter {
+  font-weight: bold;
+}

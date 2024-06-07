@@ -1,0 +1,222 @@
+.profile-pick {
+  max-height: 40px;
+  object-fit: cover;
+  object-position: center;
+}
+.text-end-dots {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.w-16px {
+  width: 16px;
+}
+
+.w-22px {
+  width: 22px;
+}
+.status-buttons {
+  transition: 0.3s ease-in-out;
+  transform: scale(0.9);
+}
+.status-buttons.active,
+.status-buttons:hover {
+  transform: scale(1.1);
+}
+.status-buttons.active {
+  box-shadow: 0 0.5rem 0.8rem rgba(0, 0, 0, 0.25) !important;
+}
+.article-thumbnail {
+  max-height: 250px;
+  max-width: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+.table .wrap {
+  white-space: normal;
+}
+.placeholder {
+  user-select: none;
+  /* transform: translateY(-50%); */
+  opacity: 0.5;
+  display: inline;
+}
+#tags-input {
+  display: flex;
+  flex-wrap: wrap;
+}
+#tags-input .tags {
+  max-width: fit-content;
+  gap: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  flex-grow: 1;
+}
+#tags-input .input {
+  flex-grow: 2;
+  flex-shrink: 2;
+  border: 0;
+  min-width: 150px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #444953;
+  background-color: #ffffff;
+}
+#tags-input .input:focus,
+#tags-input .input:hover,
+#tags-input .input:active {
+  outline: none;
+}
+.jump-shake {
+  animation: jump-shaking 0.83s infinite;
+}
+@keyframes jump-shaking {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateY(-9px);
+  }
+  35% {
+    transform: translateY(-9px) rotate(17deg);
+  }
+  55% {
+    transform: translateY(-9px) rotate(-17deg);
+  }
+  65% {
+    transform: translateY(-9px) rotate(17deg);
+  }
+  75% {
+    transform: translateY(-9px) rotate(-17deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+}
+
+.dashed-title {
+  position: relative;
+  margin: auto;
+  text-align: center;
+  display: block;
+  width: 100%;
+}
+.dashed-title::after,
+.dashed-title::before {
+  position: absolute;
+  content: "";
+  height: 1px;
+  height: 1px;
+  max-width: 400px;
+  width: 100%;
+  background: #8f9bad;
+  top: 50%;
+}
+.dashed-title:after {
+  left: 0;
+}
+.dashed-title:before {
+  right: 0;
+}
+.lecture .lecture-image {
+  object-fit: cover;
+  object-position: center center;
+  aspect-ratio: 1 / 0.6;
+}
+.lecture .lecture-overlay {
+  background: linear-gradient(45deg, transparent -10%, rgba(0, 0, 0, 0.7) 90%);
+}
+.lecture .lecture-overlay .lecture-handler {
+  padding: 6px;
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+}
+.ar .lecture-overlay .lecture-handler {
+  position: absolute;
+  bottom: 15px;
+  right: auto;
+  left: 15px;
+}
+.lecture .badge {
+  float: right;
+}
+.ar .lecture .badge {
+  float: left;
+}
+.toast-container {
+  right: 15px;
+  top: 20px;
+  z-index: 99;
+}
+.ar .toast-container {
+  right: auto;
+  left: 15px;
+  top: 20px;
+}
+.toast-container .toast {
+  top: 0;
+  left: 0;
+}
+.reordering .card {
+  border-color: #0342a0 !important;
+  border: 1px solid;
+  box-shadow: 0 0 10px rgba(13, 110, 253, 0.6);
+  --bs-border-opacity: 1;
+  border-color: rgba(13, 110, 253, var(--bs-border-opacity)) !important;
+}
+.toast:not(.showing):not(.show) {
+  opacity: unset;
+}
+.certificate .certificate-preview {
+  aspect-ratio: 1.414/1;
+  min-height: 195px;
+  width: 100%;
+}
+.product-preview {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+.product-preview .product-img {
+  max-width: 80px;
+  max-height: 80px;
+  position: relative;
+  overflow: hidden;
+}
+.product-preview .product-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.product-preview .product-img .btns {
+  background: rgba(0, 0, 0, 0);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  transition: background 0.3s ease-in-out;
+}
+.product-preview .product-img .btns .btn {
+  transform: translateY(80px);
+  transition: transform 0.3s ease-in-out;
+}
+.product-preview .product-img .btns .btn.btn-danger {
+  transform: translateY(-80px);
+}
+.product-preview .product-img:hover .btns {
+  background: rgba(0, 0, 0, 0.25);
+}
+.product-preview .product-img:hover .btns .btn {
+  transform: translateY(0);
+}
