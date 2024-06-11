@@ -8,53 +8,62 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use File;
 
-class ProfileController extends Controller
-{
-    /**
-     * Display the user's profile form.
-     */
-    public function edit(Request $request): View
-    {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+class ProfileController extends Controller {
+
+  public function edit(Request $request): View {
+    return view('profile.edit', [
+      'user' => auth()->user(),
+    ]);
+  }
+
+  public function settings(Request $request) {
+    return view('profile.settings', [
+      'user' => auth()->user(),
+    ]);
+  }
+
+  public function update(ProfileUpdateRequest $request): RedirectResponse {
+
+    $user = $request->user();
+    $user->first_name = request("first_name");
+    $user->last_name = request("last_name");
+    $user->bio = request("bio");
+
+    if ($user->isDirty('email')) {
+      $user->email_verified_at = null;
     }
 
-    /**
-     * Update the user's profile information.
-     */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
-        $request->user()->fill($request->validated());
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
-
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    if ($request->hasFile('profile_pic')) {
+      // delete old image
+      if ($user->image != NULL && File::exists(public_path("images/users/$user->image"))) {
+        File::delete(public_path("images/users/$user->image"));
+      }
+      // upload new image
+      $user->image = date('mdYHis') . uniqid() . substr($request->file('profile_pic')->getClientOriginalName(), -10);
+      $request->profile_pic->move(public_path('images/users'), $user->image);
     }
 
-    /**
-     * Delete the user's account.
-     */
-    public function destroy(Request $request): RedirectResponse
-    {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
+    $user->save();
 
-        $user = $request->user();
+    return Redirect::route('profile.edit')->with('status', 'profile-updated');
+  }
 
-        Auth::logout();
+  public function destroy(Request $request): RedirectResponse {
+    $request->validateWithBag('userDeletion', [
+      'password' => ['required', 'current_password'],
+    ]);
 
-        $user->delete();
+    $user = $request->user();
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+    Auth::logout();
 
-        return Redirect::to('/');
-    }
+    $user->delete();
+
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return Redirect::to('/');
+  }
 }

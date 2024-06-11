@@ -1,7 +1,67 @@
 {
+  "public/js/app.js": {
+    "file": "assets/app-Cr3STtJG.js",
+    "src": "public/js/app.js",
+    "isEntry": true
+  },
+  "public/js/bootstrap.min.js": {
+    "file": "assets/bootstrap.min-BiQmfBsm.js",
+    "src": "public/js/bootstrap.min.js",
+    "isEntry": true
+  },
+  "public/js/custom.js": {
+    "file": "assets/custom-BN3L0HqR.js",
+    "src": "public/js/custom.js",
+    "isEntry": true
+  },
+  "public/js/dashboard/bootstrap.js": {
+    "file": "assets/bootstrap-CifqVuM1.js",
+    "src": "public/js/dashboard/bootstrap.js",
+    "isEntry": true
+  },
+  "public/js/jquery.min.js": {
+    "file": "assets/jquery.min-5GtrIU7X.js",
+    "src": "public/js/jquery.min.js",
+    "isEntry": true
+  },
+  "public/js/jquery.sticky-sidebar.min.js": {
+    "file": "assets/jquery.sticky-sidebar.min-CGjdE0gJ.js",
+    "src": "public/js/jquery.sticky-sidebar.min.js",
+    "isEntry": true
+  },
+  "public/js/popper.min.js": {
+    "file": "assets/popper.min-JUKoA6mh.js",
+    "src": "public/js/popper.min.js",
+    "isEntry": true
+  },
+  "public/js/slick.min.js": {
+    "file": "assets/slick.min-BiJAL1Qc.js",
+    "src": "public/js/slick.min.js",
+    "isEntry": true
+  },
+  "public/js/taking-test.js": {
+    "file": "assets/taking-test-QONcvyPC.js",
+    "src": "public/js/taking-test.js",
+    "isEntry": true
+  },
+  "public/js/video-player.js": {
+    "file": "assets/video-player-BBFVLMpa.js",
+    "src": "public/js/video-player.js",
+    "isEntry": true
+  },
+  "public/js/yt-player.js": {
+    "file": "assets/yt-player-CovAVIvF.js",
+    "src": "public/js/yt-player.js",
+    "isEntry": true
+  },
   "resources/css/app.css": {
     "file": "assets/app-B3rRzTzI.css",
     "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/css/checkout.css": {
+    "file": "assets/checkout-ErTMuZ9V.css",
+    "src": "resources/css/checkout.css",
     "isEntry": true
   },
   "resources/css/contact.css": {
@@ -69,14 +129,29 @@
     "src": "resources/css/login.css",
     "isEntry": true
   },
+  "resources/css/product.css": {
+    "file": "assets/product-n9_9ywSu.css",
+    "src": "resources/css/product.css",
+    "isEntry": true
+  },
   "resources/css/sections.css": {
     "file": "assets/sections-Dp0VYS38.css",
     "src": "resources/css/sections.css",
     "isEntry": true
   },
+  "resources/css/shop.css": {
+    "file": "assets/shop-o7KUcfbC.css",
+    "src": "resources/css/shop.css",
+    "isEntry": true
+  },
   "resources/css/simple-line-icons.css": {
     "file": "assets/simple-line-icons-i4zATUmY.css",
     "src": "resources/csslibs/simple-line-icons.css",
+    "isEntry": true
+  },
+  "resources/css/single-product.css": {
+    "file": "assets/single-product-DEg2Nv5d.css",
+    "src": "resources/css/single-product.css",
     "isEntry": true
   },
   "resources/css/slick.css": {
@@ -170,7 +245,7 @@
   },
   "resources/fonts/fa-regular-400.eot": {
     "file": "assets/fa-regular-400-CdvVwXPA.eot",
-    "src": "resources/fonts/fa-regular-400d41d.eot"
+    "src": "resources/fonts/fa-regular-400.eot"
   },
   "resources/fonts/fa-regular-400.svg": {
     "file": "assets/fa-regular-400-CjYw4d2M.svg",
@@ -190,7 +265,7 @@
   },
   "resources/fonts/fa-regular-400d41d.eot": {
     "file": "assets/fa-regular-400-CdvVwXPA.eot",
-    "src": "resources/fonts/fa-regular-400d41d.eot"
+    "src": "resources/fonts/fa-regular-400.eot"
   },
   "resources/fonts/fa-solid-900.eot": {
     "file": "assets/fa-solid-900-CcKsHZq-.eot",
@@ -235,60 +310,5 @@
   "resources/fonts/slickd41d.eot": {
     "file": "assets/slick-Bi9J8BMx.eot",
     "src": "resources/fonts/slickd41d.eot"
-  },
-  "resources/js/app.js": {
-    "file": "assets/app-BkSob-RH.js",
-    "src": "resources/js/app.js",
-    "isEntry": true
-  },
-  "resources/js/bootstrap.min.js": {
-    "file": "assets/bootstrap.min-BiQmfBsm.js",
-    "src": "resources/js/bootstrap.min.js",
-    "isEntry": true
-  },
-  "resources/js/custom.js": {
-    "file": "assets/custom-BDzfZZqb.js",
-    "src": "resources/js/custom.js",
-    "isEntry": true
-  },
-  "resources/js/dashboard/bootstrap.js": {
-    "file": "assets/bootstrap-CifqVuM1.js",
-    "src": "resources/js/dashboard/bootstrap.js",
-    "isEntry": true
-  },
-  "resources/js/jquery.min.js": {
-    "file": "assets/jquery.min-5GtrIU7X.js",
-    "src": "resources/js/jquery.min.js",
-    "isEntry": true
-  },
-  "resources/js/jquery.sticky-sidebar.min.js": {
-    "file": "assets/jquery.sticky-sidebar.min-CGjdE0gJ.js",
-    "src": "resources/js/jquery.sticky-sidebar.min.js",
-    "isEntry": true
-  },
-  "resources/js/popper.min.js": {
-    "file": "assets/popper.min-JUKoA6mh.js",
-    "src": "resources/js/popper.min.js",
-    "isEntry": true
-  },
-  "resources/js/slick.min.js": {
-    "file": "assets/slick.min-BiJAL1Qc.js",
-    "src": "resources/js/slick.min.js",
-    "isEntry": true
-  },
-  "resources/js/taking-test.js": {
-    "file": "assets/taking-test-QONcvyPC.js",
-    "src": "resources/js/taking-test.js",
-    "isEntry": true
-  },
-  "resources/js/video-player.js": {
-    "file": "assets/video-player-BBFVLMpa.js",
-    "src": "resources/js/video-player.js",
-    "isEntry": true
-  },
-  "resources/js/yt-player.js": {
-    "file": "assets/yt-player-CovAVIvF.js",
-    "src": "resources/js/yt-player.js",
-    "isEntry": true
   }
 }

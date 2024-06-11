@@ -15,22 +15,31 @@ async function initialize() {
   elements = stripe.elements({ clientSecret: clientSecretKey });
 
   const paymentElement = elements.create("payment");
+
+  paymentElement.mount("#payment-element");
+
+  // shipping mode
   const options = { mode: "shipping" };
   const addressElement = elements.create("address", options);
-  paymentElement.mount("#payment-element");
+
   addressElement.mount("#address-element");
+
+  addressElement.on("change", (event) => {
+    if (event.complete) {
+      address = event.value.address;
+    }
+  });
 }
 
 async function handleSubmit(e) {
   e.preventDefault();
   setLoading(true);
 
-  const { setupIntent, error } = await stripe.confirmSetup({
+  const { error } = await stripe.confirmPayment({
     elements,
     confirmParams: {
       return_url: successUrl,
     },
-    redirect: "if_required",
   });
 
   const addressElement = elements.getElement("address");
@@ -44,33 +53,8 @@ async function handleSubmit(e) {
       showMessage("An unexpected error occurred.");
     }
     setLoading(false);
-  } else {
-    let form = document.getElementById("payment-form");
-    let input = document.createElement("input");
-    input.setAttribute("type", "hidden");
-    input.setAttribute("name", "paymentMethod");
-    input.setAttribute("value", setupIntent.payment_method);
-    form.appendChild(input);
-
-    if (complete) {
-      console.log(value);
-      let addressInp = document.createElement("input");
-      addressInp.setAttribute("type", "hidden");
-      addressInp.setAttribute("name", "address");
-      addressInp.setAttribute("value", JSON.stringify(value));
-      form.appendChild(addressInp);
-    }
-
-    form.submit();
   }
 }
-
-addressElement.on("change", (event) => {
-  if (event.complete) {
-    address = event.value.address;
-    console.log(event.value.address);
-  }
-});
 
 // Fetches the payment intent status after payment submission
 async function checkStatus() {
@@ -101,7 +85,6 @@ async function checkStatus() {
 }
 
 // ------- UI helpers -------
-
 function showMessage(messageText) {
   const messageContainer = document.querySelector("#payment-message");
 

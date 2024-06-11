@@ -124,6 +124,7 @@ button:disabled {
   flex-direction: column;
   gap: 8px;
   padding: 3.8em;
+  height: 100%;
 }
 .ar .products .holder {
   padding-right: 0;

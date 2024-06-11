@@ -14,6 +14,7 @@ return new class extends Migration {
       $table->string("token")->unique();
       $table->string("client_name")->nullable();
       $table->string("client_email")->nullable();
+      $table->string("intent_id")->nullable();
       $table->string("address");
       $table->tinyInteger("stage")->default(1);
       $table->timestamps();

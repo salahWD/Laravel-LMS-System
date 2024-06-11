@@ -76,7 +76,7 @@ class Dashboard extends Controller {
   }
 
   public function orders(Request $request) {
-    $orders = Order::with("user")->orderBy("created_at", "DESC")->paginate(15);
+    $orders = Order::with("user")->real()->orderBy("created_at", "DESC")->paginate(15);
     return view('dashboard.orders.index', compact("orders"));
   }
 

@@ -20,6 +20,7 @@ use App\Http\Controllers\TestAttemptController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProfileController;
 
 // barryvdh/laravel-debugbar
 
@@ -40,11 +41,18 @@ Route::middleware('localizationRedirect')->group(function () {
   Route::get('/contact-us', [PageController::class, 'contactus'])->name('contact_us');
   Route::POST('/contact-us', [MessageController::class, 'store']);
   Route::get('/cart', [CartController::class, 'show'])->name('cart_show');
-  Route::POST('/checkout', [CartController::class, 'checkout'])->name('checkout');
+  // Route::POST('/checkout', [CartController::class, 'checkout'])->name('checkout');
   Route::get('/thanks', [CartController::class, 'success'])->name('checkout_success');
   Route::get('/track/{order:token}', [OrderController::class, 'show'])->name('order_tracking');
 
   Route::middleware(['auth'])->group(function () {
+    Route::prefix('/me')->group(function () {
+      Route::get('/orders', [OrderController::class, 'index'])->name('my_orders');
+      Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+      Route::get('/settings', [ProfileController::class, 'settings'])->name('profile.settings');
+      Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+      Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    });
     Route::get('/certificates', [CertificateController::class, 'index'])->name('certificates');
     Route::get('/certificate/{certificate}', [CertificateController::class, 'download'])->name('certificate_download');
     Route::get('/certificate/theme/{theme}', [CertificateController::class, 'show_theme'])->name('certificate_theme_show');
@@ -118,7 +126,10 @@ Route::middleware('localizationRedirect')->group(function () {
     });
     Route::prefix('/orders')->group(function () {
       Route::get('/', [Dashboard::class, 'orders'])->name("orders_manage");
-      Route::POST('/orders', [CategoryController::class, 'store']);
+      Route::POST('/', [OrderController::class, 'store']);
+      Route::get('/{order}', [OrderController::class, 'edit'])->name("order_edit");
+      Route::POST('/{order}', [OrderController::class, 'update']);
+      Route::get('/{order}/refund', [OrderController::class, 'destroy'])->name("order_refund");
     });
     // Route::get('/messages/{message}/delete', [MessageController::class, 'destroy'])->name("message_delete");
     Route::get('/settings', [Dashboard::class, 'settings'])->name("dashboard_settings");
@@ -129,7 +140,9 @@ Route::middleware('localizationRedirect')->group(function () {
 });
 
 Route::prefix('/app-request')->group(function () {
+
   Route::POST('/cart/{product}', [ProductController::class, 'add_to_cart'])->name("add_product_cart");
+  Route::POST('/webhook', [CartController::class, 'webhook'])->name('webhook');
 });
 
 Route::prefix('/app-request')->middleware(['auth', 'admin'])->group(function () {
@@ -177,13 +190,8 @@ Route::prefix('/app-request')->middleware(['auth', 'admin'])->group(function () 
 });
 
 
-/*
-  Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-  });
 
+/*
 
   Route::redirect('/', '/login');
 

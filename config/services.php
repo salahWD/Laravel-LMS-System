@@ -2,6 +2,12 @@
 
 return [
 
+  'stripe' => [
+    "key" => env("STRIPE_KEY"),
+    "secret" => env("STRIPE_SECRET"),
+    "webhook_secret" => env("STRIPE_WEBHOOK_SECRET"),
+  ],
+
   'mailgun' => [
     'domain' => env('MAILGUN_DOMAIN'),
     'secret' => env('MAILGUN_SECRET'),

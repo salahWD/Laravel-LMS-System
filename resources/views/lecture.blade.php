@@ -169,16 +169,15 @@
     const doneUrl = `{{ route("lecture_done_ajax", $current_lecture->id) }}`;
     const playerNeeded = {{ !$current_lecture->is_yt_video() ? "true" : "false" }};
   </script>
-  @vite([
-    'resources/js/jquery.min.js',
-    'resources/js/popper.min.js',
-    'resources/js/bootstrap.min.js',
-    'resources/js/slick.min.js',
-    'resources/js/jquery.sticky-sidebar.min.js',
-    'resources/js/custom.js',
-    'resources/js/video-player.js',
-  ])
+  <script src="{{ url("js/jquery.min.js") }}"></script>
+  <script src="{{ url("js/popper.min.js") }}"></script>
+  <script src="{{ url("js/bootstrap.min.js") }}"></script>
+  <script src="{{ url("js/slick.min.js") }}"></script>
+  <script src="{{ url("js/jquery.sticky-sidebar.min.js") }}"></script>
+  <script src="{{ url("js/custom.js") }}"></script>
+  <script src="{{ url("js/video-player.js") }}"></script>
+
   @if ($current_lecture->is_yt_video())
-    @vite("resources/js/yt-player.js")
+  <script src="{{ url("js/yt-player.js") }}"></script>
   @endif
 @endsection

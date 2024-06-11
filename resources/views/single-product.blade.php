@@ -150,7 +150,7 @@
   </div>
   <div class="container mt-5">
     <div class="similar-products">
-      <div class="owl-carousel similar-products-carousel products owl-theme owl-loaded">
+      <div class="owl-carousel similar-products-carousel products owl-theme owl-loaded" dir="ltr">
         @foreach($similar_products as $product)
           <div class="xv-product product style shadow-around">
             <figure>

@@ -12,10 +12,10 @@ use App\Models\Report;
 use App\Models\Comment;
 use App\Models\Course;
 use App\Models\Article;
-use Laravel\Cashier\Billable;
+// use Laravel\Cashier\Billable;
 
 class User extends Authenticatable {
-  use Billable; // cashier
+  // use Billable; // cashier
   use HasApiTokens, HasFactory, Notifiable;
 
   protected $hidden = [

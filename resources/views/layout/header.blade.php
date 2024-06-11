@@ -45,10 +45,10 @@
           </button>
         </div> --}}
         @if (auth()->check())
-          <div class="account d-flex align-items-center">
+          <a href="{{ route("profile.edit") }}" class="account d-flex align-items-center">
             <p class="fullname pe-2 m-0 me-2">{{ auth()->user()->fullname() }}</p>
             <img src="{{ auth()->user()->image_url() }}" alt="{{ auth()->user()->fullname() }}" class="rounded-circle">
-          </div>
+          </a>
         @else
           <a class="login" href="{{ route("login") }}">
             {{ __("Login / Register") }}

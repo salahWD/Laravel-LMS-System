@@ -12,18 +12,12 @@ class UserController extends Controller {
     //
   }
 
-  /**
-   * Show the form for creating a new resource.
-   */
   public function create() {
     $user = new User();
     $permissions = $user->get_permissions();
     return view('dashboard.user', compact("user", "permissions"));
   }
 
-  /**
-   * Store a newly created resource in storage.
-   */
   public function store(Request $request) {
     $request->validate([
       "firstname" => "nullable|string|max:30",
@@ -56,24 +50,16 @@ class UserController extends Controller {
     return redirect()->route("users_manage");
   }
 
-  /**
-   * Display the specified resource.
-   */
   public function show(string $id) {
     //
   }
 
-  /**
-   * Show the form for editing the specified resource.
-   */
   public function edit(User $user) {
     $permissions = $user->get_permissions();
+
     return view('dashboard.user', compact(["user", "permissions"]));
   }
 
-  /**
-   * Update the specified resource in storage.
-   */
   public function update(Request $request, User $user) {
     $request->validate([
       "firstname" => "nullable|string|max:30",
@@ -115,9 +101,6 @@ class UserController extends Controller {
     return redirect()->route("users_manage");
   }
 
-  /**
-   * Remove the specified resource from storage.
-   */
   public function destroy(string $id) {
     //
   }

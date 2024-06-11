@@ -39,7 +39,7 @@ class LectureController extends Controller {
       "image" => "nullable|image|mimes:png,jpg,jpeg|max:2048", // max = 2 mega byte
       "video" => "required_if:ytlink,null|file|mimetypes:video/mp4",
       "ytlink" => [
-        "required_if:video,null", "url:https",
+        "required_if:video,null", "nullable", "url:https",
         function ($attribute, $value, $fail) {
           if (!Str::isUrl($value) || !Str::contains($value, ["youtube.com"])) {
             $fail("The {$attribute} attibute is not a valid youtube link.");
@@ -109,10 +109,14 @@ class LectureController extends Controller {
           if ($item->is_lecture()) {
             if (!$item->itemable->is_yt_video() && \File::exists(public_path("lectures/videos/" . $item->video))) {
               $file = $getID3->analyze(public_path("lectures/videos/" . $item->video));
-              if ($file['playtime_seconds'] > 60 * 60 * 1000) {
-                $item->duration = date("H:i:s", $file['playtime_seconds']);
+              if (isset($file['playtime_seconds'])) {
+                if ($file['playtime_seconds'] > 60 * 60 * 1000) {
+                  $item->duration = date("H:i:s", $file['playtime_seconds']);
+                } else {
+                  $item->duration = date('i:s', $file['playtime_seconds']);
+                }
               } else {
-                $item->duration = date('i:s', $file['playtime_seconds']);
+                $item->duration = "00:00";
               }
             } else {
               $item->duration = null;

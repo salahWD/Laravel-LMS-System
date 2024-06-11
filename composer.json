@@ -12,12 +12,12 @@
         "guzzlehttp/guzzle": "^7.2",
         "hardevine/shoppingcart": "^3.3",
         "james-heinrich/getid3": "^1.9",
-        "laravel/cashier": "^15.3",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "mcamara/laravel-localization": "^1.8",
         "simplesoftwareio/simple-qrcode": "^4.2",
+        "stripe/stripe-php": "^14.9",
         "sunra/php-simple-html-dom-parser": "^1.5",
         "symfony/css-selector": "^7.0",
         "symfony/dom-crawler": "^7.0"

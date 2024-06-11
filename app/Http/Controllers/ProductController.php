@@ -13,12 +13,17 @@ use Symfony\Component\DomCrawler\Crawler; // Import Symfony DomCrawler
 
 class ProductController extends Controller {
 
+  public function __construct() {
+    $this->middleware('auth')->only("add_to_cart");// only loged in users can use this controller
+  }
+
   public function index() {
     $header_slides = Product::inRandomOrder()->limit(3)->get();
     $offers = Product::inRandomOrder()->limit(3)->get();
     $new_products = Product::inRandomOrder()->limit(3)->get();
     $categories = Category::inRandomOrder()->isProduct()->limit(3)->withCount("products")->get();
     $packages = collect([collect([...$new_products, ...$new_products]), collect([...$new_products, ...$new_products])]);
+
     return view("shop", compact("new_products", "header_slides", "categories", "offers", "packages"));
   }
 
@@ -124,13 +129,19 @@ class ProductController extends Controller {
 
     $request->validate(["quantity" => "required|min:1"]);
 
-    if (!auth()->check() && empty(request("cart_id"))) {
-      $id = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 9);
-    } elseif (!auth()->check()) { // gust with cart it
-      $id = request("cart_id");
-    } else {
-      $id = auth()->user()->id;
-    }
+    /* =========== Note ===========
+      tihs commented code is used when unsigned people can buy from the shopp
+      ============================ */
+
+    // if (!auth()->check() && empty(request("cart_id"))) {
+    //   $id = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 9);
+    // } elseif (!auth()->check()) { // gust with cart it
+    //   $id = request("cart_id");
+    // } else {
+    //   $id = auth()->user()->id;
+    // }
+
+    $id = auth()->user()->id;
     Cart::restore($id);
     Cart::add($product->id, $product->title, request("quantity"), $product->price, ["image" => $product->main_image_url()]);
     Cart::store($id);
