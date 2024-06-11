@@ -1,2 +1,17 @@
 vendor
 node_modules
+public/lectures/videos
+public/lectures/thumbnails
+public/img
+public/images/articles
+public/images/ads
+public/images/categories
+public/images/courses
+public/images/insta
+public/images/other
+public/images/posts
+public/images/products
+public/images/questions
+public/images/tests
+public/images/users
+public/images/widgets
