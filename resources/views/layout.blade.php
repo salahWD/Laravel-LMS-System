@@ -11,12 +11,13 @@
 -->
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     @yield('meta')
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>{{ config("app.name") }}</title>
+    <title>{{ config('app.name') }}</title>
     <meta name="title" content="CES CONTENT">
     <meta name="author" content="Walid Isa">
     <meta name="description" content="CES CONTENT">
@@ -37,26 +38,22 @@
     <meta property="twitter:description" content="CES CONTENT">
     <meta property="twitter:image" content="CES CONTENT">
 
-    @if (app()->getLocale() == "ar")
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" integrity="sha384-dpuaG1suU0eT09tx5plTaGMLBsfDLzUCCUXOY2j/LSvXYuG6Bqs43ALlhIqAJVRb" crossorigin="anonymous">
+    @if (app()->getLocale() == 'ar')
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css"
+            integrity="sha384-dpuaG1suU0eT09tx5plTaGMLBsfDLzUCCUXOY2j/LSvXYuG6Bqs43ALlhIqAJVRb" crossorigin="anonymous">
     @else
-      @vite('resources/csslibs/bootstrap.min.css')
+        @vite('resources/csslibs/bootstrap.min.css')
     @endif
 
-    @if(!isset($no_header_footer) || !$no_header_footer)
-      @vite([
-        'resources/csslibs/slick.css',
-        'resources/csslibs/simple-line-icons.css',
-        'resources/csslibs/style.css',
-        'resources/csslibs/all.min.css',
-        "resources/css/custom.css",
-      ])
+    @if (!isset($no_header_footer) || !$no_header_footer)
+        @vite(['resources/csslibs/slick.css', 'resources/csslibs/simple-line-icons.css', 'resources/csslibs/style.css', 'resources/csslibs/all.min.css', 'resources/css/custom.css'])
     @endif
 
     @yield('styles')
 
-  </head>
-  <body dir="{{ app()->getLocale() == "ar" ? "rtl": "ltr" }}" class="{{ app()->getLocale() }}">
+</head>
+
+<body dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}" class="{{ app()->getLocale() }}">
 
     <!-- preloader -->
     {{-- <div id="preloader">
@@ -71,19 +68,23 @@
       </div>
     </div> --}}
 
-    @if(!isset($no_header_footer) || !$no_header_footer)
-      @include('layout.header')
+    <div class="site-wrapper d-lg-none">
+        <div class="main-overlay"></div>
+    </div>
+
+    @if (!isset($no_header_footer) || !$no_header_footer)
+        @include('layout.header')
     @endif
 
     @yield('content')
 
-    @if(!isset($no_header_footer) || !$no_header_footer)
-
-      @include('layout.footer')
-      @include('layout.search-popup')
+    @if (!isset($no_header_footer) || !$no_header_footer)
+        @include('layout.footer')
+        @include('layout.search-popup')
     @endif
 
     @yield('scripts')
 
-  </body>
+</body>
+
 </html>

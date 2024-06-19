@@ -20,6 +20,7 @@ use App\Http\Controllers\TestAttemptController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\ProfileController;
 
 // barryvdh/laravel-debugbar
@@ -49,9 +50,11 @@ Route::middleware('localizationRedirect')->group(function () {
     Route::prefix('/me')->group(function () {
       Route::get('/orders', [OrderController::class, 'index'])->name('my_orders');
       Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+      Route::get('/certificates', [ProfileController::class, 'certificates'])->name('profile.certificates');
       Route::get('/settings', [ProfileController::class, 'settings'])->name('profile.settings');
       Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
       Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+      Route::get('/{meeting}', [MeetingController::class, 'show'])->name("meeting_show");
     });
     Route::get('/certificates', [CertificateController::class, 'index'])->name('certificates');
     Route::get('/certificate/{certificate}', [CertificateController::class, 'download'])->name('certificate_download');
@@ -131,6 +134,14 @@ Route::middleware('localizationRedirect')->group(function () {
       Route::POST('/{order}', [OrderController::class, 'update']);
       Route::get('/{order}/refund', [OrderController::class, 'destroy'])->name("order_refund");
     });
+    Route::prefix('/meetings')->group(function () {
+      Route::get('/', [MeetingController::class, 'index'])->name("meetings_manage");
+      Route::get('/create', [MeetingController::class, 'create'])->name("meeting_create");
+      Route::POST('/create', [MeetingController::class, 'store']);
+      Route::get('/{meeting}', [MeetingController::class, 'edit'])->name("meeting_edit");
+      Route::POST('/{meeting}', [MeetingController::class, 'update']);
+      Route::delete('/{meeting}', [MeetingController::class, 'destroy'])->name("meeting_delete");
+    });
     // Route::get('/messages/{message}/delete', [MessageController::class, 'destroy'])->name("message_delete");
     Route::get('/settings', [Dashboard::class, 'settings'])->name("dashboard_settings");
     Route::POST('/settings', [Dashboard::class, 'set_settings']);
@@ -143,6 +154,12 @@ Route::prefix('/app-request')->group(function () {
 
   Route::POST('/cart/{product}', [ProductController::class, 'add_to_cart'])->name("add_product_cart");
   Route::POST('/webhook', [CartController::class, 'webhook'])->name('webhook');
+  Route::POST('/lectures/{lecture}', [LectureController::class, 'ajax_done'])->middleware("auth")->name("lecture_done_ajax");
+
+  Route::POST('/test/{test}/answering', [TestAttemptController::class, 'answering'])->name("attempt_answering");
+  Route::POST('/test/{test}/form', [TestAttemptController::class, 'formEntry'])->name("attempt_form_entry");
+  Route::get('/question/{question}', [QuestionController::class, 'show'])->name('show_question');
+  Route::POST('/test/attempts', [TestAttemptController::class, 'store'])->name("attempt_create");
 });
 
 Route::prefix('/app-request')->middleware(['auth', 'admin'])->group(function () {
@@ -159,7 +176,6 @@ Route::prefix('/app-request')->middleware(['auth', 'admin'])->group(function () 
   Route::POST('/messages/{message}/delete', [MessageController::class, 'destroy'])->name("message_delete");
   Route::POST('/articles/upload-attachment', [ArticleController::class, 'upload_attachment'])->name("article_attachment");
   Route::POST('/courseitems/order', [CourseController::class, 'reorder_items'])->name("courseitem_order");
-  Route::POST('/lectures/{lecture}', [LectureController::class, 'ajax_done'])->name("lecture_done_ajax");
 
 
   // Route::POST('/tests/{test}/question', [ArticleController::class, 'upload_attachment'])->name("article_attachment");
@@ -172,20 +188,16 @@ Route::prefix('/app-request')->middleware(['auth', 'admin'])->group(function () 
   Route::POST('/question/{question}/delete', [QuestionController::class, 'destroy']);
   Route::POST('/question/{question}/copy', [QuestionController::class, 'copy']);
   Route::POST('/question/{question}/reorder', [AnswerController::class, 'reorder'])->name("reorder_question_answers");
-  Route::get('/question/{question}', [QuestionController::class, 'show'])->name('show_question');
   Route::POST('/question/{question}', [QuestionController::class, 'update'])->name('update_question');
   Route::POST('/question/{question}/image_actions', [QuestionController::class, 'image_actions']);
   Route::POST('/tests/{test}/result', [ResultController::class, 'store'])->name("result");
-  Route::get('/tests/{test}/result', [ResultController::class, 'show']);
+  // Route::get('/tests/{test}/result', [ResultController::class, 'show']);
   Route::POST('/tests/{test}/result/destroy', [ResultController::class, 'destroy'])->name("test_delete_result");
   Route::get('/certificate/{certificate}', [CertificateController::class, 'show_api'])->name('certificate_show_api');
   Route::POST('/certificate/{certificate}', [CertificateController::class, 'update_api']);
   Route::POST('/tests/{test}/certificate', [TestController::class, 'certificates'])->name('test_certificate');
   Route::POST('/tests/{test}/certificate/delete', [TestController::class, 'certificate_delete'])->name('test_certificate_delete');
 
-  Route::POST('/test/{test}/answering', [TestAttemptController::class, 'answering'])->name("attempt_answering");
-  Route::POST('/test/{test}/form', [TestAttemptController::class, 'formEntry'])->name("attempt_form_entry");
-  Route::POST('/test/attempts', [TestAttemptController::class, 'store'])->name("attempt_create");
   Route::get('/attempts/{testAttempt}', [TestAttemptController::class, 'show'])->name("attempt_get");
 });
 

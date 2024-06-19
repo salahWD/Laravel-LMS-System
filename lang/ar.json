@@ -17,6 +17,9 @@
   "tests": "الإختبارات",
   "Messages": "الرسائل",
   "messages": "الرسائل",
+  "meeting": "لقاء",
+  "meetings": "اللقائات",
+  "events": "الفعاليات",
 
   "Users": "المستخدمين",
   "users": "المستخدمين",
@@ -121,6 +124,7 @@
   "Edit": "التعديل",
   "Remove": "حذف",
 
+  "manage :all from one place.": "إدارة جميع :all من مكان واحد.",
   "manage all categories from one place.": "إدارة جميع التصنيفات من مكان واحد.",
   "manage articles and posts from one place.": "إدارة جميع المقالات والمنشورات من مكان واحد.",
   "manage subscribed users from one place.": "إدارة جميع الأعضاء والمستخدمين من مكان واحد.",
@@ -225,9 +229,17 @@
   "recommended packages": "مجموعات مقترحة",
   "checkout": "الدفع",
   "shop": "المتجر",
-  "": "",
-  "": "",
-  "": "",
-  "": "",
+
+  "An elite group of professional teachers": "مجموعة النخبة من المعلمين المحترفين",
+  "We seek to educate a generation of professional engineers": "نسعى إلى تثقيف جيل من المهندسين المحترفين",
+  "Open source Projects and materials": "مشاريع ومواد مفتوحة المصدر",
+  "you can use the material we offer and as a part of the courses and articles we publish": "يمكنك استخدام المواد التي نقدمها وكجزء من الدورات والمقالات التي ننشرها",
+  "Free & Paid Courses and Certificates": "الدورات والشهادات المجانية والمدفوعة",
+  "we care a lot of our quality and our courses and certificates, some of which is free": "نحن نهتم بالكثير من جودتنا ودوراتنا وشهاداتنا ، بعضها مجاني",
+
+  "there is no :items to show": "لا يوجد :items للعرض",
+  "warning": "تحذير",
+  "my meetings": "لقائاتي",
+  "your meetings": "لقائاتك",
   "": ""
 }

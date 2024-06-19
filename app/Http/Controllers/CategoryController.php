@@ -70,7 +70,8 @@ class CategoryController extends Controller {
 
   public function collection_create() {
     $category = new Category;
-    return view('dashboard.category')->with("category", $category);
+    $no_order = true;
+    return view('dashboard.category', compact("category", "no_order"));
   }
 
   public function edit(Category $category) {

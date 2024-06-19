@@ -95,7 +95,7 @@ class LectureController extends Controller {
   public function show(Lecture $lecture) {
     if ($lecture->open_for_user(auth()->user()->id)) {
 
-      $all_items = $lecture?->courseItem?->course?->items_with_data;
+      $all_items = $lecture?->course?->items_with_data;
       $watched_items = auth()->user()->watched_items()->select("course_items.id")->pluck("course_items.id")->toArray();
 
       $getID3 = new \getID3;
@@ -122,7 +122,7 @@ class LectureController extends Controller {
               $item->duration = null;
             }
           }
-          if ($item->id == $lecture->id) {
+          if ($item->itemable->id == $lecture->id && $item->is_lecture()) {
             $item->is_current = true;
           }
           if (in_array($item->id, $watched_items)) {
@@ -254,7 +254,7 @@ class LectureController extends Controller {
       auth()->user()->watched_items()->attach($lecture->courseItem->id);
       return ["result" => true];
     }
-    abort(404);
+    return abort(404);
   }
 
   public function destroy(Lecture $lecture) {

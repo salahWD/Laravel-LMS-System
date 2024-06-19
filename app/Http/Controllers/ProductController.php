@@ -14,7 +14,7 @@ use Symfony\Component\DomCrawler\Crawler; // Import Symfony DomCrawler
 class ProductController extends Controller {
 
   public function __construct() {
-    $this->middleware('auth')->only("add_to_cart");// only loged in users can use this controller
+    $this->middleware('auth')->only("add_to_cart"); // only loged in users can use this controller
   }
 
   public function index() {

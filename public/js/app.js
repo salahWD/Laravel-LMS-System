@@ -1,5 +1,4 @@
 // import "./dashboard/on-screen.umd.min.js";
-// import "./dashboard/volt.js";
 // import "./dashboard/nouislider.min.js";
 // import "./dashboard/smooth-scroll.polyfills.min.js";
 // import "./dashboard/chartist.min.js";

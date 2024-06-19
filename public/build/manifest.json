@@ -55,12 +55,12 @@
     "isEntry": true
   },
   "resources/css/app.css": {
-    "file": "assets/app-B3rRzTzI.css",
+    "file": "assets/app-Bgf6JM2w.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/css/checkout.css": {
-    "file": "assets/checkout-ErTMuZ9V.css",
+    "file": "assets/checkout-CXA4rr6b.css",
     "src": "resources/css/checkout.css",
     "isEntry": true
   },
@@ -245,7 +245,7 @@
   },
   "resources/fonts/fa-regular-400.eot": {
     "file": "assets/fa-regular-400-CdvVwXPA.eot",
-    "src": "resources/fonts/fa-regular-400.eot"
+    "src": "resources/fonts/fa-regular-400d41d.eot"
   },
   "resources/fonts/fa-regular-400.svg": {
     "file": "assets/fa-regular-400-CjYw4d2M.svg",
@@ -265,7 +265,7 @@
   },
   "resources/fonts/fa-regular-400d41d.eot": {
     "file": "assets/fa-regular-400-CdvVwXPA.eot",
-    "src": "resources/fonts/fa-regular-400.eot"
+    "src": "resources/fonts/fa-regular-400d41d.eot"
   },
   "resources/fonts/fa-solid-900.eot": {
     "file": "assets/fa-solid-900-CcKsHZq-.eot",

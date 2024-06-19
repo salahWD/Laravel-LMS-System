@@ -4998,12 +4998,16 @@ function certificateModal(values = null) {
     )
   );
   descriptionContainer.append(
-    create("textarea", {
-      class: "form-control",
-      id: "certificateDescriptionInput",
-      placeholder: "Enter A Description",
-      value: values != null ? values.description : "",
-    })
+    create(
+      "textarea",
+      {
+        class: "form-control",
+        id: "certificateDescriptionInput",
+        placeholder: "Enter A Description",
+        rows: 5,
+      },
+      values != null ? values.description : ""
+    )
   );
 
   optionPage2.append(
@@ -5625,6 +5629,7 @@ function changeCertificateThemePreview(theme) {
       });
       $("#certificateDescriptionInput").off("input");
       $("#certificateDescriptionInput").on("input", function () {
+        console.log($(this).val());
         $("#certificate-desc").text($(this).val());
       });
     },
@@ -5647,6 +5652,15 @@ function availableCertificatePreview(certificate_id) {
     url: certificate_show_route + "/" + certificate_id,
     success: function (res) {
       $(container).html(res);
+      $("#certificateTitleInput").off("input");
+      $("#certificateTitleInput").on("input", function () {
+        $("#certificate-title").text($(this).val());
+      });
+      $("#certificateDescriptionInput").off("input");
+      $("#certificateDescriptionInput").on("input", function () {
+        console.log($(this).val());
+        $("#certificate-desc").text($(this).val());
+      });
     },
     error: function (err) {
       console.error(err);

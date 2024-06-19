@@ -28,6 +28,7 @@ export default defineConfig({
         "resources/css/dashboard/test-builder.css",
         "resources/css/dashboard/sweetalert2.min.css",
         "resources/css/dashboard/style.css",
+        "resources/css/dashboard/meetings.css",
         "resources/css/dashboard/notyf.min.css",
 
         "resources/csslibs/style.css",
@@ -50,6 +51,7 @@ export default defineConfig({
         "public/js/bootstrap.min.js",
         "public/js/video-player.js",
         "public/js/yt-player.js",
+        "public/js/meeting.js",
 
         "public/js/dashboard/bootstrap.js",
 
@@ -58,7 +60,8 @@ export default defineConfig({
         "public/js/slick.min.js",
         "public/js/jquery.sticky-sidebar.min.js",
         "public/js/app.js",
-        "public/js/custom.js",
+        // "resources/js/app.js",
+        // "public/js/custom.js",
       ],
       refresh: true,
     }),

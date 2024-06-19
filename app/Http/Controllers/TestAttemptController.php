@@ -236,7 +236,7 @@ class TestAttemptController extends Controller {
     TestAttempt::where('id', $attempt_id)->update(['is_done' => 1]);
     if ($test->has_certificate()) {
       if ($attempt->is_successful_result()) {
-        auth()->user()->certificates()->attach([$test->certificate_id]);
+        auth()->user()->certificates()->syncWithoutDetaching([$test->certificate_id]);
         return true;
       }
     }

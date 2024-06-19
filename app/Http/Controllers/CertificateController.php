@@ -69,9 +69,9 @@ class CertificateController extends Controller {
 
       $pdf->setPaper('A4', 'landscape');
 
-      // return $pdf->download();
-      // dd($certificate);
-      return $pdf->stream();
+      return response($pdf->stream())->withHeaders([
+        'Content-Type' => 'application/pdf',
+      ]);
     } else {
       return abort(404);
     }
@@ -104,12 +104,14 @@ class CertificateController extends Controller {
     $request->validate([
       "title" => "required|string",
       "price" => "nullable|integer|min:0",
+      "description" => "nullable",
       "status" => "required|integer|min:0|max:1",
       "theme" => "required|string|in:" . implode(",", Certificate::get_themes()),
     ]);
 
     $certificate->title = request("title");
     $certificate->price = request("price");
+    $certificate->description = request("description");
     $certificate->template = request("theme");
     $certificate->status = request("status");
     $res = $certificate->save();
