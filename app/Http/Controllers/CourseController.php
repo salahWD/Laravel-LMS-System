@@ -17,6 +17,29 @@ class CourseController extends Controller {
         $course->students()->syncWithoutDetaching([auth()->user()->id]);
         $request->session()->flash('course_enrolled', true);
       } else {
+        $params = [
+          "course" => $course,
+        ];
+        // $stripe = new \Stripe\StripeClient(config("services.stripe.secret"));
+
+        // $intent = $stripe->paymentIntents->create([
+        //   'currency' => config("cart.currency_name") ?? "usd",
+        //   'amount' => $course->price * 100,
+        //   'automatic_payment_methods' => ['enabled' => true],
+        //   /* =============== if unsigned people can buy stuff =============== */
+        //   'description' => auth()->user()->fullname() . " paid for a new course (" . $course->title .  ")",
+        //   'metadata' => [
+        //     'product_type' => 'course',
+        //     'fullname' => auth()->user()->fullname(),
+        //     'username' => auth()->user()->username,
+        //     'email' => auth()->user()->email,
+        //     'user_id' => auth()->user()->id,
+        //   ],
+        // ]);
+        // $params["intent"] = $intent->client_secret;
+        // $params["intentId"] = $intent->id;
+
+        return view("courses/course-checkout")->with($params);
         dd("payment methods are not ready yet");
       }
     }
@@ -80,6 +103,12 @@ class CourseController extends Controller {
     $items = $course->items_with_data;
     $is_enrolled = auth()->user()->is_enrolled_in($course->id);
 
+    $params = [
+      "course" => $course,
+      "is_enrolled" => $is_enrolled,
+      "items" => $items
+    ];
+
     if ($is_enrolled) {
       $watched_items = auth()->user()->watched_items($course->id)->get()->toArray();
 
@@ -115,12 +144,13 @@ class CourseController extends Controller {
         }
       }
     }
-    return view("course", compact("course", "items", "is_enrolled"));
+
+    return view("courses.course")->with($params);
   }
 
   public function show_all(Request $request) {
     $courses = Course::orderBy("created_at", "DESC")->paginate(15);
-    return view("courses", compact("courses"));
+    return view("courses.index", compact("courses"));
   }
 
   public function reorder_items(Request $request) {

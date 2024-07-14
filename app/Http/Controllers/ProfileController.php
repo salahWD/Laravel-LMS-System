@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Certificate;
+use App\Models\BookedAppointment;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,6 +33,51 @@ class ProfileController extends Controller {
     return view('profile.certificates', [
       'user' => auth()->user(),
       'certificates' => $certificates,
+    ]);
+  }
+
+  public function meetings(Request $request) {
+
+    $meetings = BookedAppointment::where("booker_id", auth()->user()->id)
+      // ->where("status", 1)
+      // ->where("appointment_date", ">", now())
+      ->with("appointment.author")
+      ->get();
+
+    $meetings->map(function ($item) {
+      if (auth()->user()->timezone != null) {
+        $item->appointment_date->timezone(auth()->user()->timezone);
+      }
+      return $item;
+    });
+
+    $edit_meetings_data = collect([
+      ...$meetings->map(function ($item) {
+        return [
+          "id" => $item->id,
+          "title" => $item->appointment->title,
+          "notes" => $item->notes,
+          "duration" => $item->appointment->duration,
+          "date" => $item->appointment_date,
+          "author" => $item->appointment->author->fullname(),
+        ];
+      })
+    ]);
+
+    [$active_meetings, $canceled_meetings] = $meetings->partition(function ($i) {
+      return $i->status == 1;
+    });
+
+    [$meetings, $past_meetings] = $active_meetings->partition(function ($i) {
+      return $i->appointment_date >= now();
+    });
+
+    return view('profile.meetings', [
+      'user' => auth()->user(),
+      'meetings' => $meetings,
+      'past_meetings' => $past_meetings,
+      'canceled_meetings' => $canceled_meetings,
+      'edit_meetings_data' => $edit_meetings_data,
     ]);
   }
 

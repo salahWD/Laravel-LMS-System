@@ -13,9 +13,8 @@ class UserController extends Controller {
   }
 
   public function create() {
-    $user = new User();
-    $permissions = $user->get_permissions();
-    return view('dashboard.user', compact("user", "permissions"));
+    $permissions = (new User)->get_permissions();
+    return view('dashboard.user', compact("permissions"));
   }
 
   public function store(Request $request) {
@@ -52,6 +51,13 @@ class UserController extends Controller {
 
   public function show(string $id) {
     //
+  }
+
+  public function show_meetings(User $user) {
+    $meetings = $user->appointments()->active()->get();
+    $author = $user;
+
+    return view("profile.offer-meetings", compact("meetings", "author"));
   }
 
   public function edit(User $user) {

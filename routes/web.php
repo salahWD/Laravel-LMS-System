@@ -20,8 +20,13 @@ use App\Http\Controllers\TestAttemptController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\MeetingController;
+use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\BookedAppointmentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WebhookController;
+use App\Http\Controllers\GoogleCalendarController;
+use App\Models\BookedAppointment;
+use Google\Service\AndroidPublisher\UserComment;
 
 // barryvdh/laravel-debugbar
 
@@ -52,9 +57,10 @@ Route::middleware('localizationRedirect')->group(function () {
       Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
       Route::get('/certificates', [ProfileController::class, 'certificates'])->name('profile.certificates');
       Route::get('/settings', [ProfileController::class, 'settings'])->name('profile.settings');
+      Route::get('/meetings', [ProfileController::class, 'meetings'])->name('profile.meetings');
       Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
       Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-      Route::get('/{meeting}', [MeetingController::class, 'show'])->name("meeting_show");
+      Route::get('/meetings/{bookedAppointment}', [BookedAppointmentController::class, 'show'])->name("booked_appointment_show");
     });
     Route::get('/certificates', [CertificateController::class, 'index'])->name('certificates');
     Route::get('/certificate/{certificate}', [CertificateController::class, 'download'])->name('certificate_download');
@@ -63,15 +69,20 @@ Route::middleware('localizationRedirect')->group(function () {
     Route::get('/courses/{course}/enroll', [CourseController::class, 'enroll'])->name('course_enroll');
     Route::get('/lectures/{lecture}', [LectureController::class, 'show'])->name('lecture_show');
     Route::get('/tests/{test}', [TestController::class, 'show'])->name('test_show');
+    Route::get('/appointments/{appointment:url}', [AppointmentController::class, 'show'])->name("appointment_booking");
+    Route::POST('/appointments/{bookedAppointment}', [BookedAppointmentController::class, 'update'])->name("booked.appointmet.notes");
+    Route::get('/{user:username}/meetings', [UserController::class, 'show_meetings'])->name("user_appointments");
   });
 
   Route::prefix('/dashboard')->middleware(['auth', 'admin'])->group(function () {
     Route::view('/', 'dashboard')->name('dashboard');
-    Route::get('/users', [Dashboard::class, 'users'])->name('users_manage');
-    Route::get('/users/create', [UserController::class, 'create'])->name('user_create');
-    Route::POST('/users/create', [UserController::class, 'store']);
-    Route::get('/users/{user}', [UserController::class, 'edit'])->name('user_edit');
-    Route::POST('/users/{user}', [UserController::class, 'update']);
+    Route::prefix('/users')->group(function () {
+      Route::get('/', [Dashboard::class, 'users'])->name('users_manage');
+      Route::get('/create', [UserController::class, 'create'])->name('user_create');
+      Route::POST('/create', [UserController::class, 'store']);
+      Route::get('/{user}', [UserController::class, 'edit'])->name('user_edit');
+      Route::POST('/{user}', [UserController::class, 'update']);
+    });
     Route::get('/articles', [Dashboard::class, 'articles'])->name('articles_manage');
     Route::get('/articles/create', [ArticleController::class, 'create'])->name('article_create');
     Route::POST('/articles/create', [ArticleController::class, 'store']);
@@ -134,13 +145,18 @@ Route::middleware('localizationRedirect')->group(function () {
       Route::POST('/{order}', [OrderController::class, 'update']);
       Route::get('/{order}/refund', [OrderController::class, 'destroy'])->name("order_refund");
     });
-    Route::prefix('/meetings')->group(function () {
-      Route::get('/', [MeetingController::class, 'index'])->name("meetings_manage");
-      Route::get('/create', [MeetingController::class, 'create'])->name("meeting_create");
-      Route::POST('/create', [MeetingController::class, 'store']);
-      Route::get('/{meeting}', [MeetingController::class, 'edit'])->name("meeting_edit");
-      Route::POST('/{meeting}', [MeetingController::class, 'update']);
-      Route::delete('/{meeting}', [MeetingController::class, 'destroy'])->name("meeting_delete");
+    Route::prefix('/appointments')->group(function () {
+      Route::get('/', [AppointmentController::class, 'index'])->name("appointments_manage");
+      Route::get('/create', [AppointmentController::class, 'create'])->name("appointment_create");
+      Route::POST('/create', [AppointmentController::class, 'store']);
+      Route::get('/export', [BookedAppointmentController::class, 'export'])->name("booked_appointment_export");
+      Route::get('/{appointment}', [AppointmentController::class, 'edit'])->name("appointment_edit");
+      Route::POST('/{appointment}', [AppointmentController::class, 'update']);
+      Route::POST('/{appointment}/status', [AppointmentController::class, 'status']);
+      Route::delete('/{appointment}', [AppointmentController::class, 'destroy'])->name("appointment_delete");
+    });
+    Route::prefix('/bookedAppointments')->group(function () {
+      Route::delete('/{bookedAppointment}', [BookedAppointmentController::class, 'destroy'])->name("booked_appointment_delete");
     });
     // Route::get('/messages/{message}/delete', [MessageController::class, 'destroy'])->name("message_delete");
     Route::get('/settings', [Dashboard::class, 'settings'])->name("dashboard_settings");
@@ -153,13 +169,23 @@ Route::middleware('localizationRedirect')->group(function () {
 Route::prefix('/app-request')->group(function () {
 
   Route::POST('/cart/{product}', [ProductController::class, 'add_to_cart'])->name("add_product_cart");
-  Route::POST('/webhook', [CartController::class, 'webhook'])->name('webhook');
-  Route::POST('/lectures/{lecture}', [LectureController::class, 'ajax_done'])->middleware("auth")->name("lecture_done_ajax");
+  Route::POST('/webhook', [WebhookController::class, 'webhook'])->name('webhook');
 
   Route::POST('/test/{test}/answering', [TestAttemptController::class, 'answering'])->name("attempt_answering");
   Route::POST('/test/{test}/form', [TestAttemptController::class, 'formEntry'])->name("attempt_form_entry");
   Route::get('/question/{question}', [QuestionController::class, 'show'])->name('show_question');
   Route::POST('/test/attempts', [TestAttemptController::class, 'store'])->name("attempt_create");
+
+  // google calendar reoutes
+  // Route::get('/calendar-auth', [GoogleCalendarController::class, 'authenticate'])->name('google.auth');
+  Route::get('/calendar-callback', [GoogleCalendarController::class, 'handleGoogleCallback'])->name('google.callback');
+  // Route::get('/calendar-auth', [GoogleCalendarController::class, 'redirectToGoogle']);
+
+  Route::middleware('auth')->group(function () {
+    Route::POST('/lectures/{lecture}', [LectureController::class, 'ajax_done'])->name("lecture_done_ajax");
+    Route::POST('/appointments/{appointment:url}', [BookedAppointmentController::class, 'store'])->name("appointment_booking_store");
+    Route::get('/appointments/{appointment:url}/unavailable', [BookedAppointmentController::class, 'list_booked']);
+  });
 });
 
 Route::prefix('/app-request')->middleware(['auth', 'admin'])->group(function () {

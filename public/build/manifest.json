@@ -4,6 +4,16 @@
     "src": "public/js/app.js",
     "isEntry": true
   },
+  "public/js/appointment-dashboard.js": {
+    "file": "assets/appointment-dashboard-HsUDz_lx.js",
+    "src": "public/js/appointment-dashboard.js",
+    "isEntry": true
+  },
+  "public/js/booking-appointment.js": {
+    "file": "assets/booking-appointment-BHwAqc5k.js",
+    "src": "public/js/booking-appointment.js",
+    "isEntry": true
+  },
   "public/js/bootstrap.min.js": {
     "file": "assets/bootstrap.min-BiQmfBsm.js",
     "src": "public/js/bootstrap.min.js",
@@ -55,8 +65,13 @@
     "isEntry": true
   },
   "resources/css/app.css": {
-    "file": "assets/app-Bgf6JM2w.css",
+    "file": "assets/app-Bc-3_uOO.css",
     "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/css/booking-appointment.css": {
+    "file": "assets/booking-appointment-B_ai4_5g.css",
+    "src": "resources/css/booking-appointment.css",
     "isEntry": true
   },
   "resources/css/checkout.css": {
@@ -70,13 +85,18 @@
     "isEntry": true
   },
   "resources/css/courses.css": {
-    "file": "assets/courses-BZYbyTmS.css",
+    "file": "assets/courses-D0_p3llM.css",
     "src": "resources/css/courses.css",
     "isEntry": true
   },
   "resources/css/custom.css": {
     "file": "assets/custom-JJDjZOTw.css",
     "src": "resources/css/custom.css",
+    "isEntry": true
+  },
+  "resources/css/dashboard/appointment-dashboard.css": {
+    "file": "assets/appointment-dashboard-CXf-_kh9.css",
+    "src": "resources/css/dashboard/appointment-dashboard.css",
     "isEntry": true
   },
   "resources/css/dashboard/notyf.min.css": {
@@ -120,13 +140,18 @@
     "isEntry": true
   },
   "resources/css/home.css": {
-    "file": "assets/home-SOw6pwp2.css",
+    "file": "assets/home-3_VDAugm.css",
     "src": "resources/css/home.css",
     "isEntry": true
   },
   "resources/css/login.css": {
     "file": "assets/login-Dlli9qOU.css",
     "src": "resources/css/login.css",
+    "isEntry": true
+  },
+  "resources/css/meetings.css": {
+    "file": "assets/meetings-C2IYOPT8.css",
+    "src": "resources/css/meetings.css",
     "isEntry": true
   },
   "resources/css/product.css": {
@@ -195,7 +220,7 @@
     "isEntry": true
   },
   "resources/csslibs/style.css": {
-    "file": "assets/style-Cj--MRsU.css",
+    "file": "assets/style-C6raWHEo.css",
     "src": "resources/csslibs/style.css",
     "isEntry": true
   },
@@ -245,7 +270,7 @@
   },
   "resources/fonts/fa-regular-400.eot": {
     "file": "assets/fa-regular-400-CdvVwXPA.eot",
-    "src": "resources/fonts/fa-regular-400d41d.eot"
+    "src": "resources/fonts/fa-regular-400.eot"
   },
   "resources/fonts/fa-regular-400.svg": {
     "file": "assets/fa-regular-400-CjYw4d2M.svg",
@@ -265,7 +290,7 @@
   },
   "resources/fonts/fa-regular-400d41d.eot": {
     "file": "assets/fa-regular-400-CdvVwXPA.eot",
-    "src": "resources/fonts/fa-regular-400d41d.eot"
+    "src": "resources/fonts/fa-regular-400.eot"
   },
   "resources/fonts/fa-solid-900.eot": {
     "file": "assets/fa-solid-900-CcKsHZq-.eot",

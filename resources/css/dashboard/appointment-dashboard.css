@@ -5,12 +5,12 @@ body > main.content {
   overflow: unset;
 }
 /* index page */
-.meeting.bordered-card {
+.appointment.bordered-card {
   transition: transform 0.3s;
   border-top: 5px solid var(--br-clr, #ff7675);
 }
 
-.meeting.bordered-card:hover {
+.appointment.bordered-card:hover {
   transform: translateY(-7px);
 }
 
@@ -117,4 +117,14 @@ select.form-control {
 .btn-link:focus {
   outline: none;
   box-shadow: none;
+}
+
+.subpage-nav .nav-link:not(.active) {
+  background: #e1e1e1;
+}
+.subpage-nav .nav-link {
+  min-width: 120px;
+  text-align: center;
+  padding: 10px 24px;
+  font-size: 18px;
 }

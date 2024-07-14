@@ -12,6 +12,7 @@ use App\Models\Report;
 use App\Models\Comment;
 use App\Models\Course;
 use App\Models\Article;
+use App\Models\BookedAppointment;
 // use Laravel\Cashier\Billable;
 
 class User extends Authenticatable {
@@ -31,18 +32,20 @@ class User extends Authenticatable {
   protected $fillable = [
     'username',
     'email',
+    'timezone',
     'password',
     'permission',
   ];
 
-  public function __construct() {
-    $this->username = null;
-    $this->email = null;
-    $this->image = null;
-    $this->first_name = null;
-    $this->last_name = null;
-    $this->permission = 1;
-  }
+  // public function __construct() {
+  // parent::__construct($any);
+  // $this->username = null;
+  // $this->email = null;
+  // $this->image = null;
+  // $this->first_name = null;
+  // $this->last_name = null;
+  // $this->permission = 1;
+  // }
 
   public function reports() {
     return $this->hasManyThrough(Report::class, Comment::class);
@@ -70,6 +73,14 @@ class User extends Authenticatable {
 
   public function certificates() {
     return $this->belongsToMany(Certificate::class, "certificate_user", "user_id", "certificate_id");
+  }
+
+  public function appointments() {
+    return $this->hasMany(Appointment::class);
+  }
+
+  public function meetings() {
+    return $this->hasMany(BookedAppointment::class, "booker_id");
   }
 
   public function studiable_courses() {
@@ -217,5 +228,9 @@ class User extends Authenticatable {
 
   public function can_enroll_course() {
     return $this->permission > 0;
+  }
+
+  public function scopeNotAdmin($query) {
+    return $query->where('permission', '!=', 3);
   }
 }

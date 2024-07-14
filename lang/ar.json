@@ -17,8 +17,8 @@
   "tests": "الإختبارات",
   "Messages": "الرسائل",
   "messages": "الرسائل",
-  "meeting": "لقاء",
-  "meetings": "اللقائات",
+  "appointment": "موعد",
+  "appointments": "مواعيد",
   "events": "الفعاليات",
 
   "Users": "المستخدمين",
@@ -239,7 +239,7 @@
 
   "there is no :items to show": "لا يوجد :items للعرض",
   "warning": "تحذير",
-  "my meetings": "لقائاتي",
-  "your meetings": "لقائاتك",
+  "my appointments": "مواعيدي",
+  "your appointments": "مواعيدك",
   "": ""
 }

@@ -5,18 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Cart;
 use App\Models\Order;
-use Illuminate\Support\Facades\Log;
 
 class CartController extends Controller {
 
   public function __construct() {
-    $this->middleware('auth')->except("webhook");// only loged in users can use this controller
+    $this->middleware('auth'); // only loged in users can use this controller
   }
 
   public function show() {
 
     // if (auth()->check()) {
-      Cart::restore(auth()->user()->id);
+    Cart::restore(auth()->user()->id);
     // }
 
     if (Cart::total() > 0) {
@@ -29,19 +28,23 @@ class CartController extends Controller {
         'automatic_payment_methods' => ['enabled' => true],
         /* =============== if unsigned people can buy stuff =============== */
         // 'metadata' => [
+        //   'product_type' => 'products',
         //   'email' => auth()->check() ? auth()->user()->email : "no email",
         //   'user_id' => auth()->check() ? auth()->user()->id : "not signed in",
         // ],
         'description' => auth()->user()->fullname() . " Ordered " . Cart::content()->count() .  " Product",
         'metadata' => [
+          'product_type' => 'products',
+          'fullname' => auth()->user()->fullname(),
+          'username' => auth()->user()->username,
           'email' => auth()->user()->email,
           'user_id' => auth()->user()->id,
         ],
       ]);
 
       /* ========= Note ============
-        if not signed in this will make sure to save the orders in a new cart and
-        the id of the cart will be known, so we can retrieve it later when needed
+        if user is not signed in this will make sure to save the orders in a new cart and
+        the id of the cart will be known as the intent_id, so we can retrieve it later when needed
         ============================ */
 
       // if (!auth()->check()) {
@@ -60,84 +63,6 @@ class CartController extends Controller {
       ]);
     }
     return view("shop.error");
-  }
-
-  public function webhook() {
-
-    $input = file_get_contents('php://input');
-    $body = json_decode($input);
-    $event = null;
-
-    try {
-      $event = \Stripe\Webhook::constructEvent(
-        $input,
-        $_SERVER['HTTP_STRIPE_SIGNATURE'],
-        config("services.stripe.webhook_secret")
-      );
-    } catch (Exception $e) {
-      http_response_code(403);
-      echo json_encode(['error' => $e->getMessage()]);
-      exit;
-    }
-
-    if ($event->type == 'payment_intent.succeeded') {
-
-      $products_ids = [];
-
-      $address = $event->data->object->shipping->address;
-
-      Cart::restore($event->data->object?->metadata?->user_id);
-
-      if (Cart::content()) {
-        foreach (Cart::content() as $item) {
-          $products_ids[$item->id] = ["quantity" => $item->qty];
-        }
-      }
-
-      $order = Order::updateOrCreate(
-        [
-          "user_id" => $event->data->object?->metadata?->user_id,
-          "intent_id" => $event->data->object->id,
-        ],
-        [
-          "total" => Cart::total() * 100,
-          "client_name" => $event->data->object->shipping?->name,
-          "stage" => "1",
-          "address" => format_address($address),
-        ]
-      );
-      // $order = Order::create([
-      //   "user_id" => $event->data->object?->metadata?->user_id,
-      //   "total" => Cart::total() * 100,
-      //   "intent_id" => $event->data->object->id,
-      //   "client_name" => $event->data->object->shipping?->name,
-      //   "stage" => "1",
-      //   "address" => format_address($address),
-      // ]);
-
-      $order->products()->attach($products_ids);
-
-      if ($order->user_id != null) {
-        Cart::deleteStoredCart($order?->user_id);
-      } else {
-        Cart::deleteStoredCart($event->data->object->id);
-      }
-
-      Cart::destroy();
-
-      return ['status' => 'success'];
-
-    } else if ($event->type == 'payment_intent.payment_failed') {
-
-      if ($event->data->object?->metadata?->user_id != null) {
-        Cart::deleteStoredCart($event->data->object?->metadata?->user_id);
-      } else {
-        Cart::deleteStoredCart($event->data->object->id);
-      }
-
-      abort(404);
-
-    }
   }
 
   public function success(Request $request) {
@@ -224,6 +149,7 @@ class CartController extends Controller {
   //     //   'receipt_email' => $user->email ?? "salahb170@gmail.com",
   //     //   'description' => $description ?? "new product perchuse",
   //     //   'metadata' => [
+  //     //   'product_type' => 'products',
   //     //     "email" => $user->email ?? "no email",
   //     //     "name" => $address->name,
   //     //     ...$products

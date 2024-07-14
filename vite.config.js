@@ -28,7 +28,7 @@ export default defineConfig({
         "resources/css/dashboard/test-builder.css",
         "resources/css/dashboard/sweetalert2.min.css",
         "resources/css/dashboard/style.css",
-        "resources/css/dashboard/meetings.css",
+        "resources/css/dashboard/appointment-dashboard.css",
         "resources/css/dashboard/notyf.min.css",
 
         "resources/csslibs/style.css",
@@ -41,6 +41,8 @@ export default defineConfig({
         "resources/css/product.css",
         "resources/css/single-product.css",
         "resources/css/checkout.css",
+        "resources/css/booking-appointment.css",
+        "resources/css/meetings.css",
 
         "public/js/taking-test.js",
         "public/js/slick.min.js",
@@ -51,7 +53,8 @@ export default defineConfig({
         "public/js/bootstrap.min.js",
         "public/js/video-player.js",
         "public/js/yt-player.js",
-        "public/js/meeting.js",
+        "public/js/appointment-dashboard.js",
+        "public/js/booking-appointment.js",
 
         "public/js/dashboard/bootstrap.js",
 

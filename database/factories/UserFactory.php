@@ -21,14 +21,14 @@ class UserFactory extends Factory {
    * @return array<string, mixed>
    */
   public function definition(): array {
-    $images = ["user-1.jpg", "user-2.jpg", "user-3.jpg"];
+    $images = collect(["user-1.jpg", "user-2.jpg", "user-3.jpg"]);
     return [
       'username' => fake()->userName(),
       'password' => Hash::make('123'),
       'first_name' => fake()->name(),
       'last_name' => fake()->name(),
       'email' => fake()->unique()->safeEmail(),
-      'image' => $images[array_rand($images)],
+      'image' => $images->random(),
       'permission' => 1,
       // 'email_verified_at' => now(),
       'remember_token' => Str::random(10),

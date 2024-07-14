@@ -1,11 +1,11 @@
 @extends('dashboard.layout')
 
 @section('meta')
-  @php $page_title = config("app.name") . " | " . __('meetings') @endphp
+  @php $page_title = config("app.name") . " | " . __('appointments') @endphp
 @endsection
 
 @section('styles')
-  @vite(['resources/css/dashboard/style.css', 'resources/css/dashboard/meetings.css'])
+  @vite(['resources/css/dashboard/style.css', 'resources/css/dashboard/appointment-dashboard.css'])
 @endsection
 
 @section('content')
@@ -19,7 +19,7 @@
               <div class="bg-white py-3 px-3 rounded shadow">
                 <div class="d-flex flex-wrap flex-column gap-4 align-items-center mb-4">
                   <h1 class="h3 fw-bold d-inline mb-0">
-                    @if (isset($meeting))
+                    @if (isset($appointment))
                       {{ __('Edit booking type') }}
                     @else
                       {{ __('Create new booking type') }}
@@ -40,7 +40,7 @@
                     <label for="title" class="form-label fw-bold">Title:</label>
                   </h2>
                   <input type="text" name="title" id="title" class="form-control"
-                    value="{{ null !== old('title') ? old('title') : (isset($meeting) ? $meeting->title : '') }}"
+                    value="{{ null !== old('title') ? old('title') : (isset($appointment) ? $appointment->title : '') }}"
                     required>
                 </div>
                 <div class="mb-2 pb-3">
@@ -48,27 +48,39 @@
                     <label for="url_slug" class="form-label fw-bold">URL:</label>
                   </h2>
                   <div class="input-group input-group-responsive">
-                    <span class="input-group-text">{{ config('app.url') }}/meetings/</span>
+                    <span class="input-group-text">{{ config('app.url') }}/appointments/</span>
                     <input type="text" id="url_slug" name="url_slug" class="form-control"
-                      value="{{ null !== old('url_slug') ? old('url_slug') : (isset($meeting) ? $meeting->url : '') }}"required>
+                      value="{{ null !== old('url_slug') ? old('url_slug') : (isset($appointment) ? $appointment->url : '') }}"required>
                   </div>
                 </div>
                 <div class="mb-2 pb-3">
                   <div class="mb-0 h6">
                     <label for="description" class="fw-bold form-label">Description:</label>
                   </div>
-                  <textarea class="form-control" rows="3" name="description">{{ null !== old('description') ? old('description') : (isset($meeting) ? $meeting->description : '') }}</textarea>
+                  <textarea class="form-control" rows="3" name="description">{{ null !== old('description') ? old('description') : (isset($appointment) ? $appointment->description : '') }}</textarea>
                 </div>
                 <div class="d-flex flex-wrap">
-                  <div class="mb-4 pb-2 col-12 col-md-6">
-                    <h2 class="mb-0 h6">
-                      <label for="duration_minutes" class="form-label fw-bold">Duration:</label>
-                    </h2>
-                    <div class="d-block">
-                      <input type="number" id="duration_minutes" name="duration_minutes"
-                        class="form-control d-inline me-2" min="1" style="max-width: 120px;"
-                        value="{{ null !== old('duration_minutes') ? old('duration_minutes') : (isset($meeting) ? $meeting->duration : '') }}">
-                      <div class="d-inline">minutes</div>
+                  <div class="row w-100">
+                    <div class="mb-4 pb-2 col-12 col-md-6">
+                      <h2 class="mb-0 h6">
+                        <label for="duration_minutes" class="form-label fw-bold">Duration:</label>
+                      </h2>
+                      <div class="d-block">
+                        <input type="number" id="duration_minutes" name="duration_minutes"
+                          class="form-control d-inline me-2" min="1" style="max-width: 120px;"
+                          value="{{ null !== old('duration_minutes') ? old('duration_minutes') : (isset($appointment) ? $appointment->duration : '') }}">
+                        <div class="d-inline">minutes</div>
+                      </div>
+                    </div>
+                    <div class="mb-4 pb-2 col-12 col-md-6">
+                      <h2 class="mb-0 h6">
+                        <label for="price" class="form-label fw-bold">Price:</label>
+                      </h2>
+                      <div class="input-group input-group-responsive" style="width: fit-content">
+                        <span class="input-group-text">{{ config('cart.currency') }}</span>
+                        <input type="number" id="price" name="price" class="form-control"
+                          value="{{ null !== old('price') ? old('price') : (isset($appointment) ? $appointment->price : '') }}">
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -107,6 +119,17 @@
                     </div>
                   </div>
                 </div> --}}
+                <div class="mb-4 pb-3">
+                  <label class="form-check-label" for="timezone">Your Timezone</label>
+                  <select class="form-select" name="timezone" id="timezone"
+                    data-hasTimezone={{ isset($appointment) && $appointment->timezone != null ? 'true' : 'false' }}>
+                    @foreach ($timezonelist as $timezone)
+                      <option
+                        value="{{ $timezone }}"{{ $timezone == old('timezone') ? ' selected' : (isset($appointment) && $appointment->timezone == $timezone ? ' selected' : '') }}>
+                        {{ $timezone }}</option>
+                    @endforeach
+                  </select>
+                </div>
                 <div class="mb-4 pb-3">
                   <h3 class="mb-3 h6 fw-normal">Define your weekly availability below:</h3>
                   <div class="card hide-last-border">
@@ -177,9 +200,15 @@
             <div class="col-md-12 col-lg-9">
               <div class="px-4 bg-white rounded shadow mt-2">
                 <div class="flex flex-wrap py-2 py-sm-3 d-flex align-items-center justify-content-end border-top">
-                  <a class="btn btn-outline-gray-800 my-1 my-sm-2 me-3" href="{{ route('meetings_manage') }}">Cancel</a>
-                  <button class="btn btn-primary my-1 my-sm-2" type="submit">Create booking
-                    type</button>
+                  <a class="btn btn-outline-gray-800 my-1 my-sm-2 me-3"
+                    href="{{ route('appointments_manage') }}">Cancel</a>
+                  <button class="btn btn-primary my-1 my-sm-2" type="submit">
+                    @if (isset($appointment))
+                      {{ __('Edit booking type') }}
+                    @else
+                      {{ __('Create booking type') }}
+                    @endif
+                  </button>
                 </div>
               </div>
             </div>
@@ -194,20 +223,22 @@
 @endsection
 
 @section('scripts')
-  @vite('public/js/meeting.js')
+  @vite('public/js/appointment-dashboard.js')
   <script type="module">
     import {
       addAvailableTime,
       extractTimeFromTimestamp,
       createExcludeDate
-    } from "{{ Vite::asset('public/js/meeting.js') }}"
+    } from "{{ Vite::asset('public/js/appointment-dashboard.js') }}"
+
     @if (isset($available) && $available != null)
+
       let data = JSON.parse(`{!! json_encode($available) !!}`);
       $(".day-element").each(function() {
         let stamps = data.filter((stamp) => stamp.key == $(this).data("day"));
         if (stamps.length > 0) {
           stamps.forEach((stamp) => {
-            addAvailableTime($(this), extractTimeFromTimestamp(stamp.value));
+            addAvailableTime($(this), extractTimeFromTimestamp(stamp.from_date, stamp.to_date));
           })
         } else {
           addAvailableTime($(this));
@@ -218,14 +249,22 @@
         addAvailableTime($(this));
       });
     @endif
+
     @if (isset($excluded) && $excluded != null)
       let excluded = JSON.parse(`{!! json_encode($excluded) !!}`);
       if (excluded.length > 0) {
-        console.log(excluded);
         excluded.forEach((date) => {
-          createExcludeDate(date.value);
+          createExcludeDate(date);
         })
       }
     @endif
+
+    if ($("#timezone").attr("data-hasTimezone") != "true") {
+      $("#timezone option").each(function() {
+        if ($(this).attr("value") == Intl.DateTimeFormat().resolvedOptions().timeZone) {
+          $(this).attr("selected", true);
+        }
+      })
+    }
   </script>
 @endsection

@@ -28,6 +28,9 @@ return new class extends Migration {
       $table->foreign('certificate_id')->references('id')->on('certificates')->nullOnDelete();
       $table->timestamps();
     });
+    Schema::table("results", function ($table) {
+      $table->foreign("test_id")->references("id")->on("tests")->onDelete("cascade")->onUpdate("cascade");
+    });
   }
 
   public function down() {

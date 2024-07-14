@@ -8,7 +8,6 @@
 @endsection
 
 @section('content')
-
   <div class="container">
     <div class="py-4">
       <div class="dropdown">
@@ -21,7 +20,7 @@
           {{ __('New Item') }}
         </button>
         <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1">
-          <a class="dropdown-item d-flex align-items-center" href="{{ route("user_create") }}">
+          <a class="dropdown-item d-flex align-items-center" href="{{ route('user_create') }}">
             <svg class="dropdown-icon text-gray-400 me-2" fill="currentColor" viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg">
               <path
@@ -30,7 +29,7 @@
             </svg>
             {{ __('Add User') }}
           </a>
-          <a class="dropdown-item d-flex align-items-center" href="{{ route("article_create") }}">
+          <a class="dropdown-item d-flex align-items-center" href="{{ route('article_create') }}">
             <svg class="dropdown-icon text-gray-400 me-2" fill="currentColor" viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg">
               <path
@@ -377,7 +376,7 @@
                         </h4>
                         <div class="d-flex align-items-center">
                           <div class="bg-warning dot rounded-circle me-1"></div>
-                          <small>{{ __('In a meeting') }}</small>
+                          <small>{{ __('In a appointment') }}</small>
                         </div>
                       </div>
                       <div class="col text-end">
@@ -696,8 +695,10 @@
           <div class="card border-0 shadow">
             <div class="card-body">
               <h2 class="fs-5 fw-bold mb-1">{{ __('Acquisition') }}</h2>
-              <p>{{ __('Tells you where your visitors originated from, such as search engines, social networks or website
-                referrals.') }}</p>
+              <p>
+                {{ __('Tells you where your visitors originated from, such as search engines, social networks or website
+                                referrals.') }}
+              </p>
               <div class="d-block">
                 <div class="d-flex align-items-center me-5">
                   <div class="icon-shape icon-sm icon-shape-danger rounded me-3">
@@ -756,18 +757,16 @@
       </div>
     </div>
   </div>
-
 @endsection
 
 @section('jslibs')
-  <script src="{{ url("libs/dashboard/on-screen.umd.min.js") }}"></script>
-  <script src="{{ url("libs/dashboard/nouislider.min.js") }}"></script>
-  <script src="{{ url("libs/dashboard/smooth-scroll.polyfills.min.js") }}"></script>
-  <script src="{{ url("libs/dashboard/datepicker.min.js") }}"></script>
-  <script src="{{ url("libs/dashboard/sweetalert2.all.min.js") }}"></script>
-  <script src="{{ url("libs/dashboard/notyf.min.js") }}"></script>
-  <script src="{{ url("libs/dashboard/simplebar.min.js") }}"></script>
-  <script src="{{ url("libs/dashboard/chartist.min.js") }}"></script>
-  <script src="{{ url("libs/dashboard/chartist-plugin-tooltip.min.js") }}"></script>
+  <script src="{{ url('libs/dashboard/on-screen.umd.min.js') }}"></script>
+  <script src="{{ url('libs/dashboard/nouislider.min.js') }}"></script>
+  <script src="{{ url('libs/dashboard/smooth-scroll.polyfills.min.js') }}"></script>
+  <script src="{{ url('libs/dashboard/datepicker.min.js') }}"></script>
+  <script src="{{ url('libs/dashboard/sweetalert2.all.min.js') }}"></script>
+  <script src="{{ url('libs/dashboard/notyf.min.js') }}"></script>
+  <script src="{{ url('libs/dashboard/simplebar.min.js') }}"></script>
+  <script src="{{ url('libs/dashboard/chartist.min.js') }}"></script>
+  <script src="{{ url('libs/dashboard/chartist-plugin-tooltip.min.js') }}"></script>
 @endsection
-

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MeetingRequest extends FormRequest {
+class AppointmentRequest extends FormRequest {
   /**
    * Determine if the user is authorized to make this request.
    */
@@ -24,8 +24,10 @@ class MeetingRequest extends FormRequest {
       "title" => ["required", "string"],
       "url_slug" => ["required", "string"],
       "description" => ["nullable", "string"],
+      "price" => ["nullable", "numeric", "min:0"],
       "duration_minutes" => ["required", "numeric", "min:5", "max:1440"],
       "available_days" => ["required", "array", "min:7"],
+      "timezone" => ["required", "timezone:all"],
       "available_days.*.status" => ["sometimes", "in:on,of,off"],
       "available_days.*.times" => ["nullable", "array", "min:1"],
       "available_days.*.times.*" => ["array", "min:6"],

@@ -42,11 +42,15 @@ export function createExcludeDate(date = null) {
   let count = dayEl.find(".excluded-date").length;
   let timeRangeParams = { id: "", name: name, count: count };
   let day;
+
   if (date != null) {
-    let times = date.split("|");
-    day = times[0];
-    timeRangeParams.time = extractTimeFromTimestamp(times[1]);
+    day = date.day;
+    timeRangeParams.time = extractTimeFromTimestamp(
+      date.from_date,
+      date.to_date
+    );
   }
+
   let el = `
   <div class="p-3 border-bottom excluded-date" id="${customId}">
     <div class="d-flex align-items-center flex-wrap col">
@@ -85,7 +89,7 @@ function TimeRange(args) {
     name: null,
     count: 0,
     time: {
-      from_hour: "01",
+      from_hour: "09",
       from_minute: "00",
       from_format: "am",
       to_hour: "06",
@@ -173,17 +177,26 @@ export function addAvailableTime(dayItem, data = null) {
     );
 }
 
-export function extractTimeFromTimestamp(timestamp) {
-  let stamps = timestamp.split("-");
-  let fromTime = stamps[0].split(":");
-  let toTime = stamps[1].split(":");
+export function extractTimeFromTimestamp(from, to) {
+  from = from.split("-")[0];
+  to = to.split("-")[0];
+  let fromTime = from;
+  if (from.search("T") > -1) {
+    fromTime = from.split("T")[1]; // 3T06:00:00
+  }
+  let fromFormat = fromTime.split(":");
+  let toTime = to;
+  if (to.search("T") > -1) {
+    toTime = to.split("T")[1]; // 3T06:00:00
+  }
+  let toFormat = toTime.split(":");
   return {
-    fromHour: fromTime[0],
-    fromMinute: fromTime[1],
-    fromFormat: fromTime[2],
-    toHour: toTime[0],
-    toMinute: toTime[1],
-    toFormat: toTime[2],
+    fromHour: fromFormat[0],
+    fromMinute: fromFormat[1],
+    fromFormat: fromFormat[0] > 11 ? "pm" : "am",
+    toHour: toFormat[0],
+    toMinute: toFormat[1],
+    toFormat: toFormat[0] > 11 ? "pm" : "am",
   };
 }
 

@@ -575,6 +575,10 @@ body.down .header-classic .header-bottom.clone {
 }
 .header-right .account {
   max-height: 41px;
+  color: #004878;
+}
+.header-right .account:hover {
+  color: #203656;
 }
 .header-right .account img {
   max-height: 100%;
@@ -584,6 +588,8 @@ body.down .header-classic .header-bottom.clone {
 }
 .header-right .account .fullname {
   border-right: 1px solid #eee;
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
 }
 .ar .header-right .account .fullname {
   border-right: unset;
