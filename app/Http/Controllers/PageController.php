@@ -18,9 +18,9 @@ class PageController extends Controller {
   }
 
   public function articles() {
-    $categories = Category::notProduct()->ordered()->translatedIn(app()->getLocale())->limit(10)->get();
+    $popular_categories = Category::notProduct()->mostUsed()->translatedIn(app()->getLocale())->limit(6)->get();
     $articles = Article::orderBy("created_at", "DESC")->where("status", 2)->translatedIn(app()->getLocale())->with("user", "category")->paginate(10);
-    return view("articles", compact("articles", "categories"));
+    return view("articles", compact("articles", "popular_categories"));
   }
 
   public function contactus(Request $request) {

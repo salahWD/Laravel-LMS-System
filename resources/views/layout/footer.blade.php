@@ -5,7 +5,9 @@
       <div class="row d-flex align-items-center gy-4">
         <!-- copyright text -->
         <div class="col-md-4">
-          <span class="copyright">{{ __('©2024 Walid Isa. Developed by .') }} <a href="https://github.com/salahwd">Salah</a></span>
+          <span class="copyright">&copy;{{ date('Y') }} {{ __('Walid Isa') }}. <a class="text-capitalize"
+              href="https://github.com/salahwd">{{ __('developed by') }}
+              Salah</a></span>
         </div>
 
         <!-- social icons -->
@@ -22,7 +24,8 @@
 
         <!-- go to top button -->
         <div class="col-md-4">
-          <a href="#" id="return-to-top" class="float-md-end"><i class="icon-arrow-up"></i>{{ __('Back to Top') }}</a>
+          <a href="#" id="return-to-top" class="float-md-end"><i
+              class="icon-arrow-up"></i>{{ __('Back to Top') }}</a>
         </div>
       </div>
     </div>

@@ -8,7 +8,6 @@
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
 
-  <!-- STYLES -->
   @vite(['resources/css/home.css', 'resources/css/booking-appointment.css', 'resources/css/fullcalendar-main.css'])
 @endsection
 

@@ -233,7 +233,7 @@
           role="list" id="submenu-products">
           <ul class="flex-column nav">
             <li class="nav-item {{ request()->segment(4) == 'categories' ? 'active' : '' }}">
-              <a href="{{ route('product_category_create') }}" class="nav-link">
+              <a href="{{ route('product_category') }}" class="nav-link">
                 <span class="sidebar-text">{{ __('Categories') }}</span>
               </a>
             </li>

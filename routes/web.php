@@ -135,8 +135,9 @@ Route::middleware('localizationRedirect')->group(function () {
       Route::get('/{product}/edit', [ProductController::class, 'edit'])->name("product_edit");
       Route::POST('/{product}/edit', [ProductController::class, 'update']);
       Route::get('/{product}/delete', [ProductController::class, 'destroy'])->name("product_delete");
-      Route::get('/categories', [CategoryController::class, 'collection_create'])->name("product_category_create");
-      Route::POST('/categories', [CategoryController::class, 'store']);
+      Route::get('/categories', [CategoryController::class, 'collection_index'])->name("product_category");
+      Route::get('/categories/create', [CategoryController::class, 'collection_create'])->name("product_category_create");
+      Route::POST('/categories/create', [CategoryController::class, 'store']);
     });
     Route::prefix('/orders')->group(function () {
       Route::get('/', [Dashboard::class, 'orders'])->name("orders_manage");

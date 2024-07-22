@@ -8,9 +8,6 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller {
 
-  public function index() {
-  }
-
   public function create() {
     $category = new Category;
     return view('dashboard.category')->with("category", $category);
@@ -55,8 +52,14 @@ class CategoryController extends Controller {
   }
 
   public function show(Category $category) {
-    $articles = $category->articles()->where("status", 2)->translatedIn(app()->getLocale())->paginate(12);
+    $articles = $category->notProduct()->articles()->where("status", 2)->translatedIn(app()->getLocale())->paginate(12);
     return view("category", compact("category", "articles"));
+  }
+
+  public function collection_index(Request $request) {
+    $categories = Category::isProduct()->orderBy("created_at", "DESC")->paginate(15);
+
+    return view('dashboard.categories', compact("categories"));
   }
 
   public function collection_show(Category $category) {

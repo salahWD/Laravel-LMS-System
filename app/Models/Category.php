@@ -15,6 +15,7 @@ class Category extends Model implements TranslatableContract {
   protected $fillable = [
     'image',
     'order',
+    'is_product_category'
   ];
 
   public function articles() {
@@ -25,8 +26,20 @@ class Category extends Model implements TranslatableContract {
     return $this->hasMany(Product::class);
   }
 
+  public function show_date() {
+    if ($this->created_at != null) {
+      return $this->created_at->format('Y-m-d');
+    } else {
+      return $this->created_at;
+    }
+  }
+
   public function scopeOrdered(Builder $query): void {
     $query->orderBy("order")->orderBy("created_at", "DESC");
+  }
+
+  public function scopeMostUsed(Builder $query): void {
+    $query->withCount("articles")->orderBy("articles_count");
   }
 
   public function scopeNotProduct(Builder $query): void {

@@ -9,7 +9,6 @@
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
 
-  <!-- STYLES -->
   @vite(['resources/css/home.css', 'resources/css/fullcalendar-main.css', 'resources/css/booking-appointment.css'])
   @if ($event->price != null && $event->price > 0)
     <script src="https://js.stripe.com/v3/"></script>

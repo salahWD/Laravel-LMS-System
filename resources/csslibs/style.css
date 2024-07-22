@@ -1880,7 +1880,7 @@ body.ar .post .meta li img.author {
   background-position: center center;
   background-repeat: no-repeat;
 }
-.widget .widget-ads {
+.widget .widget-spons {
   display: block;
   text-align: center;
 }
@@ -2032,7 +2032,7 @@ footer .footer-inner .copyright {
   display: block;
 }
 
-.ads-title {
+.spons-title {
   color: #c0c0c0;
   font-family: "Poppins", sans-serif;
   font-size: 12px;

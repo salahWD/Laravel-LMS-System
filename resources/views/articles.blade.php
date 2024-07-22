@@ -1,38 +1,28 @@
 @extends('layout')
 
 @section('meta')
-  <title>{{ __(config("app.name")) . " | " . __('Home') }}</title>
+  <title>{{ __(config('app.name')) . ' | ' . __('Home') }}</title>
 @endsection
 
 @section('styles')
-  <!-- STYLES -->
-  {{-- <link rel="stylesheet" href="{{ url("css/bootstrap.min.css") }}" type="text/css" media="all">
-  <link rel="stylesheet" href="{{ url("css/slick.css") }}" type="text/css" media="all">
-  <link rel="stylesheet" href="{{ url("css/simple-line-icons.css") }}" type="text/css" media="all">
-  <link rel="stylesheet" href="{{ url("css/style.css") }}" type="text/css" media="all"> --}}
-  @vite([
-    'resources/csslibs/bootstrap.min.css',
-    'resources/csslibs/slick.css',
-    'resources/csslibs/simple-line-icons.css',
-    'resources/csslibs/style.css',
-  ])
+  @vite(['resources/csslibs/slick.css', 'resources/csslibs/simple-line-icons.css', 'resources/csslibs/style.css'])
 @endsection
 
 @section('content')
   <section class="hero-carousel mt-5" dir="ltr">
     <div class="row post-carousel-featured post-carousel">
-      @foreach($categories as $category)
+      @foreach ($popular_categories as $category)
         <!-- post -->
         <div class="post featured-post-md">
           <div class="details clearfix">
-            <a class='category-badge' href=''>{{ $category->title }}</a>
+            <a class='category-badge' href=''>{{ $category->translate(app()->getLocale(), true)->title }}</a>
             {{-- <h4 class="post-title"><a href=''>{{ $article->title }}</a></h4> --}}
             <ul class="meta list-inline mb-0">
               {{-- <li class="list-inline-item"><a href="">{{ $article->user->title }}</a></li> --}}
-              <li class="list-inline-item">{{ $category->created_at->format("Y-m-d") }}</li>
+              <li class="list-inline-item">{{ $category->show_date() }}</li>
             </ul>
           </div>
-          <a href='{{ route("category_show", $category->id) }}'>
+          <a href='{{ route('category_show', $category->id) }}'>
             <div class="thumb rounded">
               <div class="inner data-bg-image" data-bg-image="{{ $category->image_url() }}"></div>
             </div>
@@ -58,23 +48,27 @@
                 <div class="post post-grid rounded bordered">
                   <div class="thumb top-rounded">
                     @if ($article->category_id)
-                      <a class='category-badge position-absolute' href='{{ route("category_show", $article->category_id) }}'>{{ $article->category->title }}</a>
+                      <a class='category-badge position-absolute'
+                        href='{{ route('category_show', $article->category_id) }}'>{{ $article->category->title }}</a>
                     @endif
-                    <a href='{{ route("article_show", $article->id) }}'>
+                    <a href='{{ route('article_show', $article->id) }}'>
                       <div class="inner">
-                        <img loading="lazy" class="article-image" src="{{ $article->image_url() }}" alt="{{ __('post-title') }}" />
+                        <img loading="lazy" class="article-image" src="{{ $article->image_url() }}"
+                          alt="{{ __('post-title') }}" />
                       </div>
                     </a>
                   </div>
                   <div class="details">
                     <ul class="meta list-inline mb-0">
                       <li class="list-inline-item"><a href="#">
-                        <img loading="lazy" src="{{ $article->user?->image_url() }}" class="author rounded-circle" alt="{{ __('author') }}" />
-                        {{ $article->user?->fullname() }}</a>
+                          <img loading="lazy" src="{{ $article->user?->image_url() }}" class="author rounded-circle"
+                            alt="{{ __('author') }}" />
+                          {{ $article->user?->fullname() }}</a>
                       </li>
-                      <li class="list-inline-item">{{ $article->created_at->format("Y-m-d") }}</li>
+                      <li class="list-inline-item">{{ $article->created_at->format('Y-m-d') }}</li>
                     </ul>
-                    <h5 class="post-title mb-3 mt-3"><a href='{{ route("article_show", $article->id) }}'>{{ $article->title }}</a></h5>
+                    <h5 class="post-title mb-3 mt-3"><a
+                        href='{{ route('article_show', $article->id) }}'>{{ $article->title }}</a></h5>
                     <p class="excerpt mb-0">{{ $article->description }}</p>
                   </div>
                   <div class="post-bottom clearfix d-flex align-items-center" dir="ltr">
@@ -102,9 +96,9 @@
           <div class="sidebar">
             <!-- widget about -->
             <div class="widget rounded">
-              <div class="widget-about data-bg-image text-center" data-bg-image="{{ url("images/map-bg.png") }}">
-                <img loading="lazy" src="{{ url("images/logo.png") }}" alt="{{ __('logo') }}" class="mb-4" />
-                <p class="mb-4">{{ __("Hello, We're content writer who is fascinated by content fashion, celebrity and lifestyle. We helps clients bring the right content to the right people.") }}</p>
+              <div class="widget-about data-bg-image text-center" data-bg-image="{{ url('images/map-bg.png') }}">
+                <img loading="lazy" src="{{ url('images/logo.png') }}" alt="{{ __('logo') }}" class="mb-4" />
+                <p class="mb-4">{{ __('Everything that is important and useful in electronic engineering') }}</p>
                 <ul class="social-icons list-unstyled list-inline mb-0">
                   <li class="list-inline-item"><a href="#"><i class="icon-social-facebook"></i></a></li>
                   <li class="list-inline-item"><a href="#"><i class="icon-social-instagram"></i></a></li>
@@ -180,15 +174,15 @@
             <div class="widget rounded">
               <div class="widget-header text-center">
                 <h3 class="widget-title">{{ __('Explore Topics') }}</h3>
-                <img loading="lazy" src="{{ url("images/wave.svg") }}" class="wave" alt="wave" />
+                <img loading="lazy" src="{{ url('images/wave.svg') }}" class="wave" alt="wave" />
               </div>
               <div class="widget-content">
                 <ul class="list">
-                  <li><a href="#">{{ __('General') }}</a><span>(5)</span></li>
-                  <li><a href="#">{{ __('Inspiration') }}</a><span>(2)</span></li>
-                  <li><a href="#">{{ __('Electronics') }}</a><span>(4)</span></li>
-                  <li><a href="#">{{ __('Mechanics') }}</a><span>(1)</span></li>
-                  <li><a href="#">{{ __('Various') }}</a><span>(3)</span></li>
+                  @foreach ($popular_categories as $cat)
+                    <li><a
+                        href="#">{{ $cat->translate(app()->getLocale(), true)->title }}</a><span>({{ $cat->articles_count }})</span>
+                    </li>
+                  @endforeach
                 </ul>
               </div>
 
@@ -211,9 +205,9 @@
                 <span class="newsletter-privacy text-center mt-3">By signing up, you agree to our <a href="#">{{ __('Privacy
                     Policy') }}</a></span>
               </div>
-            </div>
+            </div> --}}
 
-            <!-- widget post carousel -->
+            {{-- <!-- widget post carousel -->
             <div class="widget rounded">
               <div class="widget-header text-center">
                 <h3 class="widget-title">{{ __('Celebration') }}</h3>
@@ -283,19 +277,11 @@
               </div>
             </div> --}}
 
-            <!-- widget advertisement -->
-            <div class="widget no-container rounded text-md-center">
-              <span class="ads-title">{{ __('- Sponsored Ad -') }}</span>
-              <a href="#" class="widget-ads">
-                <img loading="lazy" src="images/ads/ad-360.png" alt="{{ __('Advertisement') }}" />
-              </a>
-            </div>
-
             <!-- widget tags -->
             <div class="widget rounded">
               <div class="widget-header text-center">
                 <h3 class="widget-title">{{ __('Tag Clouds') }}</h3>
-                <img loading="lazy" src="{{ url("images/wave.svg") }}" class="wave" alt="{{ __('wave') }}" />
+                <img loading="lazy" src="{{ url('images/wave.svg') }}" class="wave" alt="{{ __('wave') }}" />
               </div>
               <div class="widget-content">
                 <a href="#" class="tag">{{ __('Various') }}</a>
@@ -304,6 +290,14 @@
                 <a href="#" class="tag">{{ __('Inspiration') }}</a>
                 <a href="#" class="tag">{{ __('Mechanics') }}</a>
               </div>
+            </div>
+
+            <!-- widget advertisement -->
+            <div class="widget no-container rounded text-md-center">
+              <span class="spons-title">- {{ __('Sponsored Ad') }} -</span>
+              <a href="#" class="widget-spons">
+                <img loading="lazy" src="{{ url('images/ads/ad-360.png') }}" alt="{{ __('Advertisement') }}" />
+              </a>
             </div>
 
           </div>
@@ -315,7 +309,7 @@
     </div>
   </section>
 
-  <!-- instagram feed -->
+  {{-- <!-- instagram feed -->
   <div class="instagram">
     <div class="container-xl">
       <!-- button -->
@@ -324,45 +318,45 @@
       <div class="instagram-feed d-flex flex-wrap">
         <div class="insta-item col-sm-2 col-6 col-md-2">
           <a href="#">
-            <img loading="lazy" src="{{ url("images/insta/insta-1.jpg") }}" alt="{{ __('insta-title') }}" />
+            <img loading="lazy" src="{{ url('images/insta/insta-1.jpg') }}" alt="{{ __('insta-title') }}" />
           </a>
         </div>
         <div class="insta-item col-sm-2 col-6 col-md-2">
           <a href="#">
-            <img loading="lazy" src="{{ url("images/insta/insta-2.jpg") }}" alt="{{ __('insta-title') }}" />
+            <img loading="lazy" src="{{ url('images/insta/insta-2.jpg') }}" alt="{{ __('insta-title') }}" />
           </a>
         </div>
         <div class="insta-item col-sm-2 col-6 col-md-2">
           <a href="#">
-            <img loading="lazy" src="{{ url("images/insta/insta-3.jpg") }}" alt="{{ __('insta-title') }}" />
+            <img loading="lazy" src="{{ url('images/insta/insta-3.jpg') }}" alt="{{ __('insta-title') }}" />
           </a>
         </div>
         <div class="insta-item col-sm-2 col-6 col-md-2">
           <a href="#">
-            <img loading="lazy" src="{{ url("images/insta/insta-4.jpg") }}" alt="{{ __('insta-title') }}" />
+            <img loading="lazy" src="{{ url('images/insta/insta-4.jpg') }}" alt="{{ __('insta-title') }}" />
           </a>
         </div>
         <div class="insta-item col-sm-2 col-6 col-md-2">
           <a href="#">
-            <img loading="lazy" src="{{ url("images/insta/insta-5.jpg") }}" alt="{{ __('insta-title') }}" />
+            <img loading="lazy" src="{{ url('images/insta/insta-5.jpg') }}" alt="{{ __('insta-title') }}" />
           </a>
         </div>
         <div class="insta-item col-sm-2 col-6 col-md-2">
           <a href="#">
-            <img loading="lazy" src="{{ url("images/insta/insta-6.jpg") }}" alt="{{ __('insta-title') }}" />
+            <img loading="lazy" src="{{ url('images/insta/insta-6.jpg') }}" alt="{{ __('insta-title') }}" />
           </a>
         </div>
       </div>
     </div>
-  </div>
+  </div> --}}
 @endsection
 
 @section('scripts')
   <!-- JAVA SCRIPTS -->
-  <script src="{{ url("js/jquery.min.js") }}"></script>
-  <script src="{{ url("js/popper.min.js") }}"></script>
-  <script src="{{ url("js/bootstrap.min.js") }}"></script>
-  <script src="{{ url("js/slick.min.js") }}"></script>
-  <script src="{{ url("js/jquery.sticky-sidebar.min.js") }}"></script>
-  <script src="{{ url("js/custom.js") }}"></script>
+  <script src="{{ url('js/jquery.min.js') }}"></script>
+  <script src="{{ url('js/popper.min.js') }}"></script>
+  <script src="{{ url('js/bootstrap.min.js') }}"></script>
+  <script src="{{ url('js/slick.min.js') }}"></script>
+  <script src="{{ url('js/jquery.sticky-sidebar.min.js') }}"></script>
+  <script src="{{ url('js/custom.js') }}"></script>
 @endsection

@@ -5,7 +5,6 @@
 @endsection
 
 @section('styles')
-  <!-- STYLES -->
   @vite(['resources/css/home.css'])
 @endsection
 
@@ -19,7 +18,7 @@
     <div class="shape-1 shape"></div>
     <div class="shape-2 shape"></div>
     <div class="content">
-      <h2 class="title">تعلم بهمّة ... فالمستقبل ينتظرك
+      <h2 class="title">{{ __('Learn Actively ... the future is waiting you') }}
         <span class="star-1 star">
           <svg data-slot="icon" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true">
@@ -29,8 +28,8 @@
           </svg>
         </span>
       </h2>
-      <p class="lead">نحو جيل هندسي مبدع</p>
-      <a href="#learn" class="btn btn-light">أريد البدء بالتعلم</a>
+      <p class="lead">{{ __('Towards a creative engineering generation') }}</p>
+      <a href="#learn" class="btn btn-light">{{ __('i want to start learning') }}</a>
     </div>
     <div class="position-absolute bottom-0 start-0 end-0 z-1" style="margin-bottom: -5px;">
       <svg xmlns="http://www.w3.org/2000/svg" width="1920" height="267" viewBox="0 0 1613 224" fill="none"
@@ -76,35 +75,96 @@
   </section>
   <section class="section learn-section" id="learn">
     <div class="container">
-      <div class="row">
+      <div class="row align-items-center">
         <div class="col-md-6">
-          <h2 class="title">لنتعلم ونستفيد من المنصة</h2>
-          <p class="lead">نقدم في هذه المنصة مسارات تعليمية تشمل الأساسيات والمفاهيم المهمة وتوصلك لمرحلة تستطيع
-            فيها تصميم دوائر الكترونية متقدمة.<br>
-            <b>لكن تلك ليست نهاية الرحلة التعليمية, بل مجرد البداية</b><br>تستطيع متابعة أحدث الأخبار والتقنيات
-            وأفكار المشاريع بشكل يومي عن طريق المقالات والتحديثات القادمة على منصة <bdi>Eletorial</bdi>
+          <h2 class="title">{{ __("Let's learn and benefit from the platform") }}</h2>
+          <p class="lead">
+            {!! __('content.lets-learn-paragraph') !!}
+            <bdi>{{ config('app.name') }}</bdi>
           </p>
         </div>
         <div class="col-md-6">
-          <img src="https://placehold.it/600x400" alt="">
+          <div class="ps-4">
+            <img class="rounded shadow w-100" src="{{ url('images/lets-learn-electro.jpeg') }}"
+              style="object-fit:cover;max-height: 350px;object-position:center top">
+          </div>
         </div>
       </div>
     </div>
   </section>
+  {{-- <section class="section">
+    <div class="container mb-8 mb-lg-11">
+      <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-7">
+          <h3 class="fs-4 fs-lg-3 fw-bold text-center mb-2 mb-lg-x1"> How does <span class="text-nowrap">it work?</span>
+          </h3>
+          <p class="fs-8 mb-7 mb-lg-8 text-center lh-lg">You can use this as it is or tweak it as you seem necessary. you
+            seem necessary.</p>
+        </div>
+        <div class="col-12">
+          <div class="row g-sm-2 g-lg-3 align-items-center timeline">
+            <div
+              class="col-12 col-lg-4 d-flex flex-row flex-lg-column justify-content-center gap-2 gap-sm-x1 gap-md-4 gap-lg-0">
+              <div class="timeline-step-1 w-100 w-lg-100 mb-4 mb-lg-5 mb-xl-6">
+                <div class="timeline-item d-flex justify-content-center">
+                  <div class="timeline-icon rounded-circle d-flex justify-content-center align-items-center"
+                    style="background: #f74d4d">
+                    <span class="fs-6 fs-lg-5 fs-xl-4 text-white"> 1</span>
+                  </div>
+                </div>
+              </div>
+              <div class="py-1 py-lg-0 px-lg-5 w-75 w-sm-50 w-lg-100 timeline-content">
+                <h6 class="fs-8 fw-bold text-lg-center lh-lg mb-2">Install App</h6>
+                <p class="text-lg-center lh-xl mb-0">Install the app with a single click.</p>
+              </div>
+            </div>
+            <div
+              class="col-12 col-lg-4 d-flex flex-row flex-lg-column justify-content-center gap-2 gap-sm-x1 gap-md-4 gap-lg-0">
+              <div class="timeline-step-2 w-100 w-lg-100 mb-4 mb-lg-5 mb-xl-6">
+                <div class="timeline-item d-flex justify-content-center">
+                  <div class="timeline-icon rounded-circle d-flex justify-content-center align-items-center"
+                    style="background: #68d584">
+                    <span class="fs-6 fs-lg-5 fs-xl-4 text-white"> 2</span>
+                  </div>
+                </div>
+              </div>
+              <div class="py-1 py-lg-0 px-lg-5 w-75 w-sm-50 w-lg-100 timeline-content">
+                <h6 class="fs-8 fw-bold text-lg-center lh-lg mb-2">Add Team Members</h6>
+                <p class="text-lg-center lh-xl mb-0">Start with adding team members to <span class="text-nowrap">your
+                    channels. </span></p>
+              </div>
+            </div>
+            <div
+              class="col-12 col-lg-4 d-flex flex-row flex-lg-column justify-content-center gap-2 gap-sm-x1 gap-md-4 gap-lg-0">
+              <div class="timeline-step-3 position-relative z-1 overflow-hidden w-100 w-lg-100 mb-4 mb-lg-5 mb-xl-6">
+                <div class="timeline-item d-flex justify-content-center">
+                  <div class="timeline-icon rounded-circle d-flex justify-content-center align-items-center"
+                    style="background: #463bef"><span class="fs-6 fs-lg-5 fs-xl-4 text-white"> 3</span></div>
+                </div>
+              </div>
+              <div class="py-1 py-lg-0 px-lg-5 w-75 w-sm-50 w-lg-100 timeline-content">
+                <h6 class="fs-8 fw-bold text-lg-center lh-lg mb-2">Start Rolling</h6>
+                <p class="text-lg-center lh-xl mb-0">Start operating your business in a simpler way <span
+                    class="text-nowrap">and grow!</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section> --}}
   <section class="section aboutus-section">
     <div class="container">
       <div class="text-center">
-        <h2 class="title">نحو جيل هندسي مبدع</h2>
-        <p class="lead">هي فكرة وهدف ومبادرة تسعى لتطوير وتنمية العلوم باللغة العربية, المقصود منها هو أنتم وليس
-          الغرب, هم لديهم مصادرهم وجامعاتهم.<br>والمستفيد هو كل هاوٍ أو طالب حتى المتخصصين يستفيدون من متابعة اخر
-          التطورات في المجال</p>
+        <h2 class="title">{{ __('Towards a creative engineering generation') }}</h2>
+        <p class="lead">{!! __('content.new-gen-goal') !!}</p>
       </div>
     </div>
   </section>
   <section class="section courses-section">
     <div class="container">
-      <h2 class="title">تصفح المسارات التعليمية</h2>
-      <p class="lead">نبذة عن المسارات التعليمية المطروحة في منصة {{ config('app.name') }}.</p>
+      <h2 class="title">{{ __('Browse educational paths') }}</h2>
+      <p class="lead">{{ __('An overview of the educational paths offered') }}.</p>
       <div class="row mt-5">
         @if (isset($featuredCourses))
           @foreach ($featuredCourses as $course)
@@ -128,9 +188,9 @@
   </section>
   <section class="section courses-section">
     <div class="container">
-      <h2 class="title">أحدث المقالات</h2>
-      <p class="lead">معرفة الجديد أولاً بأول وتتبع النقاشات والمواضيع الهامة هي إحدى الميزات اللتي نقدمها في منصة
-        <bdi>{{ config('app.name') }}</bdi>
+      <h2 class="title">{{ __('Latest articles') }}</h2>
+      <p class="lead">
+        {{ __("Knowing what's new and keeping track of important discussions and topics") }}
       </p>
       <div class="row mt-5">
         @if (isset($latestArticles))
