@@ -56,7 +56,15 @@
         <div class="col-md-6">
           <div class="products">
             <div class="holder">
-              <h3 class="title m-0">Products</h3>
+              <div class="d-flex justify-content-between align-items-baseline">
+                <h3 class="title m-0">Products</h3>
+                <a href="{{ route('cart_edit') }}" class="fs-6 underline">
+                  <u>
+                    edit
+                    <i class="fa fa-edit"></i>
+                  </u>
+                </a>
+              </div>
               <hr />
               @if ($products != null)
                 @foreach ($products as $product)

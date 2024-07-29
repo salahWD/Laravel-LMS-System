@@ -1,7 +1,10 @@
+.post-single .post-content,
 .article-content {
-  line-height: 1.5;
   overflow-wrap: break-word;
   word-break: break-word;
+  line-height: 1.8rem;
+  font-size: 17px;
+  letter-spacing: 0.5px;
 }
 .article-content * {
   box-sizing: border-box;

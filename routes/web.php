@@ -35,10 +35,9 @@ Route::middleware('localizationRedirect')->group(function () {
   Route::get('/', [PageController::class, 'home'])->name("home");
 
   Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('category_show');
-  Route::get('/tags/{tag}', [TagController::class, 'tag'])->name('tag_view');
   Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('article_show');
   Route::get('/articles', [PageController::class, 'articles'])->name('articles_show');
-  Route::get('/tag/{tag:slug}', [TagController::class, 'show'])->name('tag_show');
+  Route::get('/tags/{tag:slug}', [TagController::class, 'show'])->name('tag_view');
   Route::get('/courses', [CourseController::class, 'show_all'])->name('courses_show');
   Route::POST('/articles/{article}', [CommentController::class, 'store'])->name('comment_article');
   Route::get('/products', [ProductController::class, 'index'])->name("shop");
@@ -46,7 +45,7 @@ Route::middleware('localizationRedirect')->group(function () {
   Route::get('/collection/{category}', [CategoryController::class, 'show'])->name("product_category_show");
   Route::get('/contact-us', [PageController::class, 'contactus'])->name('contact_us');
   Route::POST('/contact-us', [MessageController::class, 'store']);
-  Route::get('/cart', [CartController::class, 'show'])->name('cart_show');
+
   // Route::POST('/checkout', [CartController::class, 'checkout'])->name('checkout');
   Route::get('/thanks', [CartController::class, 'success'])->name('checkout_success');
   Route::get('/track/{order:token}', [OrderController::class, 'show'])->name('order_tracking');
@@ -72,6 +71,9 @@ Route::middleware('localizationRedirect')->group(function () {
     Route::get('/appointments/{appointment:url}', [AppointmentController::class, 'show'])->name("appointment_booking");
     Route::POST('/appointments/{bookedAppointment}', [BookedAppointmentController::class, 'update'])->name("booked.appointmet.notes");
     Route::get('/{user:username}/meetings', [UserController::class, 'show_meetings'])->name("user_appointments");
+    Route::get('/cart', [CartController::class, 'show'])->name('cart_show');
+    Route::get('/cart/edit', [CartController::class, 'edit'])->name('cart_edit');
+    Route::POST('/cart', [CartController::class, 'update'])->name('cart_update');
   });
 
   Route::prefix('/dashboard')->middleware(['auth', 'admin'])->group(function () {

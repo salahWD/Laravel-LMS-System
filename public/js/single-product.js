@@ -139,6 +139,34 @@ $(document).ready(function () {
         cartItemsEl.text(newVal);
       },
       error: function (err) {
+        let id = Date.now();
+        let el = `
+        <div id="${id}" class="action-alert alert position-fixed alert-danger d-flex align-items-center mb-0 top-0 start-50" style="transition: all 0.3s ease-in-out;transform: translate(-50%, -100%);opacity:0" role="alert">
+          <div>
+            ${err.responseJSON.message}
+          </div>
+        </div>`;
+        $(document.body).append(el);
+
+        var myAlert = document.getElementById(id);
+        let alert = new bootstrap.Alert(myAlert);
+        setTimeout(() => {
+          $("#" + id).attr(
+            "style",
+            "transition: all 0.3s ease-in-out;transform: translate(-50%, 100%); opacity:1"
+          );
+        }, 50);
+        setTimeout(() => {
+          $("#" + id).attr(
+            "style",
+            "transition: all 0.3s ease-in-out;transform: translate(-50%, -100%); opacity:0"
+          );
+        }, 2500);
+
+        setTimeout(() => {
+          alert.close();
+        }, 3000);
+
         console.error(err);
       },
     });

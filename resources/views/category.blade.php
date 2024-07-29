@@ -26,12 +26,14 @@
                     <hr>
                     <p class="lead">{{ $category->description }}</p>
                   </div>
-                  <div class="h4 m-0"><span class="badge bg-primary">{{ __('articles') }}:
+                  <div class="h4 m-0"><span
+                      class="badge bg-primary">{{ request()->segment(2) == 'shop' ? __('articles') : __('articles') }}:
                       {{ $category->articles()->count() }}</span></div>
                 </div>
               </div>
               <div class="col-md-6">
-                <img class="mh-100vh" src="{{ $category->image_url() }}" alt="{{ $category->title }}">
+                <img class="w-100 rounded" style="max-height: 380px;object-fit: cover;object-position: center;"
+                  src="{{ $category->image_url() }}" alt="{{ $category->title }}">
               </div>
             </div>
           </div>

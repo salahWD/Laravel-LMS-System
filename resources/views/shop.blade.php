@@ -26,19 +26,15 @@
             <div class="content">
               <div class="row">
                 <div class="hidden-xs hidden-sm col-md-6">
-                  <img
-                    src="https://planet-17.myshopify.com/cdn/shop/t/9/assets/slide_img_2.png?v=58646201550105743901460189156"
-                    alt="">
+                  <img src="{{ $slide->image_url() }}" alt="">
                 </div>
                 <div class="col-md-6">
                   <div class="info">
-                    <h3 class="title">get started with products</h3>
-                    <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe
-                      culpa amet delectus.</p>
-                    <div class="flex gap-2">
-                      <a href="#" class="btn btn-primary py-2 px-3">{{ __('more info') }}</a>
-                      <a href="#" class="btn btn-primary py-2 px-3">{{ __('shop now') }}</a>
-                    </div>
+                    <h3 class="title">{{ $slide->title }}</h3>
+                    <p class="lead">{{ $slide->description }}</p>
+                    <a href="{{ url("products/offers/$slide->id") }}"
+                      class="mt-4 d-block text-capitalize btn px-5 py-2 fs-6 btn-outline-white"
+                      style="max-width: 100%;width: 330px;">{{ __('shop now') }}</a>
                   </div>
                 </div>
               </div>
@@ -60,11 +56,11 @@
               @if (count($categories) > 0)
                 @foreach ($categories as $category)
                   <li class="list-group-item">
-                    <a href="{{ $category->get_link() }}">
+                    <a href="{{ $category->get_prod_link() }}">
                       <span class="badge bg-primary rounded px-3 me-2">
                         {{ $category->products_count ?? '?' }}
                       </span>
-                      {{ $category->title }}
+                      {{ $category->translate(app()->getLocale())->title }}
                     </a>
                   </li>
                 @endforeach
@@ -126,14 +122,13 @@
     <div class="mt-4 mb-5 owl-carousel offers offers-slider m-auto owl-theme custom-nav-icon owl-loaded">
       @foreach ($offers as $offer)
         <div class="offer d-flex">
-          <figure>
-            <img
-              src="//planet-17.myshopify.com/cdn/shop/products/z33_3a4076f1-94b2-4443-aa71-8fbf9f92f2a2_large.png?v=1459702297"
-              alt="Canon EOS-1">
+          <figure class="d-flex" style="place-items: center;">
+            <img src="{{ $offer->image_url() }}" alt="Canon EOS-1">
           </figure>
           <div class="saletimeout-content text-center">
             <h2><span>{{ $offer->title }}</span></h2>
-            <span>{{ __('hot deal only') }} &nbsp;{{ $offer->show_price() }}</span>
+            <span class="text-capitalize">{{ __('discount, only at') }}
+              {{ config('cart.currency') . $offer->show_price() }}</span>
             <div class="counter-wrapper" data-target="2016/8/20 23:00:00">
               <div class="hours">02<span>hour</span></div>
               <div class="minutes">15<span>min</span></div>
@@ -203,7 +198,7 @@
       </div>
       <div class="packages-section mt-5 pt-5">
         <div class="text-center">
-          <h2 class="section-title">{{ __('recommended packages') }}</h2>
+          <h2 class="section-title">{{ __('Related Products') }}</h2>
         </div>
         <div class="container">
           <div class="packages owl-carousel packages-slider m-auto owl-theme custom-nav-icon owl-loaded">
@@ -240,14 +235,14 @@
                             @php $loops++ @endphp
                             @if ($loops <= 4)
                               @if ($package->count() >= 3)
-                                <div class="col-xs-12 col-sm-6 mt-not-second">
-                                  <figure class="shadow">
+                                <div class="col-xs-12 col-sm-6 mt-not-second p-2">
+                                  <figure class="shadow h-100">
                                     <a href="{{ $product->get_link() }}">
-                                      <div class="reveal">
+                                      <div class="reveal h-100">
                                         @if ($product->get_images())
                                           @foreach ($product->get_images(2) as $i => $image)
                                             <img
-                                              class="@if ($i == 0) owl-lazy xv-superimage @else hidden @endif"
+                                              class="@if ($i == 0) owl-lazy xv-superimage h-100 @else hidden @endif"
                                               src="{{ $image }}" alt="{{ $product->title }}"
                                               @if ($i == 0) style="opacity: 1;" @endif>
                                           @endforeach

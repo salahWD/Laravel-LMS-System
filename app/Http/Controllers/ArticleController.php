@@ -123,7 +123,7 @@ class ArticleController extends Controller {
   }
 
   public function edit(Article $article) {
-    $categories = Category::notProduct()->all();
+    $categories = Category::notProduct()->get();
     return view('dashboard.article', compact("article", "categories"));
   }
 

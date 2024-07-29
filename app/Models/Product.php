@@ -6,12 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Category;
 use App\Models\Oeder;
+use App\Models\ProductOffer;
 use Gloudemans\Shoppingcart\Contracts\Buyable;
 
 class Product extends Model implements Buyable {
   use HasFactory;
-
-  // public $images;
 
   protected $fillable = [
     "title",
@@ -41,6 +40,10 @@ class Product extends Model implements Buyable {
 
   public function orders() {
     return $this->belongsToMany(Oeder::class);
+  }
+
+  public function offers() {
+    return $this->belongsToMany(ProductOffer::class);
   }
 
   public function category() {

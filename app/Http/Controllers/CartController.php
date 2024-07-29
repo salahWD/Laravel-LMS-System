@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Cart;
 use App\Models\Order;
+use App\Models\Product;
 
 class CartController extends Controller {
 
@@ -12,11 +13,66 @@ class CartController extends Controller {
     $this->middleware('auth'); // only loged in users can use this controller
   }
 
-  public function show() {
+  public function edit() {
+    return view("shop.edit-cart")->with([
+      "products" => Cart::content(),
+      "cart" => Cart::instance(),
+    ]);
+  }
 
-    // if (auth()->check()) {
+  public function update(Request $request) {
+
+    $validated = $request->validate([
+      "action" => "required|in:shopping,checkout",
+      "products" => "nullable|array",
+      "products.*.row_id" => "required|string|min:30|max:34",
+      "products.*.qty" => "required|numeric|min:1",
+    ]);
+
+    if (!empty($validated["products"])) {
+      $ids = collect($validated["products"])->pluck("row_id")->toArray();
+
+      foreach (Cart::content() as $key => $product) {
+        if (!in_array($key, $ids)) {
+          Cart::remove($key);
+        }
+      }
+
+      foreach ($validated["products"] as $prod) {
+        Cart::update($prod["row_id"], $prod["qty"]);
+      }
+
+      Cart::store(auth()->user()->id);
+    } else {
+      Cart::destroy();
+      Cart::deleteStoredCart(auth()->user()->id);
+    }
+
+    if ($validated["action"] == "checkout") {
+      return redirect()->route("cart_show");
+    } else {
+      return redirect()->route("shop");
+    }
+  }
+
+  public function show() {
+    /* ====== time testing ====== */
+    // $start = microtime(true);
+
     Cart::restore(auth()->user()->id);
-    // }
+
+    $ids = collect(Cart::content())->pluck("id");
+
+    $products = Product::whereIn("id", $ids)->get();
+
+    foreach (Cart::content() as $pro) {
+      $pro->price = $products->where("id", $pro->id)->first()->price;
+    }
+
+    Cart::store(auth()->user()->id);
+
+    /* ====== time testing ====== */
+    // dump("time to finish updating the cart content prices is: " . microtime(true) - $start);
 
     if (Cart::total() > 0) {
 
@@ -57,6 +113,9 @@ class CartController extends Controller {
       //   Cart::store($intent->id);
       // }
 
+      /* ====== time testing ====== */
+      // dd("time to return the view after getting the stripe intention id: " . microtime(true) - $start);
+
       return view("shop.checkout")->with([
         "intent" => $intent->client_secret,
         "products" => Cart::content(),
@@ -91,97 +150,4 @@ class CartController extends Controller {
       return view("shop.error");
     }
   }
-
-  // public function checkout(Request $request) {
-  //   $request->validate([
-  //     "paymentMethod" => "required|string",
-  //     "address" => "required|json",
-  //     "email" => "nullable|email",
-  //   ]);
-
-  //   if (!auth()->check()) {
-  //     $request->validate([
-  //       "email" => "required|email",
-  //     ]);
-  //   }
-
-  //   $address = json_decode(request("address"));
-
-  //   if (auth()->check()) {
-  //     $user = auth()->user();
-  //   } else {
-  //     // $user = User::find(4);
-  //   }
-  //   if (Cart::total() <= 0) {
-  //     return redirect()->route("cart_show")->withErrors(['wrong_total' => 'Total Amount is wrong']);
-  //   }
-  //   $products = [];
-  //   $products_ids = [];
-  //   if (Cart::content()) {
-  //     $description = Cart::content()->first()->name .
-  //       " and other (" . Cart::content()->count() . ") products ordered by (" .
-  //       $address->name . "), address: " .
-  //       format_address($address->address);
-  //     foreach (Cart::content() as $item) {
-  //       $products[$item->id . "_" . substr($item->name, 0, 32)] = $item->qty;
-  //       $products_ids[$item->id] = ["quantity" => $item->qty];
-  //     }
-  //   }
-
-  //   try {
-  //     // $user->createOrGetStripeCustomer();
-  //     // dd(request()->all());
-  //     // $customer = $user->createOrGetStripeCustomer(/* request("email") ?? "test@test.test", request("paymentMethod") */);
-  //     // dd($customer);
-
-  //     $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
-
-  //     $charge = $stripe->charges->create([
-  //       'currency' => config("cart.currency_name") ?? "usd",
-  //       'amount' => Cart::total() * 100,
-  //       'source'  => request("paymentMethod"), // your stripe token goes here
-  //       'statement_descriptor' => 'Short description',
-  //       'description' => 'Long description',
-  //     ]);
-  //     dd($charge, $stripe);
-
-  //     // $stripeCharge = $user->charge(Cart::total() * 100, request("paymentMethod"), [
-  //     //   'receipt_email' => $user->email ?? "salahb170@gmail.com",
-  //     //   'description' => $description ?? "new product perchuse",
-  //     //   'metadata' => [
-  //     //   'product_type' => 'products',
-  //     //     "email" => $user->email ?? "no email",
-  //     //     "name" => $address->name,
-  //     //     ...$products
-  //     //   ],
-  //     //   'return_url' => route('checkout_success'),
-  //     // ]);
-
-  //     $order = Order::create([
-  //       "user_id" => auth()->user()->id ?? null,
-  //       "total" => Cart::total() * 100,
-  //       "client_name" => $address->name,
-  //       "address" => format_address($address->address),
-  //     ]);
-
-  //     $order->products()->attach($products_ids);
-
-  //     Cart::deleteStoredCart(auth()->user()->id);
-  //     Cart::destroy();
-
-  //     return redirect()->route("order_tracking", $order->id);
-  //   } catch (Exception $e) {
-  //     dd($e);
-  //     return redirect()->route("cart_show")->withErrors(['something' => 'something went wrong']);
-  //   }
-  // }
-}
-
-function format_address($address_obj) {
-  return $address_obj->country . ", " .
-    $address_obj->state . ", " .
-    $address_obj->city . " | " .
-    $address_obj->line2 . ", " .
-    $address_obj->line1 . ", postal: " .
-    $address_obj->postal_code;
 }

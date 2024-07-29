@@ -37,7 +37,7 @@
           </div>
           <!-- post content -->
           <div class="article-content post-content clearfix">
-            {!! $article->content !!}
+            {!! html_entity_decode($article->content) !!}
           </div>
           {{-- <div class="post-content clearfix">
             <p>The European languages are members of the same family. Their separate existence is a myth. For science, music, sport, etc, Europe uses the same <a href="#">vocabulary</a>. The languages only differ in their grammar, their pronunciation and their most common words.</p>
@@ -77,7 +77,7 @@
                 <!-- tags -->
                 @if ($article->tags()->exists())
                   @foreach ($article->tags as $tag)
-                    <a href="{{ route('tag_show', $tag->slug) }}" class="tag shadow bg-dark">#{{ $tag->title }}</a>
+                    <a href="{{ route('tag_view', $tag->slug) }}" class="tag shadow bg-dark">#{{ $tag->title }}</a>
                   @endforeach
                 @endif
               </div>

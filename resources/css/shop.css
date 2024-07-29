@@ -324,8 +324,26 @@ Timer
 .hot-deal-btnl {
   background: var(--hot-deal-slider-rbtn) no-repeat;
 }
-.custom-nav-icon.owl-theme .owl-nav [class*="owl-"]:hover {
-  background: var(--hot-deal-slider-lbtn) no-repeat;
-  color: unset;
-  text-decoration: unset;
+.offers-slider .owl-nav .owl-prev:hover,
+.packages-section .owl-nav .owl-prev:hover {
+  background: transparent !important;
+  text-decoration: inherit !important;
+  background: var(--hot-deal-slider-rbtn) no-repeat !important;
+}
+.offers-slider .owl-nav .owl-next:hover,
+.packages-section .owl-nav .owl-next:hover {
+  background: transparent !important;
+  text-decoration: inherit !important;
+  background: var(--hot-deal-slider-lbtn) no-repeat !important;
+}
+.btn-outline-white {
+  color: #f8f9fa;
+  background-color: transparent;
+  background-image: none;
+  border: 1px solid #f8f9fa;
+}
+.btn-outline-white:hover {
+  color: #212529;
+  background-color: #f8f9fa;
+  border-color: #f8f9fa;
 }

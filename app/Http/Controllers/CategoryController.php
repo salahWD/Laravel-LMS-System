@@ -52,7 +52,7 @@ class CategoryController extends Controller {
   }
 
   public function show(Category $category) {
-    $articles = $category->notProduct()->articles()->where("status", 2)->translatedIn(app()->getLocale())->paginate(12);
+    $articles = $category->notProduct()->with("articles")->join("articles", "articles.category_id", "=", "categories.id")->where("articles.status", 2)->translatedIn(app()->getLocale())->paginate(12);
     return view("category", compact("category", "articles"));
   }
 

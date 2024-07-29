@@ -6,6 +6,7 @@ use App\Models\Article;
 use App\Models\User;
 use App\Models\Course;
 use App\Models\Category;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class PageController extends Controller {
@@ -19,8 +20,9 @@ class PageController extends Controller {
 
   public function articles() {
     $popular_categories = Category::notProduct()->mostUsed()->translatedIn(app()->getLocale())->limit(6)->get();
+    $popular_tags = Tag::mostUsed()->limit(6)->get();
     $articles = Article::orderBy("created_at", "DESC")->where("status", 2)->translatedIn(app()->getLocale())->with("user", "category")->paginate(10);
-    return view("articles", compact("articles", "popular_categories"));
+    return view("articles", compact("articles", "popular_categories", "popular_tags"));
   }
 
   public function contactus(Request $request) {

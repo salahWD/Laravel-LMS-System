@@ -18,6 +18,7 @@ class TagController extends Controller {
   }
 
   public function show(Tag $tag) {
+    return view("home");
   }
 
   public function edit(Tag $tag) {

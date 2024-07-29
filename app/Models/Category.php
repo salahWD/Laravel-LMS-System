@@ -42,8 +42,8 @@ class Category extends Model implements TranslatableContract {
     $query->withCount("articles")->orderBy("articles_count");
   }
 
-  public function scopeNotProduct(Builder $query): void {
-    $query->where('is_product_category', false);
+  public function scopeNotProduct(Builder $query) {
+    return $query->where('is_product_category', false);
   }
 
   public function is_product() {
@@ -52,6 +52,11 @@ class Category extends Model implements TranslatableContract {
 
   public function get_link() {
     return route("category_show", $this->id);
+  }
+
+
+  public function get_prod_link() {
+    return route("product_category_show", $this->id);
   }
 
   public function scopeIsProduct(Builder $query): void {

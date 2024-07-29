@@ -1,10 +1,7 @@
 @charset "UTF-8";
 /*
-Template Name: Katen
-Version: 1.0
-Author: ThemeGer
-Author URI: http://themeforest.net/user/themeger
-Description: Minimal Blog and Magazine HTML Template
+
+Developer: https://github.com/salahWD
 
 [TABLE OF CONTENTS]
 
@@ -30,11 +27,27 @@ Description: Minimal Blog and Magazine HTML Template
 20. Responsive Settings
 
 */
+
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500&amp;display=swap");
+
 /*=================================================================*/
 /*                      BASE
 /*=================================================================*/
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #f5f5f5;
+  border-radius: 6px;
+}
+::-webkit-scrollbar {
+  height: 6px;
+  width: 10px;
+  background-color: #f5f5f5;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  background-color: rgba(23, 87, 226, 0.5);
+}
 body {
   color: #8f9bad;
   background-color: #fff;
@@ -1372,6 +1385,7 @@ body.ar .post .meta li img.author {
 }
 .post-single .post-content {
   color: #707a88;
+  color: #414954;
   font-size: 16px;
 }
 .post-single .post-bottom {
@@ -1904,6 +1918,11 @@ body.ar .post .meta li img.author {
   vertical-align: middle;
   margin-right: 25px;
 }
+.ar .widget ul.list li a:before {
+  content: "\e605";
+  margin-right: 0;
+  margin-left: 25px;
+}
 .widget ul.list li a:hover {
   color: #004878;
 }
@@ -1918,6 +1937,9 @@ body.ar .post .meta li img.author {
 }
 .widget ul.list li span {
   float: right;
+}
+.ar .widget ul.list li span {
+  float: left;
 }
 .widget ul.list.social-icons li a:before {
   content: "";

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\ProductOffer;
 use File;
 use Cart;
 
@@ -18,10 +19,10 @@ class ProductController extends Controller {
   }
 
   public function index() {
-    $header_slides = Product::inRandomOrder()->limit(3)->get();
-    $offers = Product::inRandomOrder()->limit(3)->get();
+    $header_slides = ProductOffer::where("featured", 1)->with("product")->limit(3)->get();
+    $offers = ProductOffer::where("featured", 0)->with("product")->limit(3)->get();
     $new_products = Product::inRandomOrder()->limit(3)->get();
-    $categories = Category::inRandomOrder()->isProduct()->limit(3)->withCount("products")->get();
+    $categories = Category::inRandomOrder()->isProduct()->limit(3)->with("translations")->withCount("products")->get();
     $packages = collect([collect([...$new_products, ...$new_products]), collect([...$new_products, ...$new_products])]);
 
     return view("shop", compact("new_products", "header_slides", "categories", "offers", "packages"));
@@ -155,7 +156,6 @@ class ProductController extends Controller {
   }
 
   public function update(Request $request, Product $product) {
-    // dd(request("selected_image"), "nullable|string|in:new_images," . implode(",", (request("old_images") ?? [])));
     $request->validate([
       "title" => "required|string",
       "description" => "sometimes|nullable|string",
@@ -299,104 +299,78 @@ class ProductController extends Controller {
       return response()->json(['error' => 'Invalid URL. Only AliExpress product pages are allowed'], 400);
     }
 
-    $url = 'https://login.aliexpress.ru/setCommonCookie.htm?fromApp=false&currency=USD&region=UK&bLocale=en_US&site=glo&province=&city=';
-
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-      'accept: */*',
-      'accept-language: en-US,en;q=0.9,ar;q=0.8',
-      'cache-control: no-cache',
-      'pragma: no-cache',
-      'priority: u=1, i',
-      'sec-ch-ua: "Chromium";v="124", "Google Chrome";v="124", "Not-A.Brand";v="99"',
-      'sec-ch-ua-mobile: ?0',
-      'sec-ch-ua-platform: "Windows"',
-      'sec-fetch-dest: empty',
-      'sec-fetch-mode: cors',
-      'sec-fetch-site: cross-site',
-      'cookie: x_router_us_f=x_alimid=2694550802; aep_common_f=999JItdKjCdERYpgTAbVzXq8cOOQNCkjtxSM9+ypBMZc8J2+dIT6oA==; xman_f=kKnpuK3X0oofrmLWIwYOl1YXCb4MUNwrDZuAxic6+ws354E1e+2LUIK6Ygyrlpz2zTZdcFi6eOjJyKlDGnVwJSb15EiSc+zCt7Hn9PUuABD0L6+RW5biz9dVsPowgZZg3CYMXbkOTpc1sbxApieybYdQNDdxyrFcEqqNOpD0tgecscp8NhnzI5nw/vZECxKMgTPx3W/8qbnAH2xDf8jk8g0mzaqzkbZHabJ/g7+IaYrg5B/KDmteuLgsDzz31wJrrYJtqSUyYHLRkoQnrC9XRgM3AvZoPm1W5ywvIbFOsY4qfTJggZ0o3GFFBLsKYWvqvenHe63jHWCOijBQaZGCSyVJwSy6dEKDgB3yv4wZ9YQWqiV3Ob7isQ==; xman_t=hiXZtrbDS/Qrk+15BN9i89TcEjrOukOWJoSkpMDPSIoWU9PiFthAnePbFRSIAacf; acs_usuc_t=acs_rt=b48f15ff49ea456193fa3c343b638d96&x_csrf=ppd8t3voq_xh; xman_us_f=x_lid=tr1098335802xocae&x_l=0&x_locale=en_US&x_user=TR|96af30346a36|user|ifm|2694550802&x_c_chg=1&x_c_synced=1; aep_usuc_f=region=TR&site=glo&b_locale=en_US&isb=y&x_alimid=2694550802&c_tp=USD',
-      'Referer: https://www.aliexpress.com/',
-      'Referrer-Policy: strict-origin-when-cross-origin'
-    ]);
-
-    // $response = curl_exec($ch);
-    curl_exec($ch);
-    curl_close($ch);
-
     // Create a new GuzzleHttp client
     $client = new Client();
 
-    // try {
-    // Make a request to the external website
-    $response = $client->get($url);
-    // come
-    // Extract the HTML content from the response
-    $html = $response->getBody()->getContents();
+    try {
+      // Make a request to the external website
+      $response = $client->get($url);
 
-    // Parse the HTML using Symfony DomCrawler
-    $crawler = new Crawler($html);
+      // Extract the HTML content from the response
+      $html = $response->getBody()->getContents();
 
-    // Find the script tag containing the runParams variable
-    $scriptTag = $crawler->filterXPath('//script[contains(text(), "window.runParams")]');
+      // Parse the HTML using Symfony DomCrawler
+      $crawler = new Crawler($html);
 
-    // Extract the JavaScript code containing the runParams variable
-    $jsCode = $scriptTag->text();
+      // Find the script tag containing the runParams variable
+      $scriptTag = $crawler->filterXPath('//script[contains(text(), "window.runParams")]');
 
-    $jsCode = preg_replace('/(\bdata\b)/', '"$1"', $jsCode, 1);
+      // Extract the JavaScript code containing the runParams variable
+      $jsCode = $scriptTag->text();
 
-    // Extract the value of the runParams variable
-    preg_match('/window\.runParams\s*=\s*({.*?});/', $jsCode, $matches);
-    $runParamsJson = $matches[1] ?? null;
+      $jsCode = preg_replace('/(\bdata\b)/', '"$1"', $jsCode, 1);
 
-    // Decode the JSON data
-    $runParams = null;
-    if (!empty($runParamsJson)) {
-      $runParams = json_decode($runParamsJson, true);
-      $runParams = $runParams["data"];
-      $productInfo = [];
+      // Extract the value of the runParams variable
+      preg_match('/window\.runParams\s*=\s*({.*?});/', $jsCode, $matches);
+      $runParamsJson = $matches[1] ?? null;
 
-      // product id => productInfoComponent->idStr
-      $productInfo["product_id"] = $runParams["productInfoComponent"]["idStr"];
+      // Decode the JSON data
+      $runParams = null;
+      if (!empty($runParamsJson)) {
+        $runParams = json_decode($runParamsJson, true);
+        $runParams = $runParams["data"];
+        $productInfo = [];
 
-      // product title => html_entity_decode(productInfoComponent->subject);
-      $productInfo["title"] = html_entity_decode($runParams["productInfoComponent"]["subject"]);
+        // product id => productInfoComponent->idStr
+        $productInfo["product_id"] = $runParams["productInfoComponent"]["idStr"];
 
-      // product original price => priceComponent->origPrice->minPrice;
-      $productInfo["price"] = $runParams["priceComponent"]["origPrice"]["minPrice"];
+        // product title => html_entity_decode(productInfoComponent->subject);
+        $productInfo["title"] = html_entity_decode($runParams["productInfoComponent"]["subject"]);
 
-      // product discounted price => priceComponent->discountPrice->minActMultiCurrencyPrice;
-      $productInfo["discounted_price"] = $runParams["priceComponent"]["discountPrice"]["minActMultiCurrencyPrice"];
+        // product original price => priceComponent->origPrice->minPrice;
+        $productInfo["price"] = $runParams["priceComponent"]["origPrice"]["minPrice"];
 
-      // desc url => productDescComponent->descriptionUrl
-      $productInfo["description"] = $runParams["productDescComponent"]["descriptionUrl"];
+        // product discounted price => priceComponent->discountPrice->minActMultiCurrencyPrice;
+        $productInfo["discounted_price"] = $runParams["priceComponent"]["discountPrice"]["minActMultiCurrencyPrice"];
 
-      // quantity => inventoryComponent->totalAvailQuantity
-      $productInfo["quantity"] = $runParams["inventoryComponent"]["totalAvailQuantity"];
+        // desc url => productDescComponent->descriptionUrl
+        $productInfo["description"] = $runParams["productDescComponent"]["descriptionUrl"];
 
-      // discount check => promotionComponent->discountPromotion
-      if ($runParams["promotionComponent"]["discountPromotion"]) {
-        // discount value => promotionComponent->discount
-        $productInfo["discoun"] = $runParams["promotionComponent"]["discount"];
+        // quantity => inventoryComponent->totalAvailQuantity
+        $productInfo["quantity"] = $runParams["inventoryComponent"]["totalAvailQuantity"];
+
+        // discount check => promotionComponent->discountPromotion
+        if ($runParams["promotionComponent"]["discountPromotion"]) {
+          // discount value => promotionComponent->discount
+          $productInfo["discoun"] = $runParams["promotionComponent"]["discount"];
+        }
+
+        // image list check prop => imageComponent->imageExist
+        if ($runParams["imageComponent"]["imageExist"]) {
+          // image list [640] => imageComponent->image640PathList
+          $productInfo["images"] = $runParams["imageComponent"]["image640PathList"];
+        }
+
+        return response()->json($productInfo);
       }
 
-      // image list check prop => imageComponent->imageExist
-      if ($runParams["imageComponent"]["imageExist"]) {
-        // image list [640] => imageComponent->image640PathList
-        $productInfo["images"] = $runParams["imageComponent"]["image640PathList"];
-      }
-
-      return response()->json($productInfo);
+      return response()->json([
+        "result" => false
+      ]);
+    } catch (\Exception $e) {
+      // Handle errors
+      return response()->json(['error' => 'Failed to fetch data from the external website'], 500);
     }
-
-    return response()->json([
-      "result" => false
-    ]);
-
-    // } catch (\Exception $e) {
-    //   // Handle errors
-    //   return response()->json(['error' => 'Failed to fetch data from the external website', $e], 500);
-    // }
   }
 
   public function api_destroy(Request $request, Product $product) {

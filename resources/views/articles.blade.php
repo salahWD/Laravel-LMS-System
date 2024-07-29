@@ -68,8 +68,9 @@
                       <li class="list-inline-item">{{ $article->created_at->format('Y-m-d') }}</li>
                     </ul>
                     <h5 class="post-title mb-3 mt-3"><a
-                        href='{{ route('article_show', $article->id) }}'>{{ $article->title }}</a></h5>
-                    <p class="excerpt mb-0">{{ $article->description }}</p>
+                        href='{{ route('article_show', $article->id) }}'>{{ $article->translate(app()->getLocale(), true)->title }}</a>
+                    </h5>
+                    <p class="excerpt mb-0">{{ $article->translate(app()->getLocale(), true)->description }}</p>
                   </div>
                   <div class="post-bottom clearfix d-flex align-items-center" dir="ltr">
                     <div class="social-share me-auto">
@@ -180,7 +181,7 @@
                 <ul class="list">
                   @foreach ($popular_categories as $cat)
                     <li><a
-                        href="#">{{ $cat->translate(app()->getLocale(), true)->title }}</a><span>({{ $cat->articles_count }})</span>
+                        href="{{ route('category_show', $category->id) }}">{{ $cat->translate(app()->getLocale(), true)->title }}</a><span>({{ $cat->articles_count }})</span>
                     </li>
                   @endforeach
                 </ul>
@@ -284,7 +285,12 @@
                 <img loading="lazy" src="{{ url('images/wave.svg') }}" class="wave" alt="{{ __('wave') }}" />
               </div>
               <div class="widget-content">
-                <a href="#" class="tag">{{ __('Various') }}</a>
+                @foreach ($popular_tags as $tag)
+                  {{-- <a href="{{ route('list_tag_articles', $tag->id) }}" class="tag"> --}}
+                  <a href="{{ route('tag_view', $tag->slug) }}" class="tag">
+                    {{ $tag->title }}
+                  </a>
+                @endforeach
                 <a href="#" class="tag">{{ __('Electronics') }}</a>
                 <a href="#" class="tag">{{ __('General') }}</a>
                 <a href="#" class="tag">{{ __('Inspiration') }}</a>

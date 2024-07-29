@@ -12,7 +12,7 @@
 .cart-btns .cart {
   border-radius: 0 8px 8px 0;
   color: white;
-  background: #5fb7ea;
+  background: #3d93c5;
   padding: 12px 10px;
   overflow: visible;
 }

@@ -10,7 +10,7 @@ return new class extends Migration {
     Schema::create('orders', function (Blueprint $table) {
       $table->id();
       $table->foreignId("user_id")->nullable();
-      $table->integer("total");
+      $table->integer("total")->default(0);
       $table->string("token")->unique();
       $table->string("client_name")->nullable();
       $table->string("client_email")->nullable();

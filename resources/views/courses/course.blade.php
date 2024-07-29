@@ -88,37 +88,51 @@
 
       <div class="card card-body border-0 shadow mb-4">
         <div class="row">
-          @foreach ($items as $item)
-            <div class="col-md-4 mb-3 lecture">
-              @if ($item->is_open && $is_enrolled)
-                <a
-                  href="@if ($item->is_lecture()) {{ route('lecture_show', $item->itemable->id) }} @else {{ route('test_show', $item->itemable->id) }} @endif">
+          @if ($items->count() > 0)
+            @foreach ($items as $item)
+              <div class="col-md-4 mb-3 lecture">
+                @if ($item->is_open && $is_enrolled)
+                  <a
+                    href="@if ($item->is_lecture()) {{ route('lecture_show', $item->itemable->id) }} @else {{ route('test_show', $item->itemable->id) }} @endif">
+                    <div style="border-width: 2px;"
+                      class="card bg-dark text-white @if ($item->is_watched) border-success @else border-primary @endif">
+                      <img class="card-img lecture-img" src="{{ $item->itemable->image_url() }}"
+                        alt="{{ $item->itemable->title }}">
+                      <div class="card-img-overlay">
+                        <h5 class="card-title m-0">{{ $item->itemable->title }}</h5>
+                        <small class="card-text text-sm">{{ $item->itemable->get_date() }}</small>
+                      </div>
+                    </div>
+                  </a>
+                @else
                   <div style="border-width: 2px;"
-                    class="card bg-dark text-white @if ($item->is_watched) border-success @else border-primary @endif">
-                    <img class="card-img lecture-img" src="{{ $item->itemable->image_url() }}"
+                    class="card bg-dark text-white position-relative @if ($item->is_watched) border-success @else border-0 @endif">
+                    <span class="lock-icon">
+                      <i class="fa fa-lock"></i>
+                    </span>
+                    <img class="card-img lecture-img closed-lecture" src="{{ $item->itemable->image_url() }}"
                       alt="{{ $item->itemable->title }}">
                     <div class="card-img-overlay">
                       <h5 class="card-title m-0">{{ $item->itemable->title }}</h5>
                       <small class="card-text text-sm">{{ $item->itemable->get_date() }}</small>
                     </div>
                   </div>
-                </a>
-              @else
-                <div style="border-width: 2px;"
-                  class="card bg-dark text-white position-relative @if ($item->is_watched) border-success @else border-0 @endif">
-                  <span class="lock-icon">
-                    <i class="fa fa-lock"></i>
-                  </span>
-                  <img class="card-img lecture-img closed-lecture" src="{{ $item->itemable->image_url() }}"
-                    alt="{{ $item->itemable->title }}">
-                  <div class="card-img-overlay">
-                    <h5 class="card-title m-0">{{ $item->itemable->title }}</h5>
-                    <small class="card-text text-sm">{{ $item->itemable->get_date() }}</small>
-                  </div>
+                @endif
+              </div>
+            @endforeach
+          @else
+            <div class="card-body">
+              <div class="my-4">
+                <div role="alert"
+                  style="border-style: solid; border-width: 0px;border-{{ app()->getLocale() == 'ar' ? 'right' : 'left' }}-width: 4px; border-color: rgb(249 115 22); background-color: rgb(255 237 213); padding: 1rem; color: rgb(194 65 12);">
+                  <p class="font-bold" style="margin: 0px; font-weight: 700;">{{ __('Not Finished Yet') }}</p>
+                  <p style="margin: 0px;">
+                    {{ __('we are working on this course and we are not done uploading the leactures and exams yet') }}.
+                  </p>
                 </div>
-              @endif
+              </div>
             </div>
-          @endforeach
+          @endif
         </div>
       </div>
 

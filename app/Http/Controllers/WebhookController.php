@@ -51,7 +51,9 @@ class WebhookController extends Controller {
         Cart::deleteStoredCart($event->data->object->id);
       }
 
-      abort(404);
+      return abort(404, "your payment has failed");
+    } else {
+      return abort(404, "this event is not supported");
     }
   }
 
@@ -84,7 +86,7 @@ class WebhookController extends Controller {
         "intent_id" => $event->data->object->id,
       ],
       [
-        "total" => Cart::total() * 100,
+        "total_price" => Cart::total() * 100,
         "client_name" => $event->data->object->shipping?->name,
         "stage" => "1",
         "address" => format_address($address),
@@ -109,4 +111,13 @@ class WebhookController extends Controller {
 
     Cart::destroy();
   }
+}
+
+function format_address($address_obj) {
+  return $address_obj->country . ", " .
+    $address_obj->state . ", " .
+    $address_obj->city . " | " .
+    $address_obj->line2 . ", " .
+    $address_obj->line1 . ", postal: " .
+    $address_obj->postal_code;
 }
