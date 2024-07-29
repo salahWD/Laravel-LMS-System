@@ -6,12 +6,10 @@ export default defineConfig({
     laravel({
       input: [
         "resources/css/app.css",
-        "resources/css/style.css",
         "resources/css/video-player.css",
         "resources/css/taking-test.css",
         "resources/css/slick.css",
         "resources/css/simple-line-icons.css",
-        "resources/css/sections.css",
         "resources/css/login.css",
         "resources/css/home.css",
         "resources/css/editor.css",

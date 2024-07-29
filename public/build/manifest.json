@@ -65,7 +65,7 @@
     "isEntry": true
   },
   "resources/css/app.css": {
-    "file": "assets/app-Bc-3_uOO.css",
+    "file": "assets/app-CF5M5M8L.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -85,7 +85,7 @@
     "isEntry": true
   },
   "resources/css/courses.css": {
-    "file": "assets/courses-D0_p3llM.css",
+    "file": "assets/courses-CcF_Pov6.css",
     "src": "resources/css/courses.css",
     "isEntry": true
   },
@@ -135,12 +135,12 @@
     "isEntry": true
   },
   "resources/css/editor.css": {
-    "file": "assets/editor-B19O00XR.css",
+    "file": "assets/editor-f8sBZK5E.css",
     "src": "resources/css/editor.css",
     "isEntry": true
   },
   "resources/css/home.css": {
-    "file": "assets/home-3_VDAugm.css",
+    "file": "assets/home-Dc1ud21O.css",
     "src": "resources/css/home.css",
     "isEntry": true
   },
@@ -155,17 +155,12 @@
     "isEntry": true
   },
   "resources/css/product.css": {
-    "file": "assets/product-n9_9ywSu.css",
+    "file": "assets/product-CjAcOTR_.css",
     "src": "resources/css/product.css",
     "isEntry": true
   },
-  "resources/css/sections.css": {
-    "file": "assets/sections-Dp0VYS38.css",
-    "src": "resources/css/sections.css",
-    "isEntry": true
-  },
   "resources/css/shop.css": {
-    "file": "assets/shop-o7KUcfbC.css",
+    "file": "assets/shop-ba4Ev3jx.css",
     "src": "resources/css/shop.css",
     "isEntry": true
   },
@@ -175,18 +170,13 @@
     "isEntry": true
   },
   "resources/css/single-product.css": {
-    "file": "assets/single-product-DEg2Nv5d.css",
+    "file": "assets/single-product-CZtv6zVM.css",
     "src": "resources/css/single-product.css",
     "isEntry": true
   },
   "resources/css/slick.css": {
     "file": "assets/slick-D85A8jK9.css",
     "src": "resources/csslibs/slick.css",
-    "isEntry": true
-  },
-  "resources/css/style.css": {
-    "file": "assets/style-jIEpbcCC.css",
-    "src": "resources/css/style.css",
     "isEntry": true
   },
   "resources/css/taking-test.css": {
@@ -220,7 +210,7 @@
     "isEntry": true
   },
   "resources/csslibs/style.css": {
-    "file": "assets/style-C6raWHEo.css",
+    "file": "assets/style-IHv4hTsa.css",
     "src": "resources/csslibs/style.css",
     "isEntry": true
   },
@@ -270,7 +260,7 @@
   },
   "resources/fonts/fa-regular-400.eot": {
     "file": "assets/fa-regular-400-CdvVwXPA.eot",
-    "src": "resources/fonts/fa-regular-400.eot"
+    "src": "resources/fonts/fa-regular-400d41d.eot"
   },
   "resources/fonts/fa-regular-400.svg": {
     "file": "assets/fa-regular-400-CjYw4d2M.svg",
@@ -290,7 +280,7 @@
   },
   "resources/fonts/fa-regular-400d41d.eot": {
     "file": "assets/fa-regular-400-CdvVwXPA.eot",
-    "src": "resources/fonts/fa-regular-400.eot"
+    "src": "resources/fonts/fa-regular-400d41d.eot"
   },
   "resources/fonts/fa-solid-900.eot": {
     "file": "assets/fa-solid-900-CcKsHZq-.eot",
