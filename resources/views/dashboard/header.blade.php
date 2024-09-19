@@ -1,12 +1,11 @@
 <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
   <a class="navbar-brand me-lg-5" href="#">
-    <img class="navbar-brand-dark" src="{{ url('img/brand/light.svg') }}" alt="{{ __('Eletorial logo') }}" />
-    <img class="navbar-brand-light" src="{{ url('img/brand/dark.svg') }}" alt="{{ __('Eletorial logo') }}" />
+    <img class="navbar-brand-dark" src="{{ url('images/brand/light.svg') }}" alt="{{ __('Eletorial logo') }}" />
+    <img class="navbar-brand-light" src="{{ url('images/brand/dark.svg') }}" alt="{{ __('Eletorial logo') }}" />
   </a>
   <div class="d-flex align-items-center">
     <button class="navbar-toggler d-lg-none collapsed" type="button" data-bs-toggle="collapse"
-      data-bs-target="{{ __('sidebarMenu') }}" aria-controls="sidebarMenu" aria-expanded="false"
-      aria-label="Toggle navigation">
+      data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
   </div>
@@ -17,12 +16,12 @@
     <div class="user-card d-flex d-md-none align-items-center justify-content-between justify-content-md-center pb-4">
       <div class="d-flex align-items-center">
         <div class="avatar-lg me-4">
-          <img src="{{ url('img/team/profile-picture-3.jpg') }}" class="card-img-top rounded-circle border-white"
+          <img src="{{ auth()->user()->image_url() }}" class="card-img-top rounded-circle border-white"
             alt="{{ __('Bonnie Green') }}">
         </div>
         <div class="d-block">
           <h2 class="h5 mb-3">Hi, {{ auth()->user()->username }}</h2>
-          <a href="dashboard/examples/sign-in" tabindex="-1"
+          <a href="{{ route('logout') }}" tabindex="-1"
             class="btn btn-secondary btn-sm d-inline-flex align-items-center">
             <svg class="icon icon-xxs me-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg">
@@ -30,7 +29,7 @@
                 d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
               </path>
             </svg>
-            {{ __('Sign Out') }}
+            {{ __('Logout') }}
           </a>
         </div>
       </div>
@@ -49,7 +48,7 @@
       <li class="nav-item">
         <a href="{{ route('dashboard') }}" class="nav-link d-flex align-items-center">
           <span class="sidebar-icon">
-            <img src="{{ url('img/brand/light.svg') }}" height="20" width="20"
+            <img src="{{ url('images/brand/light.svg') }}" height="20" width="20"
               alt="{{ __('Eletorial Logo') }}">
           </span>
           <span class="mt-1 ms-1 sidebar-text">{{ __('Eletorial') }}</span>
@@ -265,7 +264,7 @@
         </a>
       </li>
 
-      <li class="nav-item {{ request()->segment(3) == 'messages' ? 'active' : '' }}">
+      {{-- <li class="nav-item {{ request()->segment(3) == 'messages' ? 'active' : '' }}">
         <a href="{{ route('messages_manage') }}" class="nav-link">
           <span class="sidebar-icon">
             <svg class="icon icon-xs me-2" data-slot="icon" fill="currentColor" viewBox="0 0 24 24"
@@ -277,7 +276,7 @@
           </span>
           <span class="sidebar-text">{{ __('Messages') }}</span>
         </a>
-      </li>
+      </li> --}}
 
       <li class="nav-item {{ request()->segment(3) == 'settings' ? 'active' : '' }}">
         <a href="{{ route('dashboard_settings') }}" class="nav-link">

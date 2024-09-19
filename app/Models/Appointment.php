@@ -15,6 +15,7 @@ class Appointment extends Model {
     "title",
     "url",
     "description",
+    "user_id",
     "duration",
     "buffer_zone",
     "timezone",

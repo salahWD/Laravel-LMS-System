@@ -15,6 +15,7 @@ use App\Models\Message;
 use App\Models\Tag;
 use App\Models\Order;
 use App\Models\Appointment;
+use App\Helpers\ConfigHelper;
 
 class Dashboard extends Controller {
 
@@ -92,9 +93,20 @@ class Dashboard extends Controller {
 
   public function set_settings(Request $request) {
     $request->validate([
-      "certification_section" => "required|boolean",
+      "certification_section" => "sometimes|in:on,off",
     ]);
-    dd(request()->all());
-    return view('dashboard.settings');
+
+    if (request("certification_section") != null && !empty(request("certification_section")) && request("certification_section")) {
+
+      ConfigHelper::updateDashboardConfig([
+        "certificates_status" => true,
+      ]);
+    } else {
+      ConfigHelper::updateDashboardConfig([
+        "certificates_status" => false,
+      ]);
+    }
+
+    return redirect()->route('dashboard_settings');
   }
 }

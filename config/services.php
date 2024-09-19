@@ -2,6 +2,11 @@
 
 return [
 
+  'telegram' => [
+    'bot_token' => env('TELEGRAM_BOT_TOKEN'),
+    'channel_id' => env('TELEGRAM_CHANNEL_ID'),
+  ],
+
   'stripe' => [
     "key" => env("STRIPE_KEY"),
     "secret" => env("STRIPE_SECRET"),

@@ -61,9 +61,11 @@ Route::middleware('localizationRedirect')->group(function () {
       Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
       Route::get('/meetings/{bookedAppointment}', [BookedAppointmentController::class, 'show'])->name("booked_appointment_show");
     });
-    Route::get('/certificates', [CertificateController::class, 'index'])->name('certificates');
-    Route::get('/certificate/{certificate}', [CertificateController::class, 'download'])->name('certificate_download');
-    Route::get('/certificate/theme/{theme}', [CertificateController::class, 'show_theme'])->name('certificate_theme_show');
+    Route::controller(CertificateController::class)->group(function () {
+      Route::get('/certificates', 'index')->name('certificates');
+      Route::get('/certificate/{certificate}', 'download')->name('certificate_download');
+      Route::get('/certificate/theme/{theme}', 'show_theme')->name('certificate_theme_show');
+    });
     Route::get('/courses/{course}', [CourseController::class, 'show'])->name('course_show');
     Route::get('/courses/{course}/enroll', [CourseController::class, 'enroll'])->name('course_enroll');
     Route::get('/lectures/{lecture}', [LectureController::class, 'show'])->name('lecture_show');
@@ -71,13 +73,20 @@ Route::middleware('localizationRedirect')->group(function () {
     Route::get('/appointments/{appointment:url}', [AppointmentController::class, 'show'])->name("appointment_booking");
     Route::POST('/appointments/{bookedAppointment}', [BookedAppointmentController::class, 'update'])->name("booked.appointmet.notes");
     Route::get('/{user:username}/meetings', [UserController::class, 'show_meetings'])->name("user_appointments");
-    Route::get('/cart', [CartController::class, 'show'])->name('cart_show');
-    Route::get('/cart/edit', [CartController::class, 'edit'])->name('cart_edit');
-    Route::POST('/cart', [CartController::class, 'update'])->name('cart_update');
+    Route::controller(CartController::class)->group(function () {
+      Route::get('/cart', 'show')->name('cart_show');
+      Route::get('/cart/edit', 'edit')->name('cart_edit');
+      Route::POST('/cart', 'update')->name('cart_update');
+    });
   });
 
   Route::prefix('/dashboard')->middleware(['auth', 'admin'])->group(function () {
     Route::view('/', 'dashboard')->name('dashboard');
+    Route::controller(Dashboard::class)->group(function () {
+      Route::get('/articles', 'articles')->name('articles_manage');
+      Route::get('/categories', 'categories')->name('categories_manage');
+      Route::get('/courses', 'courses')->name('courses_manage');
+    });
     Route::prefix('/users')->group(function () {
       Route::get('/', [Dashboard::class, 'users'])->name('users_manage');
       Route::get('/create', [UserController::class, 'create'])->name('user_create');
@@ -85,22 +94,25 @@ Route::middleware('localizationRedirect')->group(function () {
       Route::get('/{user}', [UserController::class, 'edit'])->name('user_edit');
       Route::POST('/{user}', [UserController::class, 'update']);
     });
-    Route::get('/articles', [Dashboard::class, 'articles'])->name('articles_manage');
-    Route::get('/articles/create', [ArticleController::class, 'create'])->name('article_create');
-    Route::POST('/articles/create', [ArticleController::class, 'store']);
-    Route::get('/articles/{article}', [ArticleController::class, 'edit'])->name('article_edit');
-    Route::POST('/articles/{article}', [ArticleController::class, 'update']);
-    Route::get('/categories', [Dashboard::class, 'categories'])->name('categories_manage');
-    Route::get('/categories/create', [CategoryController::class, 'create'])->name('category_create');
-    Route::POST('/categories/create', [CategoryController::class, 'store']);
-    Route::get('/categories/{category}', [CategoryController::class, 'edit'])->name('category_edit');
-    Route::POST('/categories/{category}', [CategoryController::class, 'update']);
-    Route::get('/courses', [Dashboard::class, 'courses'])->name('courses_manage');
-    Route::get('/courses/create', [CourseController::class, 'create'])->name('course_create');
-    Route::POST('/courses/create', [CourseController::class, 'store']);
-    Route::get('/courses/{course}', [CourseController::class, 'edit'])->name('course_edit');
-    Route::POST('/courses/{course}', [CourseController::class, 'update']);
-    Route::get('/courses/{course}/delete', [CourseController::class, 'destroy'])->name("course_delete");
+    Route::controller(ArticleController::class)->group(function () {
+      Route::get('/articles/create', 'create')->name('article_create');
+      Route::POST('/articles/create', 'store');
+      Route::get('/articles/{article}', 'edit')->name('article_edit');
+      Route::POST('/articles/{article}', 'update');
+    });
+    Route::controller(CategoryController::class)->group(function () {
+      Route::get('/categories/create', [CategoryController::class, 'create'])->name('category_create');
+      Route::POST('/categories/create', [CategoryController::class, 'store']);
+      Route::get('/categories/{category}', [CategoryController::class, 'edit'])->name('category_edit');
+      Route::POST('/categories/{category}', [CategoryController::class, 'update']);
+    });
+    Route::controller(CourseController::class)->group(function () {
+      Route::get('/courses/create', 'create')->name('course_create');
+      Route::POST('/courses/create', 'store');
+      Route::get('/courses/{course}', 'edit')->name('course_edit');
+      Route::POST('/courses/{course}', 'update');
+      Route::get('/courses/{course}/delete', 'destroy')->name("course_delete");
+    });
     Route::get('/courses/{course}/lecture', [LectureController::class, 'create_for'])->name('lecture_create_for');
     Route::get('/lectures', [Dashboard::class, 'lectures'])->name('lectures_manage');
     Route::get('/lectures/create', [LectureController::class, 'create'])->name('lecture_create');
@@ -112,9 +124,6 @@ Route::middleware('localizationRedirect')->group(function () {
     Route::get('/tags', [Dashboard::class, 'tags'])->name('tags_manage');
     Route::get('/tags/{tag}', [Dashboard::class, 'tag'])->name('tag_edit');
     Route::POST('/tags/{tag}', [TagController::class, 'update']);
-    Route::get('/messages', [Dashboard::class, 'messages'])->name('messages_manage');
-    Route::get('/messages/{message}', [MessageController::class, 'response'])->name('message_edit');
-    Route::POST('/messages/{message}', [MessageController::class, 'send']);
     Route::get('/certificates', [Dashboard::class, 'certificates'])->name('certificates_manage');
     Route::get('/certificates/create', [CertificateController::class, 'create'])->name('certificate_create');
     Route::POST('/certificates/create', [CertificateController::class, 'store']);
@@ -161,7 +170,6 @@ Route::middleware('localizationRedirect')->group(function () {
     Route::prefix('/bookedAppointments')->group(function () {
       Route::delete('/{bookedAppointment}', [BookedAppointmentController::class, 'destroy'])->name("booked_appointment_delete");
     });
-    // Route::get('/messages/{message}/delete', [MessageController::class, 'destroy'])->name("message_delete");
     Route::get('/settings', [Dashboard::class, 'settings'])->name("dashboard_settings");
     Route::POST('/settings', [Dashboard::class, 'set_settings']);
   });
@@ -202,7 +210,6 @@ Route::prefix('/app-request')->middleware(['auth', 'admin'])->group(function () 
   Route::POST('/articles/{article}/delete', [ArticleController::class, 'api_destroy']);
   Route::POST('/products/{product}/delete', [ProductController::class, 'api_destroy']);
   Route::get('/proxy', [ProductController::class, 'proxy'])->name("product_proxy");
-  Route::POST('/messages/{message}/delete', [MessageController::class, 'destroy'])->name("message_delete");
   Route::POST('/articles/upload-attachment', [ArticleController::class, 'upload_attachment'])->name("article_attachment");
   Route::POST('/courseitems/order', [CourseController::class, 'reorder_items'])->name("courseitem_order");
 
@@ -229,48 +236,6 @@ Route::prefix('/app-request')->middleware(['auth', 'admin'])->group(function () 
 
   Route::get('/attempts/{testAttempt}', [TestAttemptController::class, 'show'])->name("attempt_get");
 });
-
-
-
-/*
-
-  Route::redirect('/', '/login');
-
-  Route::get('/register', Register::class)->name('register');
-  Route::get('/login', Login::class)->name('login');
-
-  Route::get('/forgot-password', ForgotPassword::class)->name('forgot-password');
-
-  Route::get('/reset-password/{id}', ResetPassword::class)->name('reset-password')->middleware('signed');
-
-  Route::get('/404', Err404::class)->name('404');
-  Route::get('/500', Err500::class)->name('500');
-
-  Route::get('/dashboard', Dashboard::class)->middleware('admin')->name('dashboard');
-  Route::prefix('/dashboard')->middleware('admin')->group(function () {
-    Route::get('/profile', Profile::class)->name('profile');
-    Route::get('/users', Users::class)->name('users');
-    Route::get('/articles', Transactions::class)->name('transactions');
-    Route::get('/transactions', Transactions::class)->name('transactions');
-    Route::get('/profile-example', ProfileExample::class)->name('profile-example');
-    Route::get('/login-example', LoginExample::class)->name('login-example');
-    Route::get('/register-example', RegisterExample::class)->name('register-example');
-    Route::get('/forgot-password-example', ForgotPasswordExample::class)->name('forgot-password-example');
-    Route::get('/reset-password-example', ResetPasswordExample::class)->name('reset-password-example');
-    Route::get('/bootstrap-tables', BootstrapTables::class)->name('bootstrap-tables');
-    Route::get('/lock', Lock::class)->name('lock');
-    Route::get('/buttons', Buttons::class)->name('buttons');
-    Route::get('/notifications', Notifications::class)->name('notifications');
-    Route::get('/forms', Forms::class)->name('forms');
-    Route::get('/modals', Modals::class)->name('modals');
-    Route::get('/typography', Typography::class)->name('typography');
-  });
-
-  Route::controller(ArticleController::class)->group(function () {
-    Route::get('/orders/{id}', 'show');
-    Route::POST('/orders', 'store');
-  });
-*/
 
 
 // https://imgaz3.staticbg.com/thumb/large/oaupload/banggood/images/4F/32/productId // full image

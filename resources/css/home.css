@@ -81,17 +81,9 @@
   }
 }
 .hero-section .content {
-  /* background: rgba(15, 15, 15, 0.5); */
   backdrop-filter: blur(4px);
   background: transparent;
   border: 1px solid #00000040;
-  /* background: linear-gradient(
-    75deg,
-    rgba(20, 20, 20, 0.85) -40%,
-    rgba(72, 118, 187, 0.5) 100%
-  );
-  border: 1px solid black;
-  */
   padding: 45px 65px;
   border-radius: 10px;
   box-shadow: 0 0 30px rgba(15, 15, 15, 0.8);
@@ -99,6 +91,17 @@
   color: rgb(247, 247, 247);
   z-index: 3;
   transition: 0.5s ease-in-out;
+}
+@media screen and (max-width: 575px) {
+  .hero-section {
+    padding: 60px 30px;
+  }
+  .hero-section .content {
+    padding: 30px 25px;
+  }
+  .hero-section .shape {
+    display: none;
+  }
 }
 .hero-section .content .star-1 {
   display: inline-block;
@@ -138,6 +141,12 @@
 .about-walid .desc {
   font-size: 20px;
   line-height: 32px;
+}
+@media screen and (max-width: 575px) {
+  .about-walid .desc {
+    line-height: 18px;
+    font-size: 16px;
+  }
 }
 .about-walid h5 {
   font-size: 20px;
@@ -316,8 +325,8 @@
     height: -moz-fit-content;
     height: fit-content;
     border-bottom: 3px dashed #d5d7dd;
-    -o-border-image: url("../img/illustrations/border.webp") 20 round;
-    border-image: url("../img/illustrations/border.webp") 20 round;
+    -o-border-image: url("../images/illustrations/border.webp") 20 round;
+    border-image: url("../images/illustrations/border.webp") 20 round;
     left: 50%;
     bottom: 50%;
     z-index: -1;

@@ -19,14 +19,24 @@
     "src": "public/js/bootstrap.min.js",
     "isEntry": true
   },
+  "public/js/checkout.js": {
+    "file": "assets/checkout-D10ePgo9.js",
+    "src": "public/js/checkout.js",
+    "isEntry": true
+  },
+  "public/js/course-enroll.js": {
+    "file": "assets/course-enroll-D10ePgo9.js",
+    "src": "public/js/course-enroll.js",
+    "isEntry": true
+  },
   "public/js/custom.js": {
     "file": "assets/custom-BN3L0HqR.js",
     "src": "public/js/custom.js",
     "isEntry": true
   },
-  "public/js/dashboard/bootstrap.js": {
-    "file": "assets/bootstrap-CifqVuM1.js",
-    "src": "public/js/dashboard/bootstrap.js",
+  "public/js/fullcalendar-main.js": {
+    "file": "assets/fullcalendar-main-DCPucHNM.js",
+    "src": "public/js/fullcalendar-main.js",
     "isEntry": true
   },
   "public/js/jquery.min.js": {
@@ -39,9 +49,29 @@
     "src": "public/js/jquery.sticky-sidebar.min.js",
     "isEntry": true
   },
+  "public/js/particles.min.js": {
+    "file": "assets/particles.min-B9mZ7tew.js",
+    "src": "public/js/particles.min.js",
+    "isEntry": true
+  },
   "public/js/popper.min.js": {
     "file": "assets/popper.min-JUKoA6mh.js",
     "src": "public/js/popper.min.js",
+    "isEntry": true
+  },
+  "public/js/product-images.js": {
+    "file": "assets/product-images-DucBD29Z.js",
+    "src": "public/js/product-images.js",
+    "isEntry": true
+  },
+  "public/js/report.js": {
+    "file": "assets/report-l0sNRNKZ.js",
+    "src": "public/js/report.js",
+    "isEntry": true
+  },
+  "public/js/single-product.js": {
+    "file": "assets/single-product-BxVuMUkE.js",
+    "src": "public/js/single-product.js",
     "isEntry": true
   },
   "public/js/slick.min.js": {
@@ -54,9 +84,19 @@
     "src": "public/js/taking-test.js",
     "isEntry": true
   },
+  "public/js/test-builder.js": {
+    "file": "assets/test-builder-CmZsQTN9.js",
+    "src": "public/js/test-builder.js",
+    "isEntry": true
+  },
   "public/js/video-player.js": {
     "file": "assets/video-player-BBFVLMpa.js",
     "src": "public/js/video-player.js",
+    "isEntry": true
+  },
+  "public/js/volt.js": {
+    "file": "assets/volt-D-B71Hl6.js",
+    "src": "public/js/volt.js",
     "isEntry": true
   },
   "public/js/yt-player.js": {
@@ -64,14 +104,24 @@
     "src": "public/js/yt-player.js",
     "isEntry": true
   },
+  "resources/css/all.min.css": {
+    "file": "assets/all-B4isxjrT.css",
+    "src": "resources/css/all.min.css",
+    "isEntry": true
+  },
   "resources/css/app.css": {
-    "file": "assets/app-CF5M5M8L.css",
+    "file": "assets/app-B9RAvpM-.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/css/booking-appointment.css": {
     "file": "assets/booking-appointment-B_ai4_5g.css",
     "src": "resources/css/booking-appointment.css",
+    "isEntry": true
+  },
+  "resources/css/bootstrap.min.css": {
+    "file": "assets/bootstrap-DHH9eD7C.css",
+    "src": "resources/css/bootstrap.min.css",
     "isEntry": true
   },
   "resources/css/checkout.css": {
@@ -134,13 +184,23 @@
     "src": "resources/css/dashboard/volt.css",
     "isEntry": true
   },
+  "resources/css/edit-cart.css": {
+    "file": "assets/edit-cart-v_Elw8UN.css",
+    "src": "resources/css/edit-cart.css",
+    "isEntry": true
+  },
   "resources/css/editor.css": {
     "file": "assets/editor-f8sBZK5E.css",
     "src": "resources/css/editor.css",
     "isEntry": true
   },
+  "resources/css/fullcalendar-main.css": {
+    "file": "assets/fullcalendar-main-CPP9Ycb-.css",
+    "src": "resources/css/fullcalendar-main.css",
+    "isEntry": true
+  },
   "resources/css/home.css": {
-    "file": "assets/home-Dc1ud21O.css",
+    "file": "assets/home-D3oeFdfR.css",
     "src": "resources/css/home.css",
     "isEntry": true
   },
@@ -184,6 +244,11 @@
     "src": "resources/css/taking-test.css",
     "isEntry": true
   },
+  "resources/css/track-order.css": {
+    "file": "assets/track-order-CdwWfKxI.css",
+    "src": "resources/css/track-order.css",
+    "isEntry": true
+  },
   "resources/css/video-player.css": {
     "file": "assets/video-player-BGCqwHkM.css",
     "src": "resources/css/video-player.css",
@@ -210,7 +275,7 @@
     "isEntry": true
   },
   "resources/csslibs/style.css": {
-    "file": "assets/style-IHv4hTsa.css",
+    "file": "assets/style-RMNYdLNS.css",
     "src": "resources/csslibs/style.css",
     "isEntry": true
   },
@@ -260,7 +325,7 @@
   },
   "resources/fonts/fa-regular-400.eot": {
     "file": "assets/fa-regular-400-CdvVwXPA.eot",
-    "src": "resources/fonts/fa-regular-400d41d.eot"
+    "src": "resources/fonts/fa-regular-400.eot"
   },
   "resources/fonts/fa-regular-400.svg": {
     "file": "assets/fa-regular-400-CjYw4d2M.svg",
@@ -280,11 +345,11 @@
   },
   "resources/fonts/fa-regular-400d41d.eot": {
     "file": "assets/fa-regular-400-CdvVwXPA.eot",
-    "src": "resources/fonts/fa-regular-400d41d.eot"
+    "src": "resources/fonts/fa-regular-400.eot"
   },
   "resources/fonts/fa-solid-900.eot": {
     "file": "assets/fa-solid-900-CcKsHZq-.eot",
-    "src": "resources/fonts/fa-solid-900d41d.eot"
+    "src": "resources/fonts/fa-solid-900.eot"
   },
   "resources/fonts/fa-solid-900.svg": {
     "file": "assets/fa-solid-900-WyjaTRVc.svg",
@@ -304,7 +369,7 @@
   },
   "resources/fonts/fa-solid-900d41d.eot": {
     "file": "assets/fa-solid-900-CcKsHZq-.eot",
-    "src": "resources/fonts/fa-solid-900d41d.eot"
+    "src": "resources/fonts/fa-solid-900.eot"
   },
   "resources/fonts/slick.eot": {
     "file": "assets/slick-Bi9J8BMx.eot",

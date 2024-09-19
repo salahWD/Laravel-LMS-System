@@ -46,7 +46,7 @@
               <!-- post -->
               <div class="col-sm-6">
                 <div class="post post-grid rounded bordered">
-                  <div class="thumb top-rounded">
+                  <div class="thumb top-rounded overflow-hidden">
                     @if ($article->category_id)
                       <a class='category-badge position-absolute'
                         href='{{ route('category_show', $article->category_id) }}'>{{ $article->category->title }}</a>

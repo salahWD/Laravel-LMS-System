@@ -86,11 +86,12 @@ class ProfileController extends Controller {
     $user = $request->user();
     $user->first_name = request("first_name");
     $user->last_name = request("last_name");
+    $user->email = request("email");
     $user->bio = request("bio");
 
-    if ($user->isDirty('email')) {
-      $user->email_verified_at = null;
-    }
+    // if ($user->isDirty('email')) {
+    //   $user->email_verified_at = null;
+    // }
 
     if ($request->hasFile('profile_pic')) {
       // delete old image

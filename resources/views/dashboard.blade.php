@@ -336,7 +336,7 @@
                         <!-- Avatar -->
                         <a href="#" class="avatar">
                           <img class="rounded" alt="{{ __('Image placeholder') }}"
-                            src="../../img/team/profile-picture-1.jpg">
+                            src="../../images/team/profile-picture-1.jpg">
                         </a>
                       </div>
                       <div class="col-auto ms--2">
@@ -367,7 +367,7 @@
                         <!-- Avatar -->
                         <a href="#" class="avatar">
                           <img class="rounded" alt="{{ __('Image placeholder') }}"
-                            src="../../img/team/profile-picture-2.jpg">
+                            src="../../images/team/profile-picture-2.jpg">
                         </a>
                       </div>
                       <div class="col-auto ms--2">
@@ -398,7 +398,7 @@
                         <!-- Avatar -->
                         <a href="#" class="avatar">
                           <img class="rounded" alt="{{ __('Image placeholder') }}"
-                            src="../../img/team/profile-picture-3.jpg">
+                            src="../../images/team/profile-picture-3.jpg">
                         </a>
                       </div>
                       <div class="col-auto ms--2">
@@ -429,7 +429,7 @@
                         <!-- Avatar -->
                         <a href="#" class="avatar">
                           <img class="rounded" alt="{{ __('Image placeholder') }}"
-                            src="../../img/team/profile-picture-4.jpg">
+                            src="../../images/team/profile-picture-4.jpg">
                         </a>
                       </div>
                       <div class="col-auto ms--2">
@@ -697,7 +697,7 @@
               <h2 class="fs-5 fw-bold mb-1">{{ __('Acquisition') }}</h2>
               <p>
                 {{ __('Tells you where your visitors originated from, such as search engines, social networks or website
-                                referrals.') }}
+                                                referrals.') }}
               </p>
               <div class="d-block">
                 <div class="d-flex align-items-center me-5">

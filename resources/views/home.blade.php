@@ -9,7 +9,6 @@
 @endsection
 
 @section('content')
-
   <section class="hero-section section">
     <div id="particles-js"></div>
     {{-- <div class="bg"> --}}

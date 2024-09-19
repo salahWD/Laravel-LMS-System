@@ -21,10 +21,10 @@
               <div class="col-md-6">
                 <div class="align-items-start h-100 d-flex flex-column justify-content-between">
                   <div class="top">
-                    <p class="lead">تصنيف</p>
+                    <p class="lead">{{ __('Category') }}</p>
                     <h2 class="title">{{ $category->title }}</h2>
                     <hr>
-                    <p class="lead">{{ $category->description }}</p>
+                    <p class="lead text-black">{{ $category->description }}</p>
                   </div>
                   <div class="h4 m-0"><span
                       class="badge bg-primary">{{ request()->segment(2) == 'shop' ? __('articles') : __('articles') }}:
@@ -46,7 +46,7 @@
         <div class="row">
           @foreach ($category->articles as $article)
             <!-- post -->
-            <div class="col-md-4 col-sm-6">
+            <div class="col-md-4 col-sm-6 mb-4">
               <div class="post post-grid rounded bordered">
                 <div class="thumb top-rounded">
                   @if ($article->category_id)
