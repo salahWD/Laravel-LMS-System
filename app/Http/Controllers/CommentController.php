@@ -122,7 +122,7 @@ class CommentController extends Controller {
       "page" => "integer:min:0",
     ]);
 
-    $per_page = 15; // comment pagination
+    $per_page = config('settings.tables_row_count'); // comment pagination
     $next_comment = Comment::orderBy("created_at", "DESC")->where("approved", 0)->skip($per_page * request("page"))->with("user")->first();
     $res = $comment->delete();
 

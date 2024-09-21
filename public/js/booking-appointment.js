@@ -227,12 +227,53 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (dates?.booked?.length > 0) {
                   // Convert datesArray to Date objects
                   const dateObjects = dates.booked.map((dateString) => {
-                    const dateEnd = new Date(dateString);
+                    const userTimezone =
+                      Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+                    // Step 1: Parse the ISO 8601 string into a Date object
+                    const dateInAppointmentTimezone = new Date(dateString);
+
+                    // Formatter to convert the time to the user's timezone
+                    const userTimezoneFormatter = new Intl.DateTimeFormat(
+                      "en-US",
+                      {
+                        timeZone: userTimezone,
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        second: "2-digit",
+                        hour12: false, // 24-hour format
+                      }
+                    );
+                    const formattedUserTimeParts =
+                      userTimezoneFormatter.formatToParts(
+                        dateInAppointmentTimezone
+                      );
+
+                    const convertedUserTime = `${formattedUserTimeParts[4].value}-${formattedUserTimeParts[0].value}-${formattedUserTimeParts[2].value} ${formattedUserTimeParts[6].value}:${formattedUserTimeParts[8].value}:${formattedUserTimeParts[10].value}`;
+
+                    console.log(
+                      "Original Time (Appointment's Timezone):",
+                      dateString
+                    );
+                    console.log(
+                      "Converted Time in User's Timezone:",
+                      convertedUserTime
+                    );
+
+                    const dateEnd = new Date(convertedUserTime);
                     dateEnd.setMinutes(
                       dateEnd.getMinutes() + AppointmentDuration
                     );
+                    console.log({
+                      start: new Date(convertedUserTime),
+                      end: dateEnd,
+                    });
+
                     return {
-                      start: new Date(dateString),
+                      start: new Date(convertedUserTime),
                       end: dateEnd,
                     };
                   });

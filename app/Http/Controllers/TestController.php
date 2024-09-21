@@ -18,7 +18,7 @@ class TestController extends Controller {
 
   public function index() {
     if (auth()->user()->is_admin()) {
-      $tests = Test::paginate(15);
+      $tests = Test::paginate(config('settings.tables_row_count'));
     } else {
       $tests = auth()->user()->created_tests();
     }
@@ -478,7 +478,7 @@ class TestController extends Controller {
       }
     }
 
-    $per_page = 15; // lecture pagination
+    $per_page = config('settings.tables_row_count'); // lecture pagination
     $next_test = auth()->user()->courses()->orderBy("created_at", "DESC")->skip($per_page * request("page"))->first();
 
     if ($test->courseItem != null) {

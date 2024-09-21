@@ -380,7 +380,7 @@ class ProductController extends Controller {
 
     if (auth()->user()->is_admin()) {
 
-      $per_page = 15; // article pagination
+      $per_page = config('settings.tables_row_count'); // article pagination
       $next_product = Product::orderBy("created_at", "DESC")->skip($per_page * request("page"))->first();
       $res = $product->delete();
 

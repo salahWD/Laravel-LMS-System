@@ -13,17 +13,17 @@ use Carbon\CarbonTimeZone;
 class AppointmentController extends Controller {
 
   public function index() {
-    $appointments = Appointment::orderBy("created_at", "DESC")->paginate(15);
+    $appointments = Appointment::orderBy("created_at", "DESC")->paginate(config('settings.tables_row_count'));
     if (request("show") != null && in_array(request("show"), ["cancelled", "past", "all"])) {
       if (request("show") == "cancelled") {
-        $booked_appointments = BookedAppointment::for(auth()->user()->id)->cancelled()->with(["appointment", "booker"])->paginate(15);
+        $booked_appointments = BookedAppointment::for(auth()->user()->id)->cancelled()->with(["appointment", "booker"])->paginate(config('settings.tables_row_count'));
       } elseif (request("show") == "past") {
-        $booked_appointments = BookedAppointment::for(auth()->user()->id)->past()->with(["appointment", "booker"])->paginate(15);
+        $booked_appointments = BookedAppointment::for(auth()->user()->id)->past()->with(["appointment", "booker"])->paginate(config('settings.tables_row_count'));
       } else {
-        $booked_appointments = BookedAppointment::for(auth()->user()->id)->with(["appointment", "booker"])->paginate(15);
+        $booked_appointments = BookedAppointment::for(auth()->user()->id)->with(["appointment", "booker"])->paginate(config('settings.tables_row_count'));
       }
     } else {
-      $booked_appointments = BookedAppointment::for(auth()->user()->id)->upcoming()->with(["appointment", "booker"])->paginate(15);
+      $booked_appointments = BookedAppointment::for(auth()->user()->id)->upcoming()->with(["appointment", "booker"])->paginate(config('settings.tables_row_count'));
     }
     return view('dashboard.appointments.index', compact("appointments", "booked_appointments"));
   }
@@ -87,41 +87,46 @@ class AppointmentController extends Controller {
 
   public function show(Appointment $appointment) {
 
-    $settings = $appointment->settings;
-    $appointment->load('author');
+    if ($appointment->status > 0) {
 
-    $settings->each(function ($item) {
-      $item->makeHidden('appointment_id');
-      $item->makeHidden('id');
-    });
+      $settings = $appointment->settings;
+      $appointment->load('author');
 
-    $params = [
-      "event" => $appointment,
-      "settings" => $settings,
-    ];
+      $settings->each(function ($item) {
+        $item->makeHidden('appointment_id');
+        $item->makeHidden('id');
+      });
 
-    if ($appointment->price != null && $appointment->price > 0) {
-      $stripe = new \Stripe\StripeClient(config("services.stripe.secret"));
+      $params = [
+        "event" => $appointment,
+        "settings" => $settings,
+      ];
 
-      $intent = $stripe->paymentIntents->create([
-        'currency' => config("cart.currency_name") ?? "usd",
-        'amount' => $appointment->price * 100,
-        'automatic_payment_methods' => ['enabled' => true],
-        /* =============== if unsigned people can buy stuff =============== */
-        'description' => auth()->user()->fullname() . " Booked An Appointment (" . $appointment->title .  ")",
-        'metadata' => [
-          'product_type' => 'appointment',
-          'fullname' => auth()->user()->fullname(),
-          'username' => auth()->user()->username,
-          'email' => auth()->user()->email,
-          'user_id' => auth()->user()->id,
-        ],
-      ]);
-      $params["intent"] = $intent->client_secret;
-      $params["intentId"] = $intent->id;
+      if ($appointment->price != null && $appointment->price > 0) {
+        $stripe = new \Stripe\StripeClient(config("services.stripe.secret"));
+
+        $intent = $stripe->paymentIntents->create([
+          'currency' => config("cart.currency_name") ?? "usd",
+          'amount' => $appointment->price * 100,
+          'automatic_payment_methods' => ['enabled' => true],
+          /* =============== if unsigned people can buy stuff =============== */
+          'description' => auth()->user()->fullname() . " Booked An Appointment (" . $appointment->title .  ")",
+          'metadata' => [
+            'product_type' => 'appointment',
+            'fullname' => auth()->user()->fullname(),
+            'username' => auth()->user()->username,
+            'email' => auth()->user()->email,
+            'user_id' => auth()->user()->id,
+          ],
+        ]);
+        $params["intent"] = $intent->client_secret;
+        $params["intentId"] = $intent->id;
+      }
+
+      return view("appointment.booking-appointment")->with($params);
     }
 
-    return view("appointment.booking-appointment")->with($params);
+    abort(404);
   }
 
   public function edit(Appointment $appointment) {

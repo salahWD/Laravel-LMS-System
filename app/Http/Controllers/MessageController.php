@@ -34,7 +34,7 @@ class MessageController extends Controller {
         "name" => 'required|string|max:40',
       ]);
 
-      $success = TelegramService::sendMessage(
+      TelegramService::sendMessage(
         "📜📜📜 \n subject: " . request("subject") .
           "\n message: " . request("message") .
           "\n name: " . request("name") .
@@ -42,7 +42,7 @@ class MessageController extends Controller {
       );
     } else {
 
-      $success = TelegramService::sendMessage(
+      TelegramService::sendMessage(
         "📜📜📜 \n subject: " . request("subject") .
           "\n message: " . request("message") .
           "\n user: " . auth()->user()->fullname()

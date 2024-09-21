@@ -298,11 +298,12 @@
               </div>
             </div>
 
-            <!-- widget advertisement -->
+            <!-- widget -->
             <div class="widget no-container rounded text-md-center">
-              <span class="spons-title">- {{ __('Sponsored Ad') }} -</span>
+              <span class="spons-title">- {{ __('additional space') }} -</span>
               <a href="#" class="widget-spons">
-                <img loading="lazy" src="{{ url('images/ads/ad-360.png') }}" alt="{{ __('Advertisement') }}" />
+                <img loading="lazy" src="{{ url('images/additional/widget.jpeg') }}"
+                  alt="{{ __('additional space') }}" style="object-fit: cover; width: min(100%, 280px)" />
               </a>
             </div>
 

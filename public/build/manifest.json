@@ -10,7 +10,7 @@
     "isEntry": true
   },
   "public/js/booking-appointment.js": {
-    "file": "assets/booking-appointment-BHwAqc5k.js",
+    "file": "assets/booking-appointment-PQ1e9KtR.js",
     "src": "public/js/booking-appointment.js",
     "isEntry": true
   },
@@ -110,7 +110,7 @@
     "isEntry": true
   },
   "resources/css/app.css": {
-    "file": "assets/app-B9RAvpM-.css",
+    "file": "assets/app-C7HLAlBn.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -325,7 +325,7 @@
   },
   "resources/fonts/fa-regular-400.eot": {
     "file": "assets/fa-regular-400-CdvVwXPA.eot",
-    "src": "resources/fonts/fa-regular-400.eot"
+    "src": "resources/fonts/fa-regular-400d41d.eot"
   },
   "resources/fonts/fa-regular-400.svg": {
     "file": "assets/fa-regular-400-CjYw4d2M.svg",
@@ -345,11 +345,11 @@
   },
   "resources/fonts/fa-regular-400d41d.eot": {
     "file": "assets/fa-regular-400-CdvVwXPA.eot",
-    "src": "resources/fonts/fa-regular-400.eot"
+    "src": "resources/fonts/fa-regular-400d41d.eot"
   },
   "resources/fonts/fa-solid-900.eot": {
     "file": "assets/fa-solid-900-CcKsHZq-.eot",
-    "src": "resources/fonts/fa-solid-900.eot"
+    "src": "resources/fonts/fa-solid-900d41d.eot"
   },
   "resources/fonts/fa-solid-900.svg": {
     "file": "assets/fa-solid-900-WyjaTRVc.svg",
@@ -369,11 +369,11 @@
   },
   "resources/fonts/fa-solid-900d41d.eot": {
     "file": "assets/fa-solid-900-CcKsHZq-.eot",
-    "src": "resources/fonts/fa-solid-900.eot"
+    "src": "resources/fonts/fa-solid-900d41d.eot"
   },
   "resources/fonts/slick.eot": {
     "file": "assets/slick-Bi9J8BMx.eot",
-    "src": "resources/fonts/slickd41d.eot"
+    "src": "resources/fonts/slick.eot"
   },
   "resources/fonts/slick.svg": {
     "file": "assets/slick-BlzDm7g2.svg",
@@ -389,6 +389,6 @@
   },
   "resources/fonts/slickd41d.eot": {
     "file": "assets/slick-Bi9J8BMx.eot",
-    "src": "resources/fonts/slickd41d.eot"
+    "src": "resources/fonts/slick.eot"
   }
 }

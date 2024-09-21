@@ -149,7 +149,7 @@ class CourseController extends Controller {
   }
 
   public function show_all(Request $request) {
-    $courses = Course::orderBy("created_at", "DESC")->paginate(15);
+    $courses = Course::orderBy("created_at", "DESC")->paginate(config('settings.tables_row_count'));
     return view("courses.index", compact("courses"));
   }
 

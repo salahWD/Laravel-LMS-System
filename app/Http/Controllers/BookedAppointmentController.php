@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use App\Models\BookedAppointment;
+use App\Services\TelegramService;
 use Carbon\Carbon;
 
 use Illuminate\Http\Request;
@@ -15,6 +16,9 @@ use Illuminate\Validation\ValidationException;
 use App\Http\Controllers\GoogleCalendarController;
 use App\Models\AppointmentSetting;
 use Carbon\CarbonTimeZone;
+use PhpParser\Node\Expr\Cast\String_;
+
+use function Laravel\Prompts\text;
 
 class BookedAppointmentController extends Controller {
 
@@ -76,6 +80,10 @@ class BookedAppointmentController extends Controller {
       ->where("status", 1)
       ->whereBetween('appointment_date', [$bookedDate, $endDate])->get();
 
+    $bookedAlreadyTimezoned = $bookedAlready->map(function (BookedAppointment $booked_appointment) use ($appointment) {
+      return Carbon::createFromFormat('Y-m-d H:i:s', $booked_appointment->appointment_date, $appointment->timezone)->toIso8601String();
+    });
+
     $excluded = $appointment
       ->settings()
       ->where("key", "excluded")->get();
@@ -85,17 +93,17 @@ class BookedAppointmentController extends Controller {
       return $date->between($bookedDate, $endDate, true);
     });
 
-    return ["booked" => $bookedAlready->pluck("appointment_date"), "excluded" => $excluded->map(function (AppointmentSetting $setting) {
+    return ["booked" => $bookedAlreadyTimezoned, "excluded" => $excluded->map(function (AppointmentSetting $setting) {
       return [
-        "from" => Carbon::createFromFormat('Y-m-d H:i:sP', $setting->getRawOriginal('day') . ' ' . $setting->from_date),
-        "to" => Carbon::createFromFormat('Y-m-d H:i:sP', $setting->getRawOriginal('day') . ' ' . $setting->to_date),
+        "from" => Carbon::createFromFormat('Y-m-d H:i:sP', $setting->getRawOriginal('day') . ' ' . $setting->from_date)->toISOString(),
+        "to" => Carbon::createFromFormat('Y-m-d H:i:sP', $setting->getRawOriginal('day') . ' ' . $setting->to_date)->toISOString(),
       ];
     })];
   }
 
   public function store(StoreBookedAppointmentRequest $request, Appointment $appointment) {
     // $date => Booked ISO Date And Time
-    $date = $request->validated('date'); // Example: 2024-07-03T01:00:00
+    $date = $request->validated('date'); // Example: 2024-07-03 1:00:00 assuming that the timezone is +0
     $intent_id = $request->validated('intentId') ?? null; // Example: pi_3PWeO6IfgNuRq2TZ1dJcWLQs_secret_wYTC9D3ATGwd633dU9WazmXk2
     // $timezone = $request->validated("timezone");
 
@@ -133,7 +141,6 @@ class BookedAppointmentController extends Controller {
 
         if ($date->between($startTime, $endTime, true)) {
 
-          // $checkTime =  Carbon::createFromFormat('h:i:A', $time, new \DateTimeZone($appointment->timezone));
           $excluded_days = $settings->where("key", "excluded");
 
           // Check if the time is within the specifically excluded time windows
@@ -147,9 +154,6 @@ class BookedAppointmentController extends Controller {
               $windowEnd = Carbon::createFromFormat('Y-m-d H:i:sP', $window->day . ' ' . $window->to_date, new \DateTimeZone($appointment->timezone));
 
               if ($date->between($windowStart, $windowEnd, true)) {
-                // throw ValidationException::withMessages([
-                //   'selected_date' => 'The selected time is within a specifically excluded time window.'
-                // ]);
                 return response()->json(['success' => "error", "message" => "The selected time is within a specifically excluded time window."]);
               }
             }
@@ -195,6 +199,15 @@ class BookedAppointmentController extends Controller {
                     "meeting_link" => $eventLink,
                     "status" => $appointment->price != null && $appointment->price > 0 ? 2 : 1,
                   ]);
+
+                  $payment_status = $appointment->price != null && $appointment->price > 0 ? "مدفوع" : "مجاني";
+                  TelegramService::sendMessage(
+                    "📅📅📅 حجز موعد استشارة 📅📅📅 \n التاريخ: " . $date->toString() .
+                      "\n رابط اللقاء: " . $eventLink .
+                      "\n حالة الموعد: " . $payment_status .
+                      "\n عنوان الحجز: " . $appointment->title .
+                      "\n المستخدم: " . auth()->user()->fullname() . "\n"
+                  );
                 } else {
                   dd('Failed to create Google Calendar event');
                 }
@@ -206,6 +219,13 @@ class BookedAppointmentController extends Controller {
                   "appointment_date" => $date,
                   "status" => $appointment->price != null && $appointment->price > 0 ? 2 : 1,
                 ]);
+                $payment_status = $appointment->price != null && $appointment->price > 0 ? "مدفوع" : "مجاني";
+                TelegramService::sendMessage(
+                  "📅📅📅 حجز موعد استشارة 📅📅📅 \n التاريخ: " . $date->toString() .
+                    "\n حالة الموعد: " . $payment_status .
+                    "\n عنوان الحجز: " . $appointment->title .
+                    "\n المستخدم: " . auth()->user()->fullname() . "\n"
+                );
               }
 
               if ($appointment->price != null && $appointment->price > 0) {

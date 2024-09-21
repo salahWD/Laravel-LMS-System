@@ -39,7 +39,9 @@ class LectureController extends Controller {
       "image" => "nullable|image|mimes:png,jpg,jpeg|max:2048", // max = 2 mega byte
       "video" => "required_if:ytlink,null|file|mimetypes:video/mp4",
       "ytlink" => [
-        "required_if:video,null", "nullable", "url:https",
+        "required_if:video,null",
+        "nullable",
+        "url:https",
         function ($attribute, $value, $fail) {
           if (!Str::isUrl($value) || !Str::contains($value, ["youtube.com"])) {
             $fail("The {$attribute} attibute is not a valid youtube link.");
@@ -162,7 +164,8 @@ class LectureController extends Controller {
       "image" => "nullable|image|mimes:png,jpg,jpeg|max:2048", // max = 2 mega byte
       "video" => "nullable|file|mimetypes:video/mp4",
       "ytlink" => [
-        "required_if:video,null", "url:https",
+        "required_if:video,null",
+        "url:https",
         function ($attribute, $value, $fail) {
           if (!Str::isUrl($value) || !Str::contains($value, ["youtube.com"])) {
             $fail("The {$attribute} attibute is not a valid youtube link.");
@@ -227,7 +230,7 @@ class LectureController extends Controller {
       "page" => "integer:min:0",
     ]);
 
-    $per_page = 15; // lecture pagination
+    $per_page = config('settings.tables_row_count'); // lecture pagination
     $next_lecture = Lecture::orderBy("created_at", "DESC")->skip($per_page * request("page"))->first();
     $res = $lecture->delete();
 

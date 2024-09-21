@@ -55,19 +55,15 @@
                             href="{{ route('appointment_edit', $appointment->id) }}">{{ $appointment->title }}</a>
                         </h5>
                         <p class="card-text">{{ $appointment->description }}</p>
-                        <a href="{{ route('appointment_booking', $appointment->url) }}" class="btn btn-link">View booking
-                          page</a>
+                        <a href="{{ route('appointment_booking', $appointment->url) }}" class="btn btn-link">
+                          {{ __('View booking page') }}</a>
                         <div class="d-flex justify-content-between align-items-center mt-3">
-                          <a class="btn btn-outline-primary" href="{{ route('appointment_edit', $appointment->id) }}">
-                            Edit <i class="fa fa-edit"></i>
+                          <a class="btn btn-outline-gray-800" href="{{ route('appointment_edit', $appointment->id) }}">
+                            {{ __('Edit') }} <i class="fa fa-edit"></i>
                           </a>
                           <button data-id="{{ $appointment->id }}"
-                            class="on-off-btn btn btn-outline-gray-800 text-capitalize">
-                            @if ($appointment->status == 1)
-                              Turn Off
-                            @else
-                              Turn On
-                            @endif
+                            class="on-off-btn btn {{ $appointment->status == 1 ? 'btn-outline-danger' : 'btn-outline-primary' }} text-capitalize">
+                            {{ $appointment->status == 1 ? __('Turn Off') : __('Turn On') }}
                           </button>
                         </div>
                       </div>
@@ -436,8 +432,7 @@
 
     btn.each(function() {
       $(this).on("click", function() {
-        $(this).toggleClass(['btn-outline-gray-800', 'btn-outline-gray-500'])
-        if ($(this).hasClass("btn-outline-gray-800")) {
+        if ($(this).hasClass("btn-outline-primary")) {
           fetch(`{{ route('appointments_manage') }}/${$(this).data("id")}/status`, {
               method: "POST",
               // body: new FormData(),
@@ -452,8 +447,8 @@
             })
             .then((response) => response.json())
             .then((data) => {
-              console.log(data);
-              $(this).text('{{ __('turn off') }}')
+              $(this).text("{{ __('Turn Off') }}").addClass("btn-outline-danger").removeClass(
+                "btn-outline-primary")
             })
             .catch((error) => console.error("Error:", error));
         } else {
@@ -470,7 +465,8 @@
             .then((response) => response.json())
             .then((data) => {
               console.log(data);
-              $(this).text('{{ __('turn on') }}')
+              $(this).text("{{ __('Turn On') }}").addClass("btn-outline-primary").removeClass(
+                "btn-outline-danger")
             })
             .catch((error) => console.error("Error:", error));
 
@@ -574,74 +570,6 @@
 
       });
     })
-
-    /*
-        function getTimeZones() {
-          const timeZones = Intl.supportedValuesOf('timeZone');
-
-          return timeZones.map(timeZone => {
-            const now = new Date();
-            const formatter = new Intl.DateTimeFormat('en-US', {
-              timeZone,
-              hour: 'numeric',
-              minute: 'numeric',
-              second: 'numeric',
-              timeZoneName: 'short'
-            });
-
-            const parts = formatter.formatToParts(now);
-            const offset = parts.find(part => part.type === 'timeZoneName').value;
-
-            return {
-              timeZone,
-              offset
-            };
-          });
-        }
-        const timeZoneList = getTimeZones();
-        timeZoneList.forEach(zone => {
-          console.log(`${zone.offset} ${zone.timeZone}`);
-        });
-
-        function convertTimeZone(date, fromTimeZone, toTimeZone) {
-          // Create a formatter for the source time zone
-          const fromFormatter = new Intl.DateTimeFormat('en-US', {
-            timeZone: fromTimeZone,
-            year: 'numeric',
-            month: 'numeric',
-            day: 'numeric',
-            hour: 'numeric',
-            minute: 'numeric',
-            second: 'numeric'
-          });
-
-          // Format the date in the source time zone
-          const fromParts = fromFormatter.formatToParts(date);
-          const fromDate = new Date(
-            `${fromParts.find(part => part.type === 'year').value}-${fromParts.find(part => part.type === 'month').value}-${fromParts.find(part => part.type === 'day').value}T${fromParts.find(part => part.type === 'hour').value}:${fromParts.find(part => part.type === 'minute').value}:${fromParts.find(part => part.type === 'second').value}`
-          );
-
-          // Create a formatter for the target time zone
-          const toFormatter = new Intl.DateTimeFormat('en-US', {
-            timeZone: toTimeZone,
-            year: 'numeric',
-            month: 'numeric',
-            day: 'numeric',
-            hour: 'numeric',
-            minute: 'numeric',
-            second: 'numeric',
-            timeZoneName: 'short'
-          });
-
-          // Format the date in the target time zone
-          return toFormatter.format(fromDate);
-        }
-
-        // Example usage
-        const dateInNewYork = new Date('2024-06-21T15:00:00'); // 3:00 PM on June 21, 2024
-        const convertedDate = convertTimeZone(dateInNewYork, 'America/New_York', 'Europe/Istanbul');
-        console.log(`Date in ${toTimeZone}: ${convertedDate}`);
-     */
   </script>
 @endsection
 

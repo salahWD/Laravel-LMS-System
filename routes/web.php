@@ -40,26 +40,29 @@ Route::middleware('localizationRedirect')->group(function () {
   Route::get('/tags/{tag:slug}', [TagController::class, 'show'])->name('tag_view');
   Route::get('/courses', [CourseController::class, 'show_all'])->name('courses_show');
   Route::POST('/articles/{article}', [CommentController::class, 'store'])->name('comment_article');
-  Route::get('/products', [ProductController::class, 'index'])->name("shop");
-  Route::get('/products/{product}', [ProductController::class, 'show'])->name("product_show");
-  Route::get('/collection/{category}', [CategoryController::class, 'show'])->name("product_category_show");
+  Route::middleware('shop_section')->group(function () {
+    Route::get('/products', [ProductController::class, 'index'])->name("shop");
+    Route::get('/products/{product}', [ProductController::class, 'show'])->name("product_show");
+    Route::get('/collection/{category}', [CategoryController::class, 'show'])->name("product_category_show");
+  });
   Route::get('/contact-us', [PageController::class, 'contactus'])->name('contact_us');
   Route::POST('/contact-us', [MessageController::class, 'store']);
 
-  // Route::POST('/checkout', [CartController::class, 'checkout'])->name('checkout');
   Route::get('/thanks', [CartController::class, 'success'])->name('checkout_success');
   Route::get('/track/{order:token}', [OrderController::class, 'show'])->name('order_tracking');
 
   Route::middleware(['auth'])->group(function () {
     Route::prefix('/me')->group(function () {
       Route::get('/orders', [OrderController::class, 'index'])->name('my_orders');
-      Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-      Route::get('/certificates', [ProfileController::class, 'certificates'])->name('profile.certificates');
-      Route::get('/settings', [ProfileController::class, 'settings'])->name('profile.settings');
-      Route::get('/meetings', [ProfileController::class, 'meetings'])->name('profile.meetings');
-      Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-      Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
       Route::get('/meetings/{bookedAppointment}', [BookedAppointmentController::class, 'show'])->name("booked_appointment_show");
+      Route::controller(ProfileController::class)->group(function () {
+        Route::get('/profile', 'edit')->name('profile.edit');
+        Route::get('/certificates', 'certificates')->name('profile.certificates');
+        Route::get('/settings', 'settings')->name('profile.settings');
+        Route::get('/meetings', 'meetings')->name('profile.meetings');
+        Route::patch('/profile', 'update')->name('profile.update');
+        Route::delete('/profile', 'destroy')->name('profile.destroy');
+      });
     });
     Route::controller(CertificateController::class)->group(function () {
       Route::get('/certificates', 'index')->name('certificates');
@@ -73,7 +76,7 @@ Route::middleware('localizationRedirect')->group(function () {
     Route::get('/appointments/{appointment:url}', [AppointmentController::class, 'show'])->name("appointment_booking");
     Route::POST('/appointments/{bookedAppointment}', [BookedAppointmentController::class, 'update'])->name("booked.appointmet.notes");
     Route::get('/{user:username}/meetings', [UserController::class, 'show_meetings'])->name("user_appointments");
-    Route::controller(CartController::class)->group(function () {
+    Route::controller(CartController::class)->middleware('shop_section')->group(function () {
       Route::get('/cart', 'show')->name('cart_show');
       Route::get('/cart/edit', 'edit')->name('cart_edit');
       Route::POST('/cart', 'update')->name('cart_update');

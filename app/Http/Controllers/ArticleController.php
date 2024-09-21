@@ -209,7 +209,7 @@ class ArticleController extends Controller {
       "page" => "integer:min:0",
     ]);
 
-    $per_page = 15; // article pagination
+    $per_page = config('settings.tables_row_count'); // article pagination
     $next_article = Article::orderBy("created_at", "DESC")->skip($per_page * request("page"))->withCount("comments")->first();
     $res = $article->delete();
 

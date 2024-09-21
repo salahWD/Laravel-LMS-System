@@ -229,7 +229,7 @@
       addAvailableTime,
       extractTimeFromTimestamp,
       createExcludeDate
-    } from "{{ Vite::asset('public/js/appointment-dashboard.js') }}"
+    } from "{{ url('/js/appointment-dashboard.js') }}"
 
     @if (isset($available) && $available != null)
 

@@ -57,7 +57,7 @@ class CategoryController extends Controller {
   }
 
   public function collection_index(Request $request) {
-    $categories = Category::isProduct()->orderBy("created_at", "DESC")->paginate(15);
+    $categories = Category::isProduct()->orderBy("created_at", "DESC")->paginate(config('settings.tables_row_count'));
 
     return view('dashboard.categories', compact("categories"));
   }
@@ -135,7 +135,7 @@ class CategoryController extends Controller {
       "page" => "integer:min:0",
     ]);
 
-    $per_page = 15; // category pagination
+    $per_page = config('settings.tables_row_count'); // category pagination
     $next_category = Category::notProduct()->orderBy("created_at", "DESC")->skip($per_page * request("page"))->first();
     $res = $category->delete();
 

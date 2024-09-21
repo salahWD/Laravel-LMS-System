@@ -9,16 +9,16 @@
 @endsection
 
 @section('content')
-  <div class="container" id="container">
-    @if ($errors->any())
+  @if ($errors->any())
     <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+      <ul>
+        @foreach ($errors->all() as $error)
+          <li>{{ $error }}</li>
+        @endforeach
+      </ul>
     </div>
-@endif
+  @endif
+  <div class="container" id="container">
     <div class="form-container sign-up-container">
       <form method="POST" action="{{ route('register') }}">
         @csrf
@@ -29,19 +29,21 @@
           <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
         </div> --}}
         <span>{{ __('or use your email for registration') }}</span>
-        <input type="text" placeholder="{{ __('username') }}" name="username" required autocomplete="username" tabindex="3"/>
+        <input type="text" placeholder="{{ __('username') }}" name="username" required autocomplete="username"
+          tabindex="3" />
         @error('username')
           @foreach ($errors->get('username') as $err)
             <p class="text-danger">{{ $err }}</p>
           @endforeach
         @enderror
-        <input type="email" placeholder="{{ __('Email') }}" name="email" value="{{ old('email') }}" required autocomplete="email" tabindex="4"/>
+        <input type="email" placeholder="{{ __('Email') }}" name="email" value="{{ old('email') }}" required
+          autocomplete="email" tabindex="4" />
         @error('email')
           @foreach ($errors->get('email') as $err)
             <p class="text-danger">{{ $err }}</p>
           @endforeach
         @enderror
-        <input type="password" placeholder="{{ __('Password') }}" name="password" required tabindex="5"/>
+        <input type="password" placeholder="{{ __('Password') }}" name="password" required tabindex="5" />
         @error('password')
           @foreach ($errors->get('password') as $err)
             <p class="text-danger">{{ $err }}</p>
@@ -60,13 +62,14 @@
           <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
         </div> --}}
         <span>{{ __('or use your account') }}</span>
-        <input type="email" placeholder="{{ __('Email') }}" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus tabindex="1"/>
+        <input type="email" placeholder="{{ __('Email') }}" name="email" value="{{ old('email') }}" required
+          autocomplete="email" autofocus tabindex="1" />
         @error('email')
           @foreach ($errors->get('email') as $err)
             <p class="text-danger">{{ $err }}</p>
           @endforeach
         @enderror
-        <input type="password" placeholder="{{ __('Password') }}" name="password" required tabindex="2"/>
+        <input type="password" placeholder="{{ __('Password') }}" name="password" required tabindex="2" />
         @error('password')
           @foreach ($errors->get('password') as $err)
             <p class="text-danger">{{ $err }}</p>
@@ -94,7 +97,6 @@
 @endsection
 
 @section('scripts')
-
   <!-- Fontawesome -->
   <script src="https://kit.fontawesome.com/d49577c07f.js" crossorigin="anonymous"></script>
 
@@ -110,5 +112,17 @@
     signInButton.addEventListener('click', () => {
       container.classList.remove("right-panel-active");
     });
+
+    Array.from(document.forms)?.forEach(form =>
+      form.addEventListener("submit", function() {
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+        let input = document.createElement("input");
+        input.setAttribute("type", "hidden");
+        input.setAttribute("name", "timezone");
+        input.setAttribute("value", timezone);
+        this.appendChild(input);
+        return true;
+      })
+    );
   </script>
 @endsection
