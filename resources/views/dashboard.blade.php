@@ -86,23 +86,16 @@
                 </div>
                 <div class="d-sm-none">
                   <h2 class="h5">{{ __('Students') }}</h2>
-                  <h3 class="fw-extrabold mb-1">{{ __('345,678') }}</h3>
+                  <h3 class="fw-extrabold mb-1">{{ $students_count }}</h3>
                 </div>
               </div>
               <div class="col-12 col-xl-7 px-xl-0">
                 <div class="d-none d-sm-block">
                   <h2 class="h6 text-gray-400 mb-0">{{ __('Students') }}</h2>
-                  <h3 class="fw-extrabold mb-2">{{ __('345k') }}</h3>
+                  <h3 class="fw-extrabold mb-2">{{ $students_count }}</h3>
                 </div>
                 <small class="d-flex align-items-center text-gray-500">
-                  Feb 1 - Apr 1,
-                  <svg class="icon icon-xxs text-gray-500 ms-2 me-1" fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z"
-                      clip-rule="evenodd"></path>
-                  </svg>
-                  {{ __('USA') }}
+                  {{ \Carbon\Carbon::now()->subMonths(1)->format('M d') }} - {{ \Carbon\Carbon::now()->format('M d') }},
                 </small>
                 <div class="small d-flex mt-1">
                   <div>Since last month <svg class="icon icon-xs text-success" fill="currentColor" viewBox="0 0 20 20"
@@ -211,7 +204,7 @@
               <div class="card-header">
                 <div class="row align-items-center">
                   <div class="col">
-                    <h2 class="fs-5 fw-bold mb-0">{{ __('Page visits') }}</h2>
+                    <h2 class="fs-5 fw-bold mb-0">{{ __('Most Page visits') }}</h2>
                   </div>
                   <div class="col text-end">
                     <a href="#" class="btn btn-sm btn-primary">{{ __('See all') }}</a>
@@ -322,248 +315,250 @@
               </div>
             </div>
           </div>
-          {{-- <div class="col-12 col-xxl-6 mb-4">
-            <div class="card border-0 shadow">
-              <div class="card-header border-bottom d-flex align-items-center justify-content-between">
-                <h2 class="fs-5 fw-bold mb-0">{{ __('Team members') }}</h2>
-                <a href="#" class="btn btn-sm btn-primary">{{ __('See all') }}</a>
-              </div>
-              <div class="card-body">
-                <ul class="list-group list-group-flush list my--3">
-                  <li class="list-group-item px-0">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <!-- Avatar -->
-                        <a href="#" class="avatar">
-                          <img class="rounded" alt="{{ __('Image placeholder') }}"
-                            src="../../images/team/profile-picture-1.jpg">
-                        </a>
-                      </div>
-                      <div class="col-auto ms--2">
-                        <h4 class="h6 mb-0">
-                          <a href="#">{{ __('Chris Wood') }}</a>
-                        </h4>
-                        <div class="d-flex align-items-center">
-                          <div class="bg-success dot rounded-circle me-1"></div>
-                          <small>{{ __('Online') }}</small>
-                        </div>
-                      </div>
-                      <div class="col text-end">
-                        <a href="#" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
-                          <svg class="icon icon-xxs me-2" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                              d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                              clip-rule="evenodd"></path>
-                          </svg>
-                          {{ __('Invite') }}
-                        </a>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="list-group-item px-0">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <!-- Avatar -->
-                        <a href="#" class="avatar">
-                          <img class="rounded" alt="{{ __('Image placeholder') }}"
-                            src="../../images/team/profile-picture-2.jpg">
-                        </a>
-                      </div>
-                      <div class="col-auto ms--2">
-                        <h4 class="h6 mb-0">
-                          <a href="#">{{ __('Jose Leos') }}</a>
-                        </h4>
-                        <div class="d-flex align-items-center">
-                          <div class="bg-warning dot rounded-circle me-1"></div>
-                          <small>{{ __('In a appointment') }}</small>
-                        </div>
-                      </div>
-                      <div class="col text-end">
-                        <a href="#" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
-                          <svg class="icon icon-xxs me-2" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                              d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z"
-                              clip-rule="evenodd"></path>
-                          </svg>
-                          {{ __('Message') }}
-                        </a>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="list-group-item px-0">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <!-- Avatar -->
-                        <a href="#" class="avatar">
-                          <img class="rounded" alt="{{ __('Image placeholder') }}"
-                            src="../../images/team/profile-picture-3.jpg">
-                        </a>
-                      </div>
-                      <div class="col-auto ms--2">
-                        <h4 class="h6 mb-0">
-                          <a href="#">{{ __('Bonnie Green') }}</a>
-                        </h4>
-                        <div class="d-flex align-items-center">
-                          <div class="bg-danger dot rounded-circle me-1"></div>
-                          <small>{{ __('Offline') }}</small>
-                        </div>
-                      </div>
-                      <div class="col text-end">
-                        <a href="#" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
-                          <svg class="icon icon-xxs me-2" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                              d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z"
-                              clip-rule="evenodd"></path>
-                          </svg>
-                          {{ __('Message') }}
-                        </a>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="list-group-item px-0">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <!-- Avatar -->
-                        <a href="#" class="avatar">
-                          <img class="rounded" alt="{{ __('Image placeholder') }}"
-                            src="../../images/team/profile-picture-4.jpg">
-                        </a>
-                      </div>
-                      <div class="col-auto ms--2">
-                        <h4 class="h6 mb-0">
-                          <a href="#">{{ __('Neil Sims') }}</a>
-                        </h4>
-                        <div class="d-flex align-items-center">
-                          <div class="bg-danger dot rounded-circle me-1"></div>
-                          <small>{{ __('Offline') }}</small>
-                        </div>
-                      </div>
-                      <div class="col text-end">
-                        <a href="#" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
-                          <svg class="icon icon-xxs me-2" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                              d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z"
-                              clip-rule="evenodd"></path>
-                          </svg>
-                          {{ __('Message') }}
-                        </a>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-xxl-6 mb-4">
-            <div class="card border-0 shadow">
-              <div class="card-header border-bottom d-flex align-items-center justify-content-between">
-                <h2 class="fs-5 fw-bold mb-0">{{ __('Progress track') }}</h2>
-                <a href="#" class="btn btn-sm btn-primary">{{ __('See tasks') }}</a>
-              </div>
-              <div class="card-body">
-                <!-- Project 1 -->
-                <div class="row mb-4">
-                  <div class="col-auto">
-                    <svg class="icon icon-sm text-gray-500" fill="currentColor" viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg">
-                      <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
-                      <path fill-rule="evenodd"
-                        d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
-                        clip-rule="evenodd"></path>
-                    </svg>
-                  </div>
-                  <div class="col">
-                    <div class="progress-wrapper">
-                      <div class="progress-info">
-                        <div class="h6 mb-0">{{ __('Rocket - SaaS Template') }}</div>
-                        <div class="small fw-bold text-gray-500"><span>75 %</span></div>
-                      </div>
-                      <div class="progress mb-0">
-                        <div class="progress-bar bg-success" role="progressbar" aria-valuenow="75" aria-valuemin="0"
-                          aria-valuemax="100" style="width: 75%;"></div>
-                      </div>
-                    </div>
-                  </div>
+          {{--
+            <div class="col-12 col-xxl-6 mb-4">
+              <div class="card border-0 shadow">
+                <div class="card-header border-bottom d-flex align-items-center justify-content-between">
+                  <h2 class="fs-5 fw-bold mb-0">{{ __('Team members') }}</h2>
+                  <a href="#" class="btn btn-sm btn-primary">{{ __('See all') }}</a>
                 </div>
-                <!-- Project 2 -->
-                <div class="row align-items-center mb-4">
-                  <div class="col-auto">
-                    <svg class="icon icon-sm text-gray-500" fill="currentColor" viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg">
-                      <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
-                      <path fill-rule="evenodd"
-                        d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
-                        clip-rule="evenodd"></path>
-                    </svg>
-                  </div>
-                  <div class="col">
-                    <div class="progress-wrapper">
-                      <div class="progress-info">
-                        <div class="h6 mb-0">{{ __('Themesberg - Design System') }}</div>
-                        <div class="small fw-bold text-gray-500"><span>60 %</span></div>
+                <div class="card-body">
+                  <ul class="list-group list-group-flush list my--3">
+                    <li class="list-group-item px-0">
+                      <div class="row align-items-center">
+                        <div class="col-auto">
+                          <!-- Avatar -->
+                          <a href="#" class="avatar">
+                            <img class="rounded" alt="{{ __('Image placeholder') }}"
+                              src="../../images/team/profile-picture-1.jpg">
+                          </a>
+                        </div>
+                        <div class="col-auto ms--2">
+                          <h4 class="h6 mb-0">
+                            <a href="#">{{ __('Chris Wood') }}</a>
+                          </h4>
+                          <div class="d-flex align-items-center">
+                            <div class="bg-success dot rounded-circle me-1"></div>
+                            <small>{{ __('Online') }}</small>
+                          </div>
+                        </div>
+                        <div class="col text-end">
+                          <a href="#" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
+                            <svg class="icon icon-xxs me-2" fill="currentColor" viewBox="0 0 20 20"
+                              xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd"
+                                d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                clip-rule="evenodd"></path>
+                            </svg>
+                            {{ __('Invite') }}
+                          </a>
+                        </div>
                       </div>
-                      <div class="progress mb-0">
-                        <div class="progress-bar bg-success" role="progressbar" aria-valuenow="60" aria-valuemin="0"
-                          aria-valuemax="100" style="width: 60%;"></div>
+                    </li>
+                    <li class="list-group-item px-0">
+                      <div class="row align-items-center">
+                        <div class="col-auto">
+                          <!-- Avatar -->
+                          <a href="#" class="avatar">
+                            <img class="rounded" alt="{{ __('Image placeholder') }}"
+                              src="../../images/team/profile-picture-2.jpg">
+                          </a>
+                        </div>
+                        <div class="col-auto ms--2">
+                          <h4 class="h6 mb-0">
+                            <a href="#">{{ __('Jose Leos') }}</a>
+                          </h4>
+                          <div class="d-flex align-items-center">
+                            <div class="bg-warning dot rounded-circle me-1"></div>
+                            <small>{{ __('In a appointment') }}</small>
+                          </div>
+                        </div>
+                        <div class="col text-end">
+                          <a href="#" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
+                            <svg class="icon icon-xxs me-2" fill="currentColor" viewBox="0 0 20 20"
+                              xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd"
+                                d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z"
+                                clip-rule="evenodd"></path>
+                            </svg>
+                            {{ __('Message') }}
+                          </a>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- Project 3 -->
-                <div class="row align-items-center mb-4">
-                  <div class="col-auto">
-                    <svg class="icon icon-sm text-gray-500" fill="currentColor" viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg">
-                      <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
-                      <path fill-rule="evenodd"
-                        d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
-                        clip-rule="evenodd"></path>
-                    </svg>
-                  </div>
-                  <div class="col">
-                    <div class="progress-wrapper">
-                      <div class="progress-info">
-                        <div class="h6 mb-0">{{ __('Homepage Design in Figma') }}</div>
-                        <div class="small fw-bold text-gray-500"><span>45 %</span></div>
+                    </li>
+                    <li class="list-group-item px-0">
+                      <div class="row align-items-center">
+                        <div class="col-auto">
+                          <!-- Avatar -->
+                          <a href="#" class="avatar">
+                            <img class="rounded" alt="{{ __('Image placeholder') }}"
+                              src="../../images/team/profile-picture-3.jpg">
+                          </a>
+                        </div>
+                        <div class="col-auto ms--2">
+                          <h4 class="h6 mb-0">
+                            <a href="#">{{ __('Bonnie Green') }}</a>
+                          </h4>
+                          <div class="d-flex align-items-center">
+                            <div class="bg-danger dot rounded-circle me-1"></div>
+                            <small>{{ __('Offline') }}</small>
+                          </div>
+                        </div>
+                        <div class="col text-end">
+                          <a href="#" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
+                            <svg class="icon icon-xxs me-2" fill="currentColor" viewBox="0 0 20 20"
+                              xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd"
+                                d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z"
+                                clip-rule="evenodd"></path>
+                            </svg>
+                            {{ __('Message') }}
+                          </a>
+                        </div>
                       </div>
-                      <div class="progress mb-0">
-                        <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="45" aria-valuemin="0"
-                          aria-valuemax="100" style="width: 45%;"></div>
+                    </li>
+                    <li class="list-group-item px-0">
+                      <div class="row align-items-center">
+                        <div class="col-auto">
+                          <!-- Avatar -->
+                          <a href="#" class="avatar">
+                            <img class="rounded" alt="{{ __('Image placeholder') }}"
+                              src="../../images/team/profile-picture-4.jpg">
+                          </a>
+                        </div>
+                        <div class="col-auto ms--2">
+                          <h4 class="h6 mb-0">
+                            <a href="#">{{ __('Neil Sims') }}</a>
+                          </h4>
+                          <div class="d-flex align-items-center">
+                            <div class="bg-danger dot rounded-circle me-1"></div>
+                            <small>{{ __('Offline') }}</small>
+                          </div>
+                        </div>
+                        <div class="col text-end">
+                          <a href="#" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
+                            <svg class="icon icon-xxs me-2" fill="currentColor" viewBox="0 0 20 20"
+                              xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd"
+                                d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z"
+                                clip-rule="evenodd"></path>
+                            </svg>
+                            {{ __('Message') }}
+                          </a>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- Project 4 -->
-                <div class="row align-items-center mb-3">
-                  <div class="col-auto">
-                    <svg class="icon icon-sm text-gray-500" fill="currentColor" viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg">
-                      <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
-                      <path fill-rule="evenodd"
-                        d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
-                        clip-rule="evenodd"></path>
-                    </svg>
-                  </div>
-                  <div class="col">
-                    <div class="progress-wrapper">
-                      <div class="progress-info">
-                        <div class="h6 mb-0">{{ __('Backend for Themesberg v2') }}</div>
-                        <div class="small fw-bold text-gray-500"><span>34 %</span></div>
-                      </div>
-                      <div class="progress mb-0">
-                        <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="34" aria-valuemin="0"
-                          aria-valuemax="100" style="width: 34%;"></div>
-                      </div>
-                    </div>
-                  </div>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
-          </div> --}}
+            <div class="col-12 col-xxl-6 mb-4">
+              <div class="card border-0 shadow">
+                <div class="card-header border-bottom d-flex align-items-center justify-content-between">
+                  <h2 class="fs-5 fw-bold mb-0">{{ __('Progress track') }}</h2>
+                  <a href="#" class="btn btn-sm btn-primary">{{ __('See tasks') }}</a>
+                </div>
+                <div class="card-body">
+                  <!-- Project 1 -->
+                  <div class="row mb-4">
+                    <div class="col-auto">
+                      <svg class="icon icon-sm text-gray-500" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
+                        <path fill-rule="evenodd"
+                          d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
+                          clip-rule="evenodd"></path>
+                      </svg>
+                    </div>
+                    <div class="col">
+                      <div class="progress-wrapper">
+                        <div class="progress-info">
+                          <div class="h6 mb-0">{{ __('Rocket - SaaS Template') }}</div>
+                          <div class="small fw-bold text-gray-500"><span>75 %</span></div>
+                        </div>
+                        <div class="progress mb-0">
+                          <div class="progress-bar bg-success" role="progressbar" aria-valuenow="75" aria-valuemin="0"
+                            aria-valuemax="100" style="width: 75%;"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Project 2 -->
+                  <div class="row align-items-center mb-4">
+                    <div class="col-auto">
+                      <svg class="icon icon-sm text-gray-500" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
+                        <path fill-rule="evenodd"
+                          d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
+                          clip-rule="evenodd"></path>
+                      </svg>
+                    </div>
+                    <div class="col">
+                      <div class="progress-wrapper">
+                        <div class="progress-info">
+                          <div class="h6 mb-0">{{ __('Themesberg - Design System') }}</div>
+                          <div class="small fw-bold text-gray-500"><span>60 %</span></div>
+                        </div>
+                        <div class="progress mb-0">
+                          <div class="progress-bar bg-success" role="progressbar" aria-valuenow="60" aria-valuemin="0"
+                            aria-valuemax="100" style="width: 60%;"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Project 3 -->
+                  <div class="row align-items-center mb-4">
+                    <div class="col-auto">
+                      <svg class="icon icon-sm text-gray-500" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
+                        <path fill-rule="evenodd"
+                          d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
+                          clip-rule="evenodd"></path>
+                      </svg>
+                    </div>
+                    <div class="col">
+                      <div class="progress-wrapper">
+                        <div class="progress-info">
+                          <div class="h6 mb-0">{{ __('Homepage Design in Figma') }}</div>
+                          <div class="small fw-bold text-gray-500"><span>45 %</span></div>
+                        </div>
+                        <div class="progress mb-0">
+                          <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="45" aria-valuemin="0"
+                            aria-valuemax="100" style="width: 45%;"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Project 4 -->
+                  <div class="row align-items-center mb-3">
+                    <div class="col-auto">
+                      <svg class="icon icon-sm text-gray-500" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
+                        <path fill-rule="evenodd"
+                          d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
+                          clip-rule="evenodd"></path>
+                      </svg>
+                    </div>
+                    <div class="col">
+                      <div class="progress-wrapper">
+                        <div class="progress-info">
+                          <div class="h6 mb-0">{{ __('Backend for Themesberg v2') }}</div>
+                          <div class="small fw-bold text-gray-500"><span>34 %</span></div>
+                        </div>
+                        <div class="progress mb-0">
+                          <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="34" aria-valuemin="0"
+                            aria-valuemax="100" style="width: 34%;"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          --}}
         </div>
       </div>
       <div class="col-12 col-xl-4">
@@ -697,7 +692,7 @@
               <h2 class="fs-5 fw-bold mb-1">{{ __('Acquisition') }}</h2>
               <p>
                 {{ __('Tells you where your visitors originated from, such as search engines, social networks or website
-                                                referrals.') }}
+                                                                                                                                                                                                                                                                referrals.') }}
               </p>
               <div class="d-block">
                 <div class="d-flex align-items-center me-5">

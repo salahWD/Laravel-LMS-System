@@ -240,7 +240,6 @@
   <script src="{{ url('js/slick.min.js') }}"></script>
   <script src="{{ url('js/jquery.sticky-sidebar.min.js') }}"></script>
   <script src="{{ url('js/particles.min.js') }}"></script>
-  <script src="{{ url('js/custom.js') }}"></script>
   <script>
     particlesJS.load('particles-js', 'js/particles.json', function() {
       console.log('callback - particles.js config loaded');

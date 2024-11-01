@@ -33,7 +33,7 @@
                   <label for="first_name">{{ __('First Name') }}</label>
                   <input class="form-control @error('firstname') is-invalid @enderror" id="first_name" name="firstname"
                     type="text" value="{{ old('firstname') ?? (isset($user) ? $user->first_name : '') }}"
-                    placeholder="{{ __('Enter first name') }}">
+                    placeholder="{{ __('Enter :item', ['item' => __('First Name')]) }}">
                   @error('firstname')
                     <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
@@ -44,7 +44,7 @@
                   <label for="last_name">{{ __('Last Name') }}</label>
                   <input class="form-control @error('lastname') is-invalid @enderror" id="last_name" name="lastname"
                     type="text" value="{{ old('lastname') ?? (isset($user) ? $user->last_name : '') }}"
-                    placeholder="{{ __('last name') }}">
+                    placeholder="{{ __('Enter :item', ['item' => __('Last Name')]) }}">
                   @error('lastname')
                     <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
@@ -54,7 +54,7 @@
             <div class="row">
               <div class="col-md-6 mb-3">
                 <div class="form-group">
-                  <label for="username">{{ __('Username') }}</label>
+                  <label for="username" class="text-capitalize">{{ __('username') }}</label>
                   <input class="form-control @error('username') is-invalid @enderror" name="username"
                     placeholder="{{ __('unique username') }}"
                     value="{{ old('username') ?? (isset($user) ? $user->username : '') }}" id="username" required>
@@ -65,12 +65,12 @@
               </div>
               <div class="col-md-6 mb-3">
                 <div class="form-group">
-                  <label for="rank">{{ __('Permission / Rank') }}</label>
+                  <label for="rank" class="text-capitalize">{{ __('Permission / Rank') }}</label>
                   <select class="form-control form-select @error('rank') is-invalid @enderror" name="rank"
                     id="rank" aria-label="Default select example" required>
                     @foreach ($permissions as $rank)
                       <option @if (isset($user) && $rank->id == $user->permission) selected @endif value="{{ $rank->id }}">
-                        {{ $rank->name }}</option>
+                        {{ __($rank->name) }}</option>
                     @endforeach
                   </select>
                   @error('rank')
@@ -87,7 +87,7 @@
                   <label for="email">{{ __('Email') }}</label>
                   <input class="form-control @error('email') is-invalid @enderror" id="email"
                     value="{{ old('email') ?? (isset($user->email) ? $user->email : '') }}" type="email" name="email"
-                    placeholder="{{ __('Enter User Email') }}" required>
+                    placeholder="{{ __('Enter :item', ['item' => __('User Email')]) }}" required>
                   @error('email')
                     <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
@@ -172,7 +172,7 @@
                   </li>
                 @endforeach
               @else
-                No Comments For {{ '@' . $user->username }}
+                {{ __('No Comments For') }} {{ '@' . $user->username }}
               @endif
             </ul>
           </div>
@@ -237,7 +237,7 @@
                       </li>
                     @endforeach
                   @else
-                    there's no reports for {{ '@' . $user->username }}
+                    {{ __("there's no reports for") }} {{ '@' . $user->username }}
                   @endif
                 </ul>
               </div>

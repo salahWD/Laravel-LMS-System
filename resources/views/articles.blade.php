@@ -284,18 +284,15 @@
                 <h3 class="widget-title">{{ __('Tag Clouds') }}</h3>
                 <img loading="lazy" src="{{ url('images/wave.svg') }}" class="wave" alt="{{ __('wave') }}" />
               </div>
-              <div class="widget-content">
-                @foreach ($popular_tags as $tag)
-                  {{-- <a href="{{ route('list_tag_articles', $tag->id) }}" class="tag"> --}}
-                  <a href="{{ route('tag_view', $tag->slug) }}" class="tag">
-                    {{ $tag->title }}
-                  </a>
-                @endforeach
-                <a href="#" class="tag">{{ __('Electronics') }}</a>
-                <a href="#" class="tag">{{ __('General') }}</a>
-                <a href="#" class="tag">{{ __('Inspiration') }}</a>
-                <a href="#" class="tag">{{ __('Mechanics') }}</a>
-              </div>
+              @if (count($popular_tags) > 0)
+                <div class="widget-content">
+                  @foreach ($popular_tags as $tag)
+                    <a href="{{ route('tag_view', $tag->slug) }}" class="tag">
+                      {{ $tag->title }}
+                    </a>
+                  @endforeach
+                </div>
+              @endif
             </div>
 
             <!-- widget -->
@@ -365,5 +362,4 @@
   <script src="{{ url('js/bootstrap.min.js') }}"></script>
   <script src="{{ url('js/slick.min.js') }}"></script>
   <script src="{{ url('js/jquery.sticky-sidebar.min.js') }}"></script>
-  <script src="{{ url('js/custom.js') }}"></script>
 @endsection

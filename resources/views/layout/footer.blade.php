@@ -6,7 +6,7 @@
         <!-- copyright text -->
         <div class="col-md-4">
           <span class="copyright">&copy;{{ date('Y') }} {{ __('Walid Isa') }}. <a class="text-capitalize"
-              href="https://github.com/salahwd">{{ __('developed by') }}
+              href="https://salahbakhash.com">{{ __('developed by') }}
               Salah</a></span>
         </div>
 

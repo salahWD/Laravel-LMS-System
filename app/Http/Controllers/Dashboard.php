@@ -17,8 +17,21 @@ use App\Models\Order;
 use App\Models\Appointment;
 use App\Helpers\ConfigHelper;
 use Illuminate\Support\Facades\Artisan;
+use Spatie\Analytics\Facades\Analytics;
+use Spatie\Analytics\Period;
 
 class Dashboard extends Controller {
+
+  public function index(Request $request) {
+    $students_count = 10;
+
+    // $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::months(6));
+    // $MostVisitedPages = Analytics::fetchMostVisitedPages(Period::months(1), 5); // Collection
+
+    // dd($analyticsData, $MostVisitedPages);
+
+    return view('dashboard', compact("students_count"));
+  }
 
   public function users(Request $request) {
     $users = User::paginate(config('settings.tables_row_count'));

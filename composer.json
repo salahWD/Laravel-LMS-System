@@ -20,6 +20,7 @@
     "laravel/tinker": "^2.8",
     "mcamara/laravel-localization": "^1.8",
     "simplesoftwareio/simple-qrcode": "^4.2",
+    "spatie/laravel-analytics": "^5.4",
     "stripe/stripe-php": "^14.9",
     "sunra/php-simple-html-dom-parser": "^1.5",
     "symfony/css-selector": "^7.0",

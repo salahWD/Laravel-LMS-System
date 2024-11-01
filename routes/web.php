@@ -84,8 +84,8 @@ Route::middleware('localizationRedirect')->group(function () {
   });
 
   Route::prefix('/dashboard')->middleware(['auth', 'admin'])->group(function () {
-    Route::view('/', 'dashboard')->name('dashboard');
     Route::controller(Dashboard::class)->group(function () {
+      Route::get('/', 'index')->name('dashboard');
       Route::get('/articles', 'articles')->name('articles_manage');
       Route::get('/categories', 'categories')->name('categories_manage');
       Route::get('/courses', 'courses')->name('courses_manage');

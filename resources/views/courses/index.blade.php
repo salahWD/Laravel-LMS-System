@@ -126,5 +126,4 @@
   <script src="{{ url('js/bootstrap.min.js') }}"></script>
   <script src="{{ url('js/slick.min.js') }}"></script>
   <script src="{{ url('js/jquery.sticky-sidebar.min.js') }}"></script>
-  <script src="{{ url('js/custom.js') }}"></script>
 @endsection
