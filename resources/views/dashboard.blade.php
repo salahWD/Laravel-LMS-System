@@ -70,6 +70,32 @@
         </div>
       </div>
     </div>
+    <div class="py-4">
+      <table>
+        <thead>
+          <tr>
+            <th>Page Path</th>
+            <th>Country</th>
+            <th>Screen Page Views</th>
+            <th>Bounce Rate</th>
+            <th>Total Users</th>
+            <th>Sessions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach ($analyticsData as $data)
+            <tr>
+              <td>{{ $data['dimensions'][0] ?? 'N/A' }}</td>
+              <td>{{ $data['dimensions'][1] ?? 'N/A' }}</td>
+              <td>{{ $data['metrics'][0] ?? 'N/A' }}</td>
+              <td>{{ $data['metrics'][1] ?? 'N/A' }}</td>
+              <td>{{ $data['metrics'][2] ?? 'N/A' }}</td>
+              <td>{{ $data['metrics'][3] ?? 'N/A' }}</td>
+            </tr>
+          @endforeach
+        </tbody>
+      </table>
+    </div>
     <div class="row">
       <div class="col-12 col-sm-6 col-xl-4 mb-4">
         <div class="card border-0 shadow">
@@ -692,7 +718,7 @@
               <h2 class="fs-5 fw-bold mb-1">{{ __('Acquisition') }}</h2>
               <p>
                 {{ __('Tells you where your visitors originated from, such as search engines, social networks or website
-                                                                                                                                                                                                                                                                referrals.') }}
+                                                                                                                                                                                                                                                                                referrals.') }}
               </p>
               <div class="d-block">
                 <div class="d-flex align-items-center me-5">

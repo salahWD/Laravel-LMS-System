@@ -14,23 +14,27 @@ use App\Models\Product;
 use App\Models\Message;
 use App\Models\Tag;
 use App\Models\Order;
-use App\Models\Appointment;
 use App\Helpers\ConfigHelper;
 use Illuminate\Support\Facades\Artisan;
-use Spatie\Analytics\Facades\Analytics;
-use Spatie\Analytics\Period;
+use App\Services\GoogleAnalyticsService;
+
 
 class Dashboard extends Controller {
 
   public function index(Request $request) {
     $students_count = 10;
 
-    // $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::months(6));
-    // $MostVisitedPages = Analytics::fetchMostVisitedPages(Period::months(1), 5); // Collection
+    $totalUsers = GoogleAnalyticsService::getTotalUsers();
+    $topCountries = GoogleAnalyticsService::getTopCountries();
+    $topPages = GoogleAnalyticsService::getTopPages();
+    $totalBounceRate = GoogleAnalyticsService::getTotalBounceRate();
+    $dailyTraffic = GoogleAnalyticsService::getDailyTrafficLastMonth();
 
-    // dd($analyticsData, $MostVisitedPages);
+    // $analyticsData = GoogleAnalyticsService::getAllAnalyticsData();
 
-    return view('dashboard', compact("students_count"));
+    dd($totalUsers, $topCountries, $topPages, $totalBounceRate, $dailyTraffic);
+    // return view('dashboard', compact("students_count", "totalUsers", "topCountries", "topPages", "totalBounceRate", "dailyTraffic"));
+    return view('dashboard', compact("students_count", "analyticsData"));
   }
 
   public function users(Request $request) {
