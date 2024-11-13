@@ -8,6 +8,7 @@ use Google\Analytics\Data\V1beta\Dimension;
 use Google\Analytics\Data\V1beta\Metric;
 use Google\Analytics\Data\V1beta\OrderBy;
 use Google\Analytics\Data\V1beta\OrderBy\MetricOrderBy;
+use Google\Analytics\Data\V1beta\OrderBy\DimensionOrderBy;
 
 
 class GoogleAnalyticsService {
@@ -133,19 +134,20 @@ class GoogleAnalyticsService {
       'dateRanges' => [new DateRange(['start_date' => '30daysAgo', 'end_date' => 'today'])],
       'dimensions' => [new Dimension(['name' => 'date'])],
       'metrics' => [new Metric(['name' => 'sessions'])],
-      // 'orderBys' => [
-      //   new OrderBy([
-      //     'metric' => new MetricOrderBy(['metric_name' => 'date']),
-      //     'desc' => true
-      //   ])
-      // ]
+      'orderBys' => [
+        new OrderBy([
+          'dimension' => new DimensionOrderBy(['dimension_name' => 'date']),
+          'desc' => false
+        ]),
+      ],
     ]);
 
     $trafficData = [];
     foreach ($response->getRows() as $row) {
       $date = $row->getDimensionValues()[0]->getValue();
       $sessions = $row->getMetricValues()[0]->getValue();
-      $trafficData[] = ['date' => $date, 'sessions' => $sessions];
+
+      $trafficData[] = ['date' => substr($date, 6), 'sessions' => $sessions];
     }
 
     return $trafficData;

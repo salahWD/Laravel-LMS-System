@@ -2,7 +2,7 @@
 
 @section('meta')
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>{{ __(config('app.name')) . ' | ' . $category->title }}</title>
+  <title>{{ __(config('app.name')) . ' | ' . $tag->title }}</title>
 @endsection
 
 @section('styles')
@@ -18,23 +18,20 @@
         <section class="section">
           <div class="container">
             <div class="row">
-              <div class="col-md-6">
-                <div class="align-items-start h-100 d-flex flex-column justify-content-between">
-                  <div class="top w-100">
-                    <p class="lead">{{ __('Category') }}</p>
-                    <h2 class="title">{{ $category->title }}</h2>
+              <div class="col-md-2"></div>
+              <div class="col-md-8">
+                <div class="h-100 d-flex flex-column justify-content-between text-center">
+                  <div class="top">
+                    <p class="lead mb-0">{{ __('Tag') }}</p>
+                    <h2 class="title mt-1 mb-2">{{ $tag->title }}</h2>
                     <hr>
-                    <p class="lead text-black">{{ $category->description }}</p>
+                    <p class="lead text-black">{{ $tag->description }}</p>
                   </div>
-                  <div class="h4 m-0"><span
-                      class="badge bg-primary">{{ request()->segment(2) == 'shop' ? __('articles') : __('articles') }}:
-                      {{ $category->articles()->count() }}</span></div>
+                  <div class="h4 m-0"><span class="badge bg-primary">{{ __('articles') }}:
+                      {{ $tag?->articles?->count() ?? 0 }}</span></div>
                 </div>
               </div>
-              <div class="col-md-6">
-                <img class="w-100 rounded" style="max-height: 380px;object-fit: cover;object-position: center;"
-                  src="{{ $category->image_url() }}" alt="{{ $category->title }}">
-              </div>
+              <div class="col-md-2"></div>
             </div>
           </div>
         </section>
@@ -42,9 +39,9 @@
 
       <div class="spacer" data-height="50"></div>
 
-      @if ($category->articles)
+      @if ($tag->articles)
         <div class="row">
-          @foreach ($category->articles as $article)
+          @foreach ($tag->articles as $article)
             <!-- post -->
             <div class="col-md-4 col-sm-6 mb-4">
               <div class="post post-grid rounded bordered">

@@ -125,7 +125,7 @@ Route::middleware('localizationRedirect')->group(function () {
     Route::get('/comments', [Dashboard::class, 'comments'])->name('comments_manage');
     Route::POST('/comments/{comment}', [CommentController::class, 'update']);
     Route::get('/tags', [Dashboard::class, 'tags'])->name('tags_manage');
-    Route::get('/tags/{tag}', [Dashboard::class, 'tag'])->name('tag_edit');
+    Route::get('/tags/{tag}', [TagController::class, 'edit'])->name('tag_edit');
     Route::POST('/tags/{tag}', [TagController::class, 'update']);
     Route::get('/certificates', [Dashboard::class, 'certificates'])->name('certificates_manage');
     Route::get('/certificates/create', [CertificateController::class, 'create'])->name('certificate_create');

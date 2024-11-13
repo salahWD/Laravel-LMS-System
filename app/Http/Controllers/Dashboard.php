@@ -27,14 +27,11 @@ class Dashboard extends Controller {
     $totalUsers = GoogleAnalyticsService::getTotalUsers();
     $topCountries = GoogleAnalyticsService::getTopCountries();
     $topPages = GoogleAnalyticsService::getTopPages();
-    $totalBounceRate = GoogleAnalyticsService::getTotalBounceRate();
+    $totalBounceRate = GoogleAnalyticsService::getTotalBounceRate() ?? 0.22;
     $dailyTraffic = GoogleAnalyticsService::getDailyTrafficLastMonth();
 
-    // $analyticsData = GoogleAnalyticsService::getAllAnalyticsData();
-
-    dd($totalUsers, $topCountries, $topPages, $totalBounceRate, $dailyTraffic);
-    // return view('dashboard', compact("students_count", "totalUsers", "topCountries", "topPages", "totalBounceRate", "dailyTraffic"));
-    return view('dashboard', compact("students_count", "analyticsData"));
+    // dd($totalUsers, $topCountries, $topPages, $totalBounceRate, $dailyTraffic);
+    return view('dashboard', compact("students_count", "totalUsers", "topCountries", "topPages", "totalBounceRate", "dailyTraffic"));
   }
 
   public function users(Request $request) {
@@ -83,11 +80,6 @@ class Dashboard extends Controller {
     $tags = Tag::withCount("articles")->paginate(config('settings.tables_row_count'));
 
     return view('dashboard.tags', compact("tags"));
-  }
-
-  public function tag(Request $request, Tag $tag) {
-    $articles = $tag->articles()->orderBy("created_at", "DESC")->limit(5)->get();
-    return view('dashboard.tag', compact("tag", "articles"));
   }
 
   public function products(Request $request) {

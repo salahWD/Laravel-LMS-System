@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Str;
@@ -18,10 +19,16 @@ class TagController extends Controller {
   }
 
   public function show(Tag $tag) {
-    return view("home");
+
+    return view("tag", [
+      "articles" => $tag->articles,
+      "tag" => $tag,
+    ]);
   }
 
   public function edit(Tag $tag) {
+    $articles = $tag->articles()->orderBy("created_at", "DESC")->limit(5)->get();
+    return view('dashboard.tag', compact("tag", "articles"));
   }
 
   public function update(Request $request, Tag $tag) {

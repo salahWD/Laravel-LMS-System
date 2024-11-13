@@ -17,6 +17,8 @@
     'butonClass' => '',
 ])
 
+@aware(['appointmentDate', 'googleCalendar', 'butonClass'])
+
 <div class="card appointment bordered-card mb-3 rounded" style="--br-clr: {{ $color }};{{ $style }}">
   <div class="card-body">
     <h5 class="card-title mb-3">
@@ -98,7 +100,7 @@
             See Event</a>
         @else
           <a class="d-flex gap-2" target="_blank"
-            href="https://calendar.google.com/calendar/r/eventedit?text={{ $title }}&dates={{ $startUtc }}/{{ $endUtc }}&details={{ $notes }}&location={{ 'online: ' . route('profile.meetings') }}">
+            href="https://calendar.google.com/calendar/r/eventedit?text={{ $title }}&dates={{ $startUtc }}/{{ $endUtc }}&details={{ $notes . '<br><br>you can chekcout yur meetings at: ' . route('profile.meetings') }}&location={{ route('profile.meetings') }}">
             <svg version="1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg" width="20"
               xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 200 200"
               enable-background="new 0 0 200 200" xml:space="preserve">

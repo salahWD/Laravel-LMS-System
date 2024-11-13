@@ -17,7 +17,7 @@ class ArticleController extends Controller {
   }
 
   public function create() {
-    $categories = Category::notProduct()->all();
+    $categories = Category::notProduct()->get();
     $article = new Article;
     return view('dashboard.article', compact("article", "categories"));
   }
