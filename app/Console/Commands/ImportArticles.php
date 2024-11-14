@@ -42,10 +42,11 @@ class ImportArticles extends Command {
     // Extract the insert statements
     preg_match_all('/INSERT INTO `et_posts` .*?VALUES\n(.*?);/is', $sql, $matches);
 
+    $titles_arr = Article::select("title")->join("article_translations", "article_id", "=", "articles.id")->get()->pluck("title")->toArray();
     foreach ($matches[1] as $i => $insertStatement) {
       if ($i != 0) {
 
-        preg_match_all('/\((.*?)[0-9]?\),/is', $insertStatement, $rows);
+        preg_match_all('/\((.*?)[0-9]?\),[\r\n]+/is', $insertStatement, $rows);
         // Extract values from the insert statement
         foreach ($rows[1] as $row) {
           $columns = str_getcsv($row, ',', "'");
@@ -67,21 +68,24 @@ class ImportArticles extends Command {
             }
 
             // Insert into the new database
-            $art = Article::create([
-              'user_id' => 1,
-              "ar" => [
-                'title' => $postTitle,
-                'content' => $cleanedContent,
-              ],
-              'image' => isset($thumbnail) && is_string($thumbnail) ? $thumbnail : null,
-              'status' => 2,
-              'created_at' => now(),
-              'updated_at' => now(),
-            ]);
+            if (!in_array($postTitle, $titles_arr)) {
+              $art = Article::create([
+                'user_id' => 1,
+                "ar" => [
+                  'title' => $postTitle,
+                  'content' => $cleanedContent,
+                ],
+                'image' => isset($thumbnail) && is_string($thumbnail) ? $thumbnail : null,
+                'status' => 2,
+                'created_at' => now(),
+                'updated_at' => now(),
+              ]);
+              $count++;
 
-            $count++;
-
-            $this->info("[$count] Article Import Succeed ( ID: " . $art->id . ", Title: $postTitle)");
+              $this->info("[$count] Article Import Succeed ( ID: " . $columns[0] . ", Title: $postTitle)");
+            } else {
+              $this->info("old article ( ID: " . $columns[0] . ", Title: $postTitle)");
+            }
           }
         }
       }
