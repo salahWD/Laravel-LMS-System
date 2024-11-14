@@ -1,7 +1,14 @@
+@props([
+    'meta' => null,
+])
 @extends('layout')
 
 @section('meta')
-  <title>{{ __(config('app.name')) . ' | ' . __('Home') }}</title>
+  @if ($meta != null)
+    {{ $meta }}
+  @else
+    <title>{{ __(config('app.name')) . ' | ' . __('Settings') }}</title>
+  @endif
 @endsection
 
 @section('styles')
@@ -33,10 +40,13 @@
           class="flex items-center px-3 py-2.5 bg-white hover:text-blue-900 !border !border-transparent hover:!border-gray-800 rounded-full @if (request()->segment(3) == 'meetings') !border-gray-800 text-blue-900 font-bold @else font-semibold @endif">
           My Meetings
         </a>
-        <a href="{{ route('my_orders') }}"
-          class="flex items-center px-3 py-2.5 bg-white hover:text-blue-900 !border !border-transparent hover:!border-gray-800 rounded-full @if (request()->segment(3) == 'orders') !border-gray-800 text-blue-900 font-bold @else font-semibold @endif">
-          My Orders
-        </a>
+
+        @if(config("settings.shop_status"))
+          <a href="{{ route('my_orders') }}"
+            class="flex items-center px-3 py-2.5 bg-white hover:text-blue-900 !border !border-transparent hover:!border-gray-800 rounded-full @if (request()->segment(3) == 'orders') !border-gray-800 text-blue-900 font-bold @else font-semibold @endif">
+            My Orders
+          </a>
+        @endif
       </div>
     </aside>
     <main class="w-full min-h-screen py-1 md:w-2/3 lg:w-3/4">
@@ -47,4 +57,9 @@
       </div>
     </main>
   </div>
+@endsection
+
+
+@section('scripts')
+  <script src="{{ url('js/jquery.min.js') }}"></script>
 @endsection

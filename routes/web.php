@@ -53,7 +53,7 @@ Route::middleware('localizationRedirect')->group(function () {
 
   Route::middleware(['auth'])->group(function () {
     Route::prefix('/me')->group(function () {
-      Route::get('/orders', [OrderController::class, 'index'])->name('my_orders');
+      Route::get('/orders', [OrderController::class, 'index'])->middleware('shop_section')->name('my_orders');
       Route::get('/meetings/{bookedAppointment}', [BookedAppointmentController::class, 'show'])->name("booked_appointment_show");
       Route::controller(ProfileController::class)->group(function () {
         Route::get('/profile', 'edit')->name('profile.edit');

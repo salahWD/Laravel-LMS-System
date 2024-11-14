@@ -1,5 +1,9 @@
 <x-profile.layout>
 
+  <x-slot name="meta">
+    <title>{{ __(config('app.name')) . ' | ' . __('My Meetings') }}</title>
+  </x-slot>
+
   @vite('resources/css/meetings.css')
 
   @if ($errors->any())
@@ -36,7 +40,7 @@
           <div class="col-md-4">
             <x-meeting-card :id="$meeting->id" butonClass="modal-opener" :title="$meeting->appointment->title" :notes="$meeting->notes ?? 'no notes'"
               :color="$meeting->appointment->color" :admin="$meeting->appointment->author?->fullname()" :date="$meeting->day()" :duration="$meeting->appointment->show_duration()" :appointmentDate="$meeting->appointment_date"
-              :googleCalendar="$meeting->meeting_link" :timezone="$meeting->appointment->timezone" :editable=true />
+              :googleCalendar="$meeting->meeting_link" :timezone="$meeting->appointment->timezone" :editable="true" :selectable="false"></x-meeting-card>
           </div>
         @endforeach
       </div>
@@ -59,7 +63,7 @@
         @foreach ($canceled_meetings as $meeting)
           <div class="col-md-4">
             <x-meeting-card disabled=true style="filter: grayscale(1)" :id="$meeting->id" :title="$meeting->appointment->title"
-              :notes="$meeting->notes ?? 'no notes'" :color="$meeting->appointment->color" :admin="$meeting->appointment->author?->fullname()" :duration="$meeting->appointment->show_duration()" />
+              :notes="$meeting->notes ?? 'no notes'" :color="$meeting->appointment->color" :admin="$meeting->appointment->author?->fullname()" :duration="$meeting->appointment->show_duration()"></x-meeting-card>
           </div>
         @endforeach
       </div>
@@ -77,7 +81,7 @@
         @foreach ($past_meetings as $meeting)
           <div class="col-md-4">
             <x-meeting-card style="filter: grayscale(1)" :disabled="true" :id="$meeting->id" :title="$meeting->appointment->title"
-              :notes="$meeting->notes ?? 'no notes'" :color="$meeting->appointment->color" :admin="$meeting->appointment->author?->fullname()" :duration="$meeting->appointment->show_duration()" />
+              :notes="$meeting->notes ?? 'no notes'" :color="$meeting->appointment->color" :admin="$meeting->appointment->author?->fullname()" :duration="$meeting->appointment->show_duration()"></x-meeting-card>
           </div>
         @endforeach
       </div>
@@ -106,9 +110,8 @@
     </div>
   </div>
 
-  <script src="{{ url('js/jquery.min.js') }}"></script>
   <script>
-    const meetings = JSON.parse(`{!! $edit_meetings_data !!}`)
+    const meetings = JSON.parse(`{!! $edit_meetings_data !!}`);
     let modal = document.getElementById("myModal");
     let btns = document.querySelectorAll(".modal-opener");
     let span = modal.querySelector(".close");

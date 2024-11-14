@@ -61,3 +61,7 @@
   </div>
 
 @endsection
+
+@section('scripts')
+  <script src="{{ url('js/jquery.min.js') }}"></script>
+@endsection

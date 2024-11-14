@@ -19,6 +19,16 @@
 
 @aware(['appointmentDate', 'googleCalendar', 'butonClass'])
 
+<?php
+// start date & time relevant to the timezone of the appointment
+$start = \Carbon\Carbon::parse($appointmentDate)->shiftTimezone($timezone ?? 'UTC');
+// start & end date & time relevant to the timezone of the user (getting his timezone from his profile settings)
+$relativeStart = $start->copy()->setTimezone(auth()->user()->timezone ?? 'UTC');
+
+$startUTC = $start->copy()->setTimezone('UTC');
+$endUTC = (clone $startUTC)->addMinutes(intval($duration));
+?>
+
 <div class="card appointment bordered-card mb-3 rounded" style="--br-clr: {{ $color }};{{ $style }}">
   <div class="card-body">
     <h5 class="card-title mb-3">
@@ -49,19 +59,14 @@
       <div class="d-flex align-items-center gap-3 mb-2 text-muted my-2">
         <div class="d-flex align-items-center gap-2">
           <i class="fas fa-calendar-alt"></i>
-          {{ $date }} {{ \Carbon\Carbon::parse($appointmentDate)->format('h:i a') }}
+          {{ $date }}
+          {{ $relativeStart->format('h:i a') }}
         </div>
       </div>
       <hr>
     @endif
     <p class="card-text my-3">{{ $notes }}</p>
     @if ($editable && !$disabled)
-      @php
-        $start = \Carbon\Carbon::parse($appointmentDate, $timezone);
-        $end = (clone $start)->addMinutes(intval($duration));
-        $startUtc = $start->copy()->setTimezone('UTC')->format('Ymd\THis\Z');
-        $endUtc = $end->copy()->setTimezone('UTC')->format('Ymd\THis\Z');
-      @endphp
       <hr>
       <div class="d-flex gap-3 py-3">
         @if ($googleCalendar != null)
@@ -100,7 +105,7 @@
             See Event</a>
         @else
           <a class="d-flex gap-2" target="_blank"
-            href="https://calendar.google.com/calendar/r/eventedit?text={{ $title }}&dates={{ $startUtc }}/{{ $endUtc }}&details={{ $notes . '<br><br>you can chekcout yur meetings at: ' . route('profile.meetings') }}&location={{ route('profile.meetings') }}">
+            href="https://calendar.google.com/calendar/r/eventedit?text={{ $title }}&dates={{ $startUTC->format('Ymd\THis\Z') }}/{{ $endUTC->format('Ymd\THis\Z') }}&details={{ $notes . '<br><br>you can chekcout yur meetings at: ' . route('profile.meetings') }}&location={{ route('profile.meetings') }}">
             <svg version="1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg" width="20"
               xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 200 200"
               enable-background="new 0 0 200 200" xml:space="preserve">
@@ -138,8 +143,8 @@
     @if ($editable && !$disabled)
       <hr>
       <div class="d-flex justify-content-between align-items-center mt-3">
-        <button class="btn btn-outline-primary {{ $butonClass }}" data-id="{{ $id }}">
-          Edit <i class="fa fa-edit"></i>
+        <button class="btn mb-2 btn-outline-primary {{ $butonClass }}" data-id="{{ $id }}">
+          Add Note <i class="fa fa-edit"></i>
         </button>
       </div>
     @endif

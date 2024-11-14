@@ -22,6 +22,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ["Figtree", ...defaultTheme.fontFamily.sans],
+        Source: ["Source Sans Pro", "Arial", "sans-serif"],
       },
     },
   },

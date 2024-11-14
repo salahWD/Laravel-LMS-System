@@ -92,7 +92,13 @@ class ProfileController extends Controller {
     // if ($user->isDirty('email')) {
     //   $user->email_verified_at = null;
     // }
-
+    if (request("delete_image") == true) {
+      // delete old image
+      if ($user->image != NULL && File::exists(public_path("images/users/$user->image"))) {
+        File::delete(public_path("images/users/$user->image"));
+      }
+      $user->image = NULL;
+    }
     if ($request->hasFile('profile_pic')) {
       // delete old image
       if ($user->image != NULL && File::exists(public_path("images/users/$user->image"))) {
