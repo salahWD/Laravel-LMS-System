@@ -21,7 +21,8 @@
         {{-- <div class="btn-group me-2 me-lg-3">
             <button type="button" class="btn btn-sm btn-outline-gray-600">{{ __('Export') }}</button>
         </div> --}}
-        <a href="{{ route('category_create') }}" class="btn btn-sm btn-gray-800 d-inline-flex align-items-center">
+        <a href="{{ Route::is('product_category') ? route('product_category_create') : route('category_create') }}"
+          class="btn btn-sm btn-gray-800 d-inline-flex align-items-center">
           <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -56,17 +57,9 @@
               </svg>
               <span class="visually-hidden">{{ __('Toggle Dropdown') }}</span>
             </button>
-            <div class="dropdown-menu dropdown-menu-xs dropdown-menu-end pb-0">
-              <span class="small ps-3 fw-bold text-dark">{{ __('Show') }}</span>
-              <a class="dropdown-item d-flex align-items-center fw-bold" href="#">10 <svg
-                  class="icon icon-xxs ms-auto" fill="currentColor" viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd"
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                    clip-rule="evenodd"></path>
-                </svg></a>
-              <a class="dropdown-item fw-bold" href="#">20</a>
-              <a class="dropdown-item fw-bold rounded-bottom" href="#">30</a>
+            <div class="dropdown-menu dropdown-menu-xs dropdown-menu-end pt-0 pb-0">
+              <a class="dropdown-item fw-bold disabled bg-gray-200">Rows: {{ config('settings.tables_row_count') }}</a>
+              <a class="dropdown-item rounded-bottom" href="{{ route('dashboard_settings') }}">{{ __('change') }}</a>
             </div>
           </div>
         </div>

@@ -14,7 +14,7 @@ class OrderController extends Controller {
 
   public function index() {
     $user = auth()->user();
-    $orders = Order::where("user_id", $user->id)->where("stage", ">", 0)->with("products")->paginate(10);
+    $orders = Order::where("user_id", $user->id)->where("stage", ">", 0)->with("products")->paginate(config("settings.tables_row_count"));
     // foreach($orders as $o) {
     //   dump($o->products);
     //   dump($o->calc_price());

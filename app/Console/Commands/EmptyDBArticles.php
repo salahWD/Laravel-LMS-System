@@ -33,9 +33,6 @@ class EmptyDBArticles extends Command {
 
     $arr = array_diff($articles_ids, $ar_articles_ids);
     dd($arr);
-    // foreach ($arr as $item) {
-    //   $this->info($item);
-    // }
 
     $this->info('All articles imported successfully!');
   }

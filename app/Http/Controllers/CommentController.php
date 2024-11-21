@@ -48,12 +48,18 @@ class CommentController extends Controller {
       $user = auth()->user();
     }
 
-    $res = Comment::create([
+    $comment_info = [
       "article_id" => $article->id,
       "user_id" => $user->id,
       "reply_on" => request("reply"),
       "text" => request("comment")
-    ]);
+    ];
+
+    if (config("settings.approve_comments") == false) { // if comments does not need to be approved
+      $comment_info["approved"] = 1;
+    }
+
+    $res = Comment::create();
 
     return ["done" => boolval($user->id && $res), "comment" => [
       "id" => $res->id,

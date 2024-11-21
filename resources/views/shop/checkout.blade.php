@@ -60,7 +60,7 @@
                 <h3 class="title m-0">Products</h3>
                 <a href="{{ route('cart_edit') }}" class="fs-6 underline">
                   <u>
-                    edit
+                    change order
                     <i class="fa fa-edit"></i>
                   </u>
                 </a>

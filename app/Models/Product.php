@@ -115,7 +115,7 @@ class Product extends Model implements Buyable {
 
   public function is_from_aliexpress() {
     // Define a regex pattern to match AliExpress product URLs
-    $pattern = '/^(https?:\/\/)?(www\.)?aliexpress\.com\/item\/\d+\.html/i';
+    $pattern = '/^(.*)?aliexpress\.com/i';
 
     // Use preg_match to check if the URL matches the pattern
     return preg_match($pattern, $this->product_link()) && $this->store == 2;

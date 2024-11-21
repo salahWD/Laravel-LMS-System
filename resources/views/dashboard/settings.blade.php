@@ -16,12 +16,6 @@
     <form method="POST">
       @csrf
       <div class="row">
-        {{-- <div class="col-md-6 mb-3">
-            <div class="form-group">
-              <label for="row-count">{{ __('tables row count') }}</label>
-              <input class="form-control" id="row-count" type="number" placeholder="15 row per page" required>
-            </div>
-          </div> --}}
         <div class="col-md-6 mb-3">
           <div>
             <div class="form-group">
@@ -31,8 +25,15 @@
                 <label class="form-check-label" for="shop">{{ __('Shop Section:') }}</label>
               </div>
             </div>
-            <div class="form-group">
-              <label for="table-row-count">tables row count</label>
+            <div class="form-group mt-3">
+              <div class="form-check form-switch">
+                <input class="form-check-input" name="comments_approval" id="comments_approval" type="checkbox"
+                  @if (config('settings.comments_approval')) checked @endif>
+                <label class="form-check-label" for="comments_approval">{{ __('comments approval is required') }}:</label>
+              </div>
+            </div>
+            <div class="form-group mt-3">
+              <label class="form-label" for="table-row-count">tables row count</label>
               <input class="form-control" id="table-row-count" type="number" name="tables_row_count"
                 placeholder="Enter the count of rows in the managing tables" required min="0" max="100"
                 value="{{ config('settings.tables_row_count') }}">

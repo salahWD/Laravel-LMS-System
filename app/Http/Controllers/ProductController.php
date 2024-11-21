@@ -290,6 +290,7 @@ class ProductController extends Controller {
     // Extract the URL to proxy from the query parameters
     $url = request('url');
 
+    dd($url);
     if (!$url) {
       return response()->json(['error' => 'URL parameter is missing'], 400);
     }
@@ -314,6 +315,7 @@ class ProductController extends Controller {
 
       // Find the script tag containing the runParams variable
       $scriptTag = $crawler->filterXPath('//script[contains(text(), "window.runParams")]');
+      dd($scriptTag);
 
       // Extract the JavaScript code containing the runParams variable
       $jsCode = $scriptTag->text();
@@ -326,8 +328,10 @@ class ProductController extends Controller {
 
       // Decode the JSON data
       $runParams = null;
+      dd($runParamsJson);
       if (!empty($runParamsJson)) {
         $runParams = json_decode($runParamsJson, true);
+        dd($runParams);
         $runParams = $runParams["data"];
         $productInfo = [];
 
@@ -369,7 +373,7 @@ class ProductController extends Controller {
       ]);
     } catch (\Exception $e) {
       // Handle errors
-      return response()->json(['error' => 'Failed to fetch data from the external website'], 500);
+      return response()->json(['error' => 'Failed to fetch data from the external website' . $e], 500);
     }
   }
 

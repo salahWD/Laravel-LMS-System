@@ -37,6 +37,7 @@
   object-fit: cover;
   object-position: center center;
   max-width: unset;
+  background: white;
 }
 /* .hizoom .small img {
   max-width: 100% !important;

@@ -46,6 +46,7 @@ Route::middleware('localizationRedirect')->group(function () {
     Route::get('/collection/{category}', [CategoryController::class, 'show'])->name("product_category_show");
   });
   Route::get('/contact-us', [PageController::class, 'contactus'])->name('contact_us');
+  Route::get('/contact/{email}', [MessageController::class, 'redirect'])->name('redirect_to_email');
   Route::POST('/contact-us', [MessageController::class, 'store']);
 
   Route::get('/thanks', [CartController::class, 'success'])->name('checkout_success');
@@ -96,6 +97,9 @@ Route::middleware('localizationRedirect')->group(function () {
       Route::POST('/create', [UserController::class, 'store']);
       Route::get('/{user}', [UserController::class, 'edit'])->name('user_edit');
       Route::POST('/{user}', [UserController::class, 'update']);
+      Route::put('/{user}/d', [UserController::class, 'disable']);
+      Route::put('/{user}/e', [UserController::class, 'enable']);
+      Route::delete('/{user}', [UserController::class, 'destroy']);
     });
     Route::controller(ArticleController::class)->group(function () {
       Route::get('/articles/create', 'create')->name('article_create');
@@ -204,6 +208,7 @@ Route::prefix('/app-request')->group(function () {
 
 Route::prefix('/app-request')->middleware(['auth', 'admin'])->group(function () {
 
+  Route::Delete('/users/{user}', [UserController::class, 'destroy_api'])->name("user_delete_api");
   Route::POST('/tags/{tag}/delete', [TagController::class, 'api_destroy']);
   Route::POST('/comments/report/{comment}', [CommentController::class, 'report']);
   Route::POST('/comments/{comment}/approve', [CommentController::class, 'approve']);

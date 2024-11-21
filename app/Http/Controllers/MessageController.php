@@ -38,19 +38,29 @@ class MessageController extends Controller {
         "📜📜📜 \n subject: " . request("subject") .
           "\n message: " . request("message") .
           "\n name: " . request("name") .
-          "\n email: " . request("email")
+          "\n email: " . request("email"),
+        request("email")
       );
     } else {
 
       TelegramService::sendMessage(
         "📜📜📜 \n subject: " . request("subject") .
           "\n message: " . request("message") .
-          "\n user: " . auth()->user()->fullname()
+          "\n user: " . auth()->user()->fullname(),
+        auth()->user()->email
       );
     }
 
     $request->session()->flash('message-sent', true);
 
     return redirect()->route('contact_us');
+  }
+
+  public function redirect(Request $request, string $email) {
+
+    if ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      return redirect("mailto:" . $email . "?Subject=Response From " . config("app.name"));
+    }
+    return abort(400, 'Invalid email');
   }
 }

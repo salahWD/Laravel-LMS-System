@@ -55,9 +55,8 @@
               </svg>
               <span class="visually-hidden">{{ __('Toggle Dropdown') }}</span>
             </button>
-            <div class="dropdown-menu dropdown-menu-xs dropdown-menu-end pb-0">
-              <div class="small ps-3 pb-2 fw-bold text-dark">{{ __('show') }}</div>
-              <a class="dropdown-item fw-bold">10</a>
+            <div class="dropdown-menu dropdown-menu-xs dropdown-menu-end pt-0 pb-0">
+              <a class="dropdown-item fw-bold disabled bg-gray-200">Rows: {{ config('settings.tables_row_count') }}</a>
               <a class="dropdown-item rounded-bottom" href="{{ route('dashboard_settings') }}">{{ __('change') }}</a>
             </div>
           </div>
@@ -93,7 +92,7 @@
               </td>
               <td>{{ $user->created_at }}</td>
               <td><span
-                  class="fw-bold px-2 py-1 text-white rounded bg-{{ $user->status_class() }}">{{ $user->status_text() }}</span>
+                  class="fw-bold px-2 py-1 rounded bg-{{ $user->status_class() }}">{{ $user->status_text() }}</span>
               </td>
               <td>
                 <div class="btn-group">
@@ -117,7 +116,13 @@
                       {{ __('Edit') }}
                     </a>
                     <hr class="my-0">
-                    <a class="dropdown-item text-danger rounded-bottom" href="#">
+                    <form action="{{ route('user_edit', $user->id) }}" id="delete-user-{{ $user->id }}"
+                      method="POST">
+                      @csrf
+                      @method('DELETE')
+                    </form>
+                    <button class="dropdown-item text-danger rounded-bottom delete-user" data-id="{{ $user->id }}"
+                      form="delete-user-{{ $user->id }}" type="submit">
                       <span class="fa me-2">
                         <svg class="me-2" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor"
                           viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -127,7 +132,7 @@
                         </svg>
                       </span>
                       {{ __('Remove') }}
-                    </a>
+                    </button>
                   </div>
                 </div>
               </td>
@@ -140,4 +145,37 @@
       </div>
     </div>
   </div>
+@endsection
+
+@section('jslibs')
+  <script src="{{ url('libs/dashboard/sweetalert2.all.min.js') }}"></script>
+@endsection
+
+@section('scripts')
+  <script>
+    document.querySelectorAll(".delete-user").forEach(deleteBtn => {
+      deleteBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        Swal.fire({
+          title: "Are You Sure ?",
+          customClass: {
+            confirmButton: 'btn btn-danger me-4',
+            cancelButton: 'btn btn-primary'
+          },
+          buttonsStyling: false,
+          inputAttributes: {
+            autocapitalize: "off"
+          },
+          showCancelButton: true,
+          confirmButtonText: "{{ __('Delete User') }}",
+          showLoaderOnConfirm: false,
+          preConfirm: async (input) => {
+            deleteBtn.form.submit()
+          },
+        });
+
+      });
+    });
+  </script>
 @endsection

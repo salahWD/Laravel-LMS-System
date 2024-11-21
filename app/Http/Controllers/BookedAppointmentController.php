@@ -177,14 +177,14 @@ class BookedAppointmentController extends Controller {
 
               if ($appointment->link_google_calendar == 1) {
 
-                $googleCalendarController = new GoogleCalendarController();
-                $eventLink = $googleCalendarController->createGoogleCalendarEvent(
-                  $date->toAtomString(),
-                  $date->copy()->addMinutes($appointment->duration)->toAtomString(),
-                  'Appointment with ' . $appointment->author->fullname(),
-                  'Details of the appointment.',
-                  'Online'
-                );
+                // $googleCalendarController = new GoogleCalendarController();
+                // $eventLink = $googleCalendarController->createGoogleCalendarEvent(
+                //   $date->toAtomString(),
+                //   $date->copy()->addMinutes($appointment->duration)->toAtomString(),
+                //   'Appointment with ' . $appointment->author->fullname(),
+                //   'Details of the appointment.',
+                //   'Online'
+                // );
 
                 if (isset($eventLink) && $eventLink instanceof \Illuminate\Http\RedirectResponse) {
                   return $eventLink; // Redirect to Google auth if needed

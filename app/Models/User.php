@@ -37,16 +37,6 @@ class User extends Authenticatable {
     'permission',
   ];
 
-  // public function __construct() {
-  // parent::__construct($any);
-  // $this->username = null;
-  // $this->email = null;
-  // $this->image = null;
-  // $this->first_name = null;
-  // $this->last_name = null;
-  // $this->permission = 1;
-  // }
-
   public function reports() {
     return $this->hasManyThrough(Report::class, Comment::class);
   }
@@ -120,11 +110,8 @@ class User extends Authenticatable {
   }
 
   public function status_class() {
-    // if ($this->permission == -1) {
-    //   return "info";
-    // }
     if ($this->permission <= 3 && $this->permission >= 0) {
-      return ['danger', 'success', 'primary', 'dark'][$this->permission];
+      return ['warning text-black', 'success text-white', 'primary text-white', 'dark text-white'][$this->permission];
     }
     return "danger";
   }

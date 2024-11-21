@@ -105,12 +105,14 @@ class Dashboard extends Controller {
     $request->validate([
       "certification_section" => "sometimes|in:on,off",
       "shop_section" => "sometimes|in:on,off",
+      "comments_approval" => "sometimes|in:on,off",
       "tables_row_count" => "required|numeric|min:5|max:100",
     ]);
 
     ConfigHelper::updateDashboardConfig([
       // "certificates_status" => request("certification_section") == true ?? false,
       "shop_status" => request("shop_section") == true ?? false,
+      "comments_approval" => request("comments_approval") == true ?? false,
       "tables_row_count" => request("tables_row_count") != null ? intval(request("tables_row_count")) : 0,
     ]);
 

@@ -114,7 +114,7 @@ class ArticleController extends Controller {
 
   public function show($article_id) {
     $article = Article::where('id', $article_id)->where('status', ">", 0)->withTranslation()->first();
-    $comments = Comment::where("article_id", $article->id)->orderBy("created_at", "DESC")->limit(20)->get();
+    $comments = Comment::where("article_id", $article->id)->where("approved", 1)->orderBy("created_at", "DESC")->limit(20)->get();
     if ($article) {
       return view('article', compact("article", "comments"));
     } else {
@@ -178,11 +178,13 @@ class ArticleController extends Controller {
     $new_tags = array();
 
     foreach ($new_tags_titles as $tag) {
-      $new_tag = [
-        "title" => $tag,
-        "slug" => Str::slug($tag),
-      ];
-      array_push($new_tags, $new_tag);
+      if (!empty($tag) && strlen($tag) > 1) {
+        $new_tag = [
+          "title" => $tag,
+          "slug" => Str::slug($tag),
+        ];
+        array_push($new_tags, $new_tag);
+      }
     }
 
     $article->tags()->sync($tags_ids);

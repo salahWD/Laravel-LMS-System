@@ -8,10 +8,10 @@
       <!-- List -->
       <ul class="list-inline list-group-flush list-group-borderless text-md-end mb-0">
         <li class="list-inline-item px-0 px-sm-2">
-          <a href="#">{{ __('Settings') }}</a>
+          <a href="{{ route('dashboard_settings') }}">{{ __('Settings') }}</a>
         </li>
         <li class="list-inline-item px-0 px-sm-2">
-          <a href="#">{{ __('Home') }}</a>
+          <a href="{{ route('home') }}">{{ __('Home') }}</a>
         </li>
       </ul>
     </div>

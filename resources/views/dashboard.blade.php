@@ -221,7 +221,8 @@
                     <h2 class="fs-5 fw-bold mb-0">{{ __('Most Page visits') }}</h2>
                   </div>
                   <div class="col text-end">
-                    <a href="#" class="btn btn-sm btn-primary">{{ __('Go To Google Analytics') }}</a>
+                    <a href="https://analytics.google.com/analytics/web/"
+                      class="btn btn-sm btn-primary">{{ __('Go To Google Analytics') }}</a>
                   </div>
                 </div>
               </div>

@@ -107,7 +107,24 @@ class UserController extends Controller {
     return redirect()->route("users_manage");
   }
 
-  public function destroy(string $id) {
-    //
+  public function disable(Request $request, User $user) {
+    $user->permission = 0;
+    return $user->save();
+  }
+
+  public function enable(Request $request, User $user) {
+    $user->permission = 1;
+    return $user->save();
+  }
+
+  public function destroy_api(Request $request, User $user) {
+    $res = $user->delete();
+    return $res;
+  }
+
+  public function destroy(Request $request, User $user) {
+    $res = $user->delete();
+    $request->session()->flash('user-deleted', $res);
+    return redirect()->route("users_manage");
   }
 }

@@ -9,15 +9,6 @@ use Str;
 
 class TagController extends Controller {
 
-  public function index() {
-  }
-
-  public function create() {
-  }
-
-  public function store(Request $request) {
-  }
-
   public function show(Tag $tag) {
 
     return view("tag", [
@@ -58,21 +49,9 @@ class TagController extends Controller {
       "page" => "integer:min:0",
     ]);
 
-    $per_page = 2;
-    $next_tag = Tag::skip($per_page * request("page"))->withCount("articles")->first();
     $res = $tag->delete();
 
-    if ($next_tag != null) {
-      $next_tag = [
-        "id" => $next_tag->id,
-        "title" => $next_tag->title,
-        "slug" => $next_tag->slug,
-        "description" => $next_tag->description,
-        "articles_count" => $next_tag->articles_count,
-      ];
-    }
-
-    return ["result" => $res, "next_tag" => $next_tag];
+    return ["result" => $res];
   }
 
   public function destroy(Tag $tag) {

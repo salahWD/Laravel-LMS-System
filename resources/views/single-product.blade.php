@@ -175,15 +175,13 @@
               <h3><a href="{{ $product->get_link() }}">{{ $product->title }}</a></h3>
               <div class="color-opt">{{ $product?->category?->title }}</div>
               <span class="xv-price"> {{ $product->show_price() }} </span>
-              <form method="post" action="#">
-                <div style="display:none;">
-                  <select name="id">
-                    <option value="18772192327">Default Title - {{ $product->show_price() }}</option>
-                  </select>
-                </div>
-                <button type="submit" name="add" class="product-buy flytoQuickView"
-                  data-qv-tab="#qvt-cart">{{ __('Buy') }}</button>
-              </form>
+              <div style="display:none;">
+                <select name="id">
+                  <option value="18772192327">Default Title - {{ $product->show_price() }}</option>
+                </select>
+              </div>
+              <button type="submit" name="add" class="product-buy flytoQuickView"
+                data-qv-tab="#qvt-cart">{{ __('Buy') }}</button>
             </div>
           </div>
         @endforeach
@@ -198,10 +196,10 @@
   <script src="{{ url('js/jquery.min.js') }}"></script>
   <script src="{{ url('libs/owl/owl.carousel.min.js') }}"></script>
   <script src="{{ url('libs/hizoom/hizoom.min.js') }}"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> --}}
   <script>
-    const cardUrl = '{{ route('add_product_cart', $product->id) }}';
+    const cardUrl = "{{ route('add_product_cart', $product->id) }}";
   </script>
   <script src="{{ url('js/single-product.js') }}"></script>
 @endsection
