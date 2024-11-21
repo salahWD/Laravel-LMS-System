@@ -18,7 +18,7 @@ class RemoveDuplicateTitles extends Command {
    *
    * @var string
    */
-  protected $description = 'Removes articles with duplicate titles from the SQL file';
+  protected $description = 'Removes articles with duplicate titles from the SQL file, and outputs a new filtered sql file';
 
   /**
    * Execute the console command.

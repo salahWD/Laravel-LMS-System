@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-  <x-status-page title="Something Went Wrong!" btn="Return To Checkout" level="danger" :link="route('shop')">
+  <x-status-page :title="$error !== null ? ucfirst($error) : 'Something Went Wrong!'" :btn="$error_btn !== null ? ucfirst($error_btn) : 'Return To Checkout'" level="danger" :link="route('shop')">
     <x-slot:icon>
       <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="300" height="300" viewBox="0 0 50 50"
         style="color: rgb(189, 48, 48)">
@@ -16,7 +16,7 @@
       </svg>
     </x-slot>
     <x-slot:desc>
-      Sorry, something went wrong and the order has been rejected ... please try again
+      {{ $error_desc !== null ? $error_desc : 'Sorry, something went wrong and the order has been rejected ... please try again' }}
     </x-slot>
   </x-status-page>
 @endsection

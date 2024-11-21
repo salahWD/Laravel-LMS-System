@@ -21,7 +21,7 @@ class ImportArticles extends Command {
    *
    * @var string
    */
-  protected $description = 'Import articles from an SQL file without inserting it into the old database';
+  protected $description = 'Import articles from an SQL file and insert it into the database';
 
   /**
    * Execute the console command.

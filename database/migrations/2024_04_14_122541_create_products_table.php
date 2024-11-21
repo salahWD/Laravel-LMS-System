@@ -9,8 +9,9 @@ return new class extends Migration {
   public function up(): void {
     Schema::create('products', function (Blueprint $table) {
       $table->id();
-      $table->tinyInteger("store")->nullable()->default(1); // manualy => 1 aliexpress => 2 | banggood => 3
-      $table->string("product_id")->nullable();
+      // $table->tinyInteger("store")->nullable()->default(1); // manualy => 1 aliexpress => 2 | banggood => 3
+      // $table->string("product_id")->nullable();
+      $table->string("affiliate_link")->nullable();
       $table->foreignId("category_id")->nullable();
       $table->string("title");
       $table->text("description")->nullable();

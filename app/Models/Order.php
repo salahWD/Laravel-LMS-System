@@ -46,6 +46,14 @@ class Order extends Model {
     return $this->belongsToMany(Product::class)->withPivot("quantity");
   }
 
+  public function message() {
+    $message = '';
+    foreach ($this->products as $pro) {
+      $message .= "\n" . $pro->title . " => *" . $pro->pivot?->quantity . '*';
+    }
+    return $message;
+  }
+
   private static function generateToken($length = 9) {
     $characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
     $charactersLength = strlen($characters);

@@ -21,7 +21,7 @@ class EmptyDBArticles extends Command {
    *
    * @var string
    */
-  protected $description = 'get a list of empty articles ids';
+  protected $description = 'get a list of empty articles ids, to remove them later';
 
   /**
    * Execute the console command.

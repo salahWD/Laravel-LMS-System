@@ -16,12 +16,11 @@ class Product extends Model implements Buyable {
     "title",
     "description",
     "price",
-    "store",
     "rating",
     "type",
     "images",
     "category_id",
-    "product_id",
+    "affiliate_link",
     "stock",
   ];
 
@@ -96,18 +95,10 @@ class Product extends Model implements Buyable {
     return $this->type == 2;
   }
 
-  /* === link in main platform or store (for admin or affiliate) */
-  public function product_link() {
-    if ($this->is_affiliate() && $this->product_id) {
-      return "https://aliexpress.com/item/" . $this->product_id . ".html";
-    }
-    return null;
-  }
-
   /* === link in this website (for users) */
   public function get_link() {
-    if ($this->is_affiliate() && $this->product_id) {
-      return "https://aliexpress.com/item/" . $this->product_id . ".html";
+    if ($this->is_affiliate()) {
+      return $this->affiliate_link;
     } else {
       return route("product_show", $this->id);
     }
@@ -118,7 +109,7 @@ class Product extends Model implements Buyable {
     $pattern = '/^(.*)?aliexpress\.com/i';
 
     // Use preg_match to check if the URL matches the pattern
-    return preg_match($pattern, $this->product_link()) && $this->store == 2;
+    return preg_match($pattern, $this->get_link());
   }
 
   public function max_order_quantity() {

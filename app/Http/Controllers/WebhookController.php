@@ -7,6 +7,7 @@ use Cart;
 use App\Models\Order;
 use App\Models\BookedAppointment;
 use Illuminate\Support\Facades\Log;
+use App\Services\TelegramService;
 use Stripe\Stripe;
 use Stripe\Webhook;
 
@@ -86,22 +87,22 @@ class WebhookController extends Controller {
         "intent_id" => $event->data->object->id,
       ],
       [
-        "total_price" => Cart::total() * 100,
+        "total" => Cart::total(),
         "client_name" => $event->data->object->shipping?->name,
         "stage" => "1",
         "address" => format_address($address),
       ]
     );
-    // $order = Order::create([
-    //   "user_id" => $event->data->object?->metadata?->user_id,
-    //   "total" => Cart::total() * 100,
-    //   "intent_id" => $event->data->object->id,
-    //   "client_name" => $event->data->object->shipping?->name,
-    //   "stage" => "1",
-    //   "address" => format_address($address),
-    // ]);
 
     $order->products()->attach($products_ids);
+
+    TelegramService::sendMessage(
+      "🎁🎁🎁 لديك طلب جديد 🎁🎁🎁 \n بتاريخ: \n" . date("Y-m-d h:i a") .
+        "\n السعر: " . $order->total . "$" .
+        "\n الطلب: " . route("order_edit", $order->id) .
+        "\n\n *المتجات:*" . $order->message() .
+        "\n\n ===" . ["اللهم زد وبارك", "الحمد لله", "وفقنا الله"][array_rand([1, 2, 3])] . "==="
+    );
 
     if ($order->user_id != null) {
       Cart::deleteStoredCart($order?->user_id);

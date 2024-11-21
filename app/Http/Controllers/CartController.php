@@ -121,7 +121,11 @@ class CartController extends Controller {
         "products" => Cart::content(),
       ]);
     }
-    return view("shop.error");
+    return view("shop.error")->with([
+      "error" => "no products",
+      "error_desc" => "your cart is empty, you need to have at least one item to be able to edit or checkout your cart",
+      "error_btn" => "return to shop",
+    ]);
   }
 
   public function success(Request $request) {

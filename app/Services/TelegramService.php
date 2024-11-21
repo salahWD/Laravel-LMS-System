@@ -15,7 +15,7 @@ class TelegramService {
     $data = [
       'chat_id' => $channelId,
       'text' => $message,
-      'parse_mode' => 'HTML', // Optional, allows for bold, italic, etc.
+      'parse_mode' => 'markdown', // allows for bold, italic, etc.
     ];
 
     // Add inline keyboard if email is provided

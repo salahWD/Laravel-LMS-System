@@ -60,11 +60,11 @@
             <div class="mb-3" id="affiliate-section">
               <div class="mb-3">
                 <label for="affiliate-link">{{ __('Affiliate Link') }}</label>
-                <input class="form-control @error('affiliate-link') is-invalid @enderror" id="affiliate-link"
-                  name="affiliate-link" type="text"
-                  value="{{ old('affiliate-link') ?? ($product->product_link() !== null ? $product->product_link() : '') }}"
+                <input class="form-control @error('affiliate_link') is-invalid @enderror" id="affiliate-link"
+                  name="affiliate_link" type="text"
+                  value="{{ old('affiliate_link') ?? ($product->get_link() !== null ? $product->get_link() : '') }}"
                   placeholder="{{ __('product link from affiliate store') }}">
-                @error('affiliate-link')
+                @error('affiliate_link')
                   <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
               </div>

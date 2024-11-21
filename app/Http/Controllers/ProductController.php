@@ -39,14 +39,13 @@ class ProductController extends Controller {
     $request->validate([
       "product_id" => "sometimes|nullable|string",
       "title" => "required|string",
+      "affiliate_link" => "nullable|url",
       "description" => "sometimes|nullable|string",
-      "product_type" => "required|integer|min:1|max:2", // 1 => dropshipping | 2 => affiliate
       "category" => "nullable|integer|exists:categories,id",
       "images" => "nullable|array",
       "images.*" => "required|image|mimes:png,jpg,jpeg|max:2048", // max = 2 mega byte
       "url_images" => "nullable|array",
       "url_images.*" => "required|url",
-      "store" => "sometimes|integer|min:2|max:3", // 1- manually added 2- aliexpress 3-boogded
       // "rating" => [
       //   "nullable",
       //   "min:0",
@@ -71,6 +70,7 @@ class ProductController extends Controller {
     $info = [
       "product_id" => request("product_id"),
       "title" => request("title"),
+      "affiliate_link" => request("affiliate_link"),
       "description" => request("description"),
       "type" => request("product_type"),
       "category_id" => request("category"),
@@ -160,7 +160,7 @@ class ProductController extends Controller {
       "title" => "required|string",
       "description" => "sometimes|nullable|string",
       "category" => "nullable|integer|exists:categories,id",
-      "product_type" => "required|integer|min:1|max:2", // 1 => dropshipping | 2 => affiliate
+      "affiliate_link" => "nullable|url",
       "old_images" => "nullable|array",
       "old_images.*" => "required|string",
       "url_images" => "nullable|array",
@@ -168,16 +168,6 @@ class ProductController extends Controller {
       "images" => "nullable|array",
       "images.*" => "required|image|mimes:png,jpg,jpeg|max:2048", // max = 2 mega byte
       "selected_image" => "nullable|string|in:new_images," . implode(",", (request("old_images") ?? [])),
-      "store" => "sometimes|integer|min:2|max:3", // 1- manually added 2- aliexpress 3-boogded
-      // "rating" => [
-      //   "nullable",
-      //   "min:0",
-      //   function ($attribute, $value, $fail) {
-      //     if (!is_numeric($value)) {
-      //       $fail("The {$attribute} attibute is not a number.");
-      //     }
-      //   }
-      // ],
       "price" => [
         "required_if:product_type,1",
         "min:0",
@@ -194,6 +184,7 @@ class ProductController extends Controller {
 
     $product->title = request("title");
     $product->description = request("description");
+    $product->affiliate_link = request("affiliate_link");
     $product->type = request("product_type");
     $product->category_id = request("category");
 

@@ -110,7 +110,7 @@
                       </option>
                     </select>
                   </div>
-                  <a class="product-buy" href="{{ route('product_show', $product->id) }}">{{ __('Buy') }}</a>
+                  <a class="product-buy" href="{{ $product->get_link() }}">{{ __('Buy') }}</a>
                 </div>
               </div>
             @endforeach
@@ -183,7 +183,7 @@
                       </option>
                     </select>
                   </div>
-                  <a class="product-buy" href="{{ route('product_show', $product->id) }}">{{ __('Buy') }}</a>
+                  <a class="product-buy" href="{{ $product->get_link() }}">{{ __('Buy') }}</a>
                 </div>
               </div>
             @endforeach

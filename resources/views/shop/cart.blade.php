@@ -42,12 +42,12 @@
   }
 </style>
 <div class="cart-btns">
-  <a class="btn cart" href="{{ route('cart_show') }}">
+  <a class="btn cart" href="{{ route('cart_show') }}" id="cart-btn-link">
     <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-    <div class="badge" id="cartItemsCount" data-count="{{ $cart_items_count }}">
-      @if ($cart_items_count > 0)
+    @if ($cart_items_count > 0)
+      <div class="badge" id="cartItemsCount" data-count="{{ $cart_items_count }}">
         {{ $cart_items_count }}
-      @endif
-    </div>
+      </div>
+    @endif
   </a>
 </div>

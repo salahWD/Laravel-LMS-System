@@ -134,9 +134,15 @@ $(document).ready(function () {
         const next30DaysDate = new Date(next30Days);
         document.cookie = `cartId=${cartId};expires=${next30DaysDate}; path=/`;
         let cartItemsEl = $("#cartItemsCount");
-        let newVal = parseInt(cartItemsEl.data("count")) + data.quantity;
-        cartItemsEl.data("count", newVal);
-        cartItemsEl.text(newVal);
+        if (cartItemsEl.length) {
+          let newVal = parseInt(cartItemsEl.data("count")) + data.quantity;
+          cartItemsEl.data("count", newVal);
+          cartItemsEl.text(newVal);
+        } else {
+          $("#cart-btn-link").append(
+            `<div class="badge" id="cartItemsCount" data-count="${data.quantity}">${data.quantity}</div>`
+          );
+        }
       },
       error: function (err) {
         let id = Date.now();
