@@ -92,15 +92,21 @@
                 </tr>
               </tbody>
             </table>
-            <a class="mt-4 btn btn-sm btn-danger d-inline-flex align-items-center" data-bs-toggle="tooltip"
-              id="refund-and-cancel" data-bs-placement="top" title="{{ __('Refund Order') }}"
-              href="{{ route('order_refund', $order->id) }}">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="icon icon-xs me-2" fill="currentColor">
-                <path
-                  d="M535 41c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l64 64c4.5 4.5 7 10.6 7 17s-2.5 12.5-7 17l-64 64c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l23-23L384 112c-13.3 0-24-10.7-24-24s10.7-24 24-24l174.1 0L535 41zM105 377l-23 23L256 400c13.3 0 24 10.7 24 24s-10.7 24-24 24L81.9 448l23 23c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L7 441c-4.5-4.5-7-10.6-7-17s2.5-12.5 7-17l64-64c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9zM96 64H337.9c-3.7 7.2-5.9 15.3-5.9 24c0 28.7 23.3 52 52 52l117.4 0c-4 17 .6 35.5 13.8 48.8c20.3 20.3 53.2 20.3 73.5 0L608 169.5V384c0 35.3-28.7 64-64 64H302.1c3.7-7.2 5.9-15.3 5.9-24c0-28.7-23.3-52-52-52l-117.4 0c4-17-.6-35.5-13.8-48.8c-20.3-20.3-53.2-20.3-73.5 0L32 342.5V128c0-35.3 28.7-64 64-64zm64 64H96v64c35.3 0 64-28.7 64-64zM544 320c-35.3 0-64 28.7-64 64h64V320zM320 352a96 96 0 1 0 0-192 96 96 0 1 0 0 192z" />
-              </svg>
-              Cancel Order & Refund
-            </a>
+            @if ($order->stage == 2)
+              <form id="refund-and-cancel" action="{{ route('order_refund', $order->id) }}" method="POST">
+                @csrf
+                @method('delete')
+                <button class="mt-4 btn btn-sm btn-danger d-inline-flex align-items-center" data-bs-toggle="tooltip"
+                  data-bs-placement="top" title="{{ __('Refund Order') }}">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="icon icon-xs me-2"
+                    fill="currentColor">
+                    <path
+                      d="M535 41c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l64 64c4.5 4.5 7 10.6 7 17s-2.5 12.5-7 17l-64 64c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l23-23L384 112c-13.3 0-24-10.7-24-24s10.7-24 24-24l174.1 0L535 41zM105 377l-23 23L256 400c13.3 0 24 10.7 24 24s-10.7 24-24 24L81.9 448l23 23c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L7 441c-4.5-4.5-7-10.6-7-17s2.5-12.5 7-17l64-64c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9zM96 64H337.9c-3.7 7.2-5.9 15.3-5.9 24c0 28.7 23.3 52 52 52l117.4 0c-4 17 .6 35.5 13.8 48.8c20.3 20.3 53.2 20.3 73.5 0L608 169.5V384c0 35.3-28.7 64-64 64H302.1c3.7-7.2 5.9-15.3 5.9-24c0-28.7-23.3-52-52-52l-117.4 0c4-17-.6-35.5-13.8-48.8c-20.3-20.3-53.2-20.3-73.5 0L32 342.5V128c0-35.3 28.7-64 64-64zm64 64H96v64c35.3 0 64-28.7 64-64zM544 320c-35.3 0-64 28.7-64 64h64V320zM320 352a96 96 0 1 0 0-192 96 96 0 1 0 0 192z" />
+                  </svg>
+                  Cancel Order & Refund
+                </button>
+              </form>
+            @endif
           </div>
         </div>
       </div>
@@ -112,7 +118,7 @@
                 <h2 class="h5 mb-1">Processing</h2>
                 <p class="lorem mb-0 pe-4">Lorem ipsum dolor sit amet.</p>
               </div>
-              {!! $order->stages_component(1) !!}
+              <x-order-stage :order="$order" :stage="1"></x-order-stage>
             </div>
           </div>
           <div class="card card-body border-0 shadow">
@@ -121,7 +127,7 @@
                 <h2 class="h5 mb-1">Shipping</h2>
                 <p class="lorem mb-0 pe-4">Lorem ipsum dolor sit amet.</p>
               </div>
-              {!! $order->stages_component(2) !!}
+              <x-order-stage :order="$order" :stage="2"></x-order-stage>
             </div>
           </div>
           <div class="card card-body border-0 shadow">
@@ -130,7 +136,12 @@
                 <h2 class="h5 mb-1">Delivery</h2>
                 <p class="lorem mb-0 pe-4">Lorem ipsum dolor sit amet.</p>
               </div>
-              {!! $order->stages_component(3) !!}
+              <i class="text-warning text-center" style="width: 40px;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512" fill="currentColor" height="46">
+                  <path
+                    d="M176 432c0 44.1-35.9 80-80 80s-80-35.9-80-80 35.9-80 80-80 80 35.9 80 80zM25.3 25.2l13.6 272C39.5 310 50 320 62.8 320h66.3c12.8 0 23.3-10 24-22.8l13.6-272C167.4 11.5 156.5 0 142.8 0H49.2C35.5 0 24.6 11.5 25.3 25.2z" />
+                </svg>
+              </i>
             </div>
           </div>
           <div class="card card-body border-0 shadow">
@@ -139,7 +150,12 @@
                 <h2 class="h5 mb-1">Receve The Order</h2>
                 <p class="lorem mb-0 pe-4">Lorem ipsum dolor sit amet.</p>
               </div>
-              {!! $order->stages_component(4) !!}
+              <i class="text-warning text-center" style="width: 40px;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512" fill="currentColor" height="46">
+                  <path
+                    d="M176 432c0 44.1-35.9 80-80 80s-80-35.9-80-80 35.9-80 80-80 80 35.9 80 80zM25.3 25.2l13.6 272C39.5 310 50 320 62.8 320h66.3c12.8 0 23.3-10 24-22.8l13.6-272C167.4 11.5 156.5 0 142.8 0H49.2C35.5 0 24.6 11.5 25.3 25.2z" />
+                </svg>
+              </i>
             </div>
           </div>
         </div>
@@ -155,19 +171,46 @@
 
 @section('scripts')
   <script>
-    let refundBtn = document.getElementById('refund-and-cancel');
-    refundBtn.addEventListener('click', function(e) {
+    let updateStage = document.getElementById('update-form');
+    @if ($order->stage == 2)
+      let refundForm = document.getElementById('refund-and-cancel');
+
+      refundForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        Swal.fire({
+          title: "Will Cancel The Order & Refund The Payment ?",
+          confirmButtonText: `Cancel & Refund`,
+          customClass: {
+            confirmButton: 'bg-danger text-white',
+          },
+          focusCancel: true,
+          buttonsStyling: true,
+          showCancelButton: true,
+          showLoaderOnConfirm: false,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            refundForm.submit();
+          }
+        });
+      });
+    @endif
+    updateStage.addEventListener('submit', function(e) {
       e.preventDefault();
+      console.log(updateStage)
       Swal.fire({
-        title: "Will Cancel The Order & Refund The Payment ?",
-        confirmButtonText: `<a href="${refundBtn.href}">Cancel & Refund</a>`,
+        title: "Are You Sure ?",
+        confirmButtonText: "Yes",
         customClass: {
-          confirmButton: 'bg-danger text-white',
+          confirmButton: 'bg-success text-white',
         },
-        focusCancel: true,
+        focusCancel: false,
         buttonsStyling: true,
         showCancelButton: true,
         showLoaderOnConfirm: false,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          updateStage.submit();
+        }
       });
     });
   </script>

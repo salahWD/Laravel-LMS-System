@@ -112,7 +112,7 @@
                         class="btn btn btn-outline-gray-900 me-3 mb-3 mb-md-0">
                         Export bookings
                         <div class="icon-info ms-1" data-bs-toggle="tooltip" data-bs-placement="top"
-                          data-bs-title="Click here to download your bookings as an .CSV file">?</div>
+                          data-bs-title="Click here to download your bookings as a .CSV file">?</div>
                       </a>
 
                       <div>
@@ -166,7 +166,6 @@
                         <th class="small fw-normal text-secondary">Duration</th>
                         <th class="small fw-normal text-secondary">Booking Type</th>
                         <th class="small fw-normal text-secondary">With</th>
-                        <th class="small fw-normal text-secondary">Status</th>
                         <th class="small fw-normal text-secondary">Actions</th>
                         <th></th>
                       </tr>
@@ -195,17 +194,9 @@
                               {{ $booked->appointment->title }}
                             </a>
                           </td>
-                          <td class="py-4 small" style="min-width: 200px">
+                          <td class="py-4 small">
                             {{-- ttt --}}
                             {{ $booked->booker->fullname() }}
-                          </td>
-                          <td class="py-4 text-center">
-                            <p class="d-flex justify-content-center align-items-center m-0">
-                              <span
-                                class="badge py-2 px-3 rounded-pill {{ ['bg-danger', 'bg-success', 'bg-primary'][$booked->status] }}">
-                                {{ ['Cancelled', 'Scheduled', 'Past'][$booked->status] }}
-                              </span>
-                            </p>
                           </td>
                           <td class="py-4">
                             <div class="d-flex align-items-center justify-content-start">
@@ -313,7 +304,7 @@
                                 <h1 class="mb-0 h4">Appointment Details</h1>
                               </div>
                               <div>
-                                <h2 class="h5 mb-4 pt-2 fw-bold">{{ $booked->title }}</h2>
+                                <h2 class="h5 mb-4 pt-2 fw-bold">{{ $booked->appointment->title }}</h2>
                               </div>
                               <div class="d-flex align-items-center mb-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
@@ -366,8 +357,8 @@
                                 </small>
                               </div>
                               <div class="mb-2">
-                                <small><strong>Email: </strong><a class="text-decoration-none"
-                                    href="mailto:{{ $booked->booker->email }}">{{ $booked->booker->email }}</a></small>
+                                <small><strong>Email: </strong><a target="_blank" class="text-decoration-none"
+                                    href="https://mail.google.com/mail/?view=cm&fs=1&to={{ $booked->booker->email }}&su=Eng.Walid Isa Meeting&body=do not forget about your meeting with Eng.Walid Isa ({{ $booked->appointment->title }})">{{ $booked->booker->email }}</a></small>
                               </div>
                               <div class="mb-2">
                                 <small><strong>At: </strong>{{ $booked->time() }}</small>

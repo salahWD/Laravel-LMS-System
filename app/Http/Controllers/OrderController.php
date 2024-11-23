@@ -49,11 +49,17 @@ class OrderController extends Controller {
   }
 
   public function update(Request $request, Order $order) {
-    //
+    $request->validate([
+      "stage" => "required|integer",
+    ]);
+    $order->stage = intval($request->input("stage", "2") + 1);
+    $order->save();
+    return redirect()->route("order_edit", $order->id);
   }
 
   /* refund the payment and remove the order */
   public function destroy(Order $order) {
+    dd("why tho ?");
 
     $stripe = new \Stripe\StripeClient(config("services.stripe.secret"));
 

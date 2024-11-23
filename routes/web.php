@@ -25,8 +25,6 @@ use App\Http\Controllers\BookedAppointmentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\GoogleCalendarController;
-use App\Models\BookedAppointment;
-use Google\Service\AndroidPublisher\UserComment;
 
 // barryvdh/laravel-debugbar
 
@@ -55,7 +53,6 @@ Route::middleware('localizationRedirect')->group(function () {
   Route::middleware(['auth'])->group(function () {
     Route::prefix('/me')->group(function () {
       Route::get('/orders', [OrderController::class, 'index'])->middleware('shop_section')->name('my_orders');
-      Route::get('/meetings/{bookedAppointment}', [BookedAppointmentController::class, 'show'])->name("booked_appointment_show");
       Route::controller(ProfileController::class)->group(function () {
         Route::get('/profile', 'edit')->name('profile.edit');
         Route::get('/certificates', 'certificates')->name('profile.certificates');
@@ -162,7 +159,7 @@ Route::middleware('localizationRedirect')->group(function () {
       Route::POST('/', [OrderController::class, 'store']);
       Route::get('/{order}', [OrderController::class, 'edit'])->name("order_edit");
       Route::POST('/{order}', [OrderController::class, 'update']);
-      Route::get('/{order}/refund', [OrderController::class, 'destroy'])->name("order_refund");
+      Route::delete('/{order}', [OrderController::class, 'destroy'])->name("order_refund");
     });
     Route::prefix('/appointments')->group(function () {
       Route::get('/', [AppointmentController::class, 'index'])->name("appointments_manage");

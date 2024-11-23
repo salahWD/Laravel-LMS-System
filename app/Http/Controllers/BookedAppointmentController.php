@@ -139,7 +139,7 @@ class BookedAppointmentController extends Controller {
         $endTime = Carbon::createFromFormat('H:i:sP', substr($timestamp->to_date, 2), new \DateTimeZone($appointment->timezone));
         $endTime->setDate($date->year, $date->month, $date->day);
 
-        if ($date->between($startTime, $endTime, true)) {
+        if ($date->between($startTime, $endTime, true)) { // booked date is indeed inside an available time window
 
           $excluded_days = $settings->where("key", "excluded");
 
@@ -159,10 +159,10 @@ class BookedAppointmentController extends Controller {
             }
           }
 
-          // Calculate the number of minutes since the start time
+          // Calculate the number of minutes since the start of the available time window
           $minutesSinceStart = $startTime->diffInMinutes($date);
 
-          // Calculate the position within the time block (time block = duration of the meeting + the buffer zone after it)
+          // Calculate the position within (available time) block (time block = duration of the meeting + the buffer zone after it)
           $positionInBlock = $minutesSinceStart % ($appointment->duration + $appointment->buffer_zone);
 
           // Check if the time is within the first 30 minutes of the 45-minute block
@@ -177,18 +177,16 @@ class BookedAppointmentController extends Controller {
 
               if ($appointment->link_google_calendar == 1) {
 
-                // $googleCalendarController = new GoogleCalendarController();
-                // $eventLink = $googleCalendarController->createGoogleCalendarEvent(
-                //   $date->toAtomString(),
-                //   $date->copy()->addMinutes($appointment->duration)->toAtomString(),
-                //   'Appointment with ' . $appointment->author->fullname(),
-                //   'Details of the appointment.',
-                //   'Online'
-                // );
-
-                if (isset($eventLink) && $eventLink instanceof \Illuminate\Http\RedirectResponse) {
-                  return $eventLink; // Redirect to Google auth if needed
-                }
+                $googleCalendarController = new GoogleCalendarController();
+                $eventLink = $googleCalendarController->createGoogleCalendarEvent(
+                  $date->toAtomString(),
+                  $date->copy()->addMinutes($appointment->duration)->toAtomString(),
+                  'Appointment with ' . $appointment->author->fullname(),
+                  'Details of the appointment.',
+                  'Online',
+                  \App\Models\User::find(1)->timezone,
+                  auth()->user()?->email
+                );
 
                 if ($eventLink) {
                   BookedAppointment::create([
@@ -202,11 +200,12 @@ class BookedAppointmentController extends Controller {
 
                   $payment_status = $appointment->price != null && $appointment->price > 0 ? "مدفوع" : "مجاني";
                   TelegramService::sendMessage(
-                    "📅📅📅 حجز موعد استشارة 📅📅📅 \n التاريخ: " . $date->toString() .
-                      "\n رابط اللقاء: " . $eventLink .
-                      "\n حالة الموعد: " . $payment_status .
-                      "\n عنوان الحجز: " . $appointment->title .
-                      "\n المستخدم: " . auth()->user()->fullname() . "\n"
+                    "📅📅📅 حجز موعد استشارة 📅📅📅 " .
+                      "\n العنوان: *" . $appointment->title . '*' .
+                      "\n حالة الموعد: *" . $payment_status . '*' .
+                      "\n التاريخ: " . $date->format("Y-m-d h:i a") .
+                      "\n المستخدم: " . auth()->user()->fullname() .
+                      "\n رابط اللقاء: " . $eventLink . "\n"
                   );
                 } else {
                   dd('Failed to create Google Calendar event');
@@ -221,9 +220,10 @@ class BookedAppointmentController extends Controller {
                 ]);
                 $payment_status = $appointment->price != null && $appointment->price > 0 ? "مدفوع" : "مجاني";
                 TelegramService::sendMessage(
-                  "📅📅📅 حجز موعد استشارة 📅📅📅 \n التاريخ: " . $date->toString() .
-                    "\n حالة الموعد: " . $payment_status .
-                    "\n عنوان الحجز: " . $appointment->title .
+                  "📅📅📅 حجز موعد استشارة 📅📅📅 " .
+                    "\n العنوان: *" . $appointment->title . '*' .
+                    "\n حالة الموعد: *" . $payment_status . '*' .
+                    "\n التاريخ: " . $date->format("Y-m-d h:i a") .
                     "\n المستخدم: " . auth()->user()->fullname() . "\n"
                 );
               }
@@ -243,6 +243,7 @@ class BookedAppointmentController extends Controller {
               }
             }
           } else {
+            // price != null => AJAX request || price == null => user direct request
             if ($appointment->price != null && $appointment->price > 0) {
               return response()->json(['status' => "error", "message" => "The selected time is within the excluded itme block (the buffer zone between every appointment)."]);
             } else {
@@ -291,78 +292,4 @@ class BookedAppointmentController extends Controller {
       abort(404);
     }
   }
-  /*
-  private function createGoogleCalendarEvent($date, $duration, $timezone, $appointment) {
-    $client = $this->getClient();
-    $service = new Google_Service_Calendar($client);
-
-    $start = Carbon::parse($date, $timezone);
-    $end = $start->copy()->addMinutes($duration);
-
-    $event = new Google_Service_Calendar_Event([
-      'summary' => $appointment->title,
-      'description' => $appointment->notes ?? '',
-      'start' => new Google_Service_Calendar_EventDateTime([
-        'dateTime' => $start->toRfc3339String(),
-        'timeZone' => $timezone,
-      ]),
-      'end' => new Google_Service_Calendar_EventDateTime([
-        'dateTime' => $end->toRfc3339String(),
-        'timeZone' => $timezone,
-      ]),
-      'conferenceData' => [
-        'createRequest' => [
-          'requestId' => 'sample123',
-          'conferenceSolutionKey' => [
-            'type' => 'hangoutsMeet'
-          ],
-        ],
-      ],
-      'location' => 'online' ?? '',
-    ]);
-
-    $event = $service->events->insert('primary', $event, ['conferenceDataVersion' => 1]);
-
-    return $event->getHangoutLink();
-  } */
-
-  /* private function getClient() {
-    $client = new Google_Client();
-    $client->setApplicationName(env('APP_NAME'));
-    $client->setScopes(Google_Service_Calendar::CALENDAR);
-    $client->setAuthConfig(storage_path('app/google-calendar/calendar-credentials.json'));
-    $client->setAccessType('offline');
-    $client->setPrompt('select_account consent');
-    $client->setRedirectUri(env('GOOGLE_CALENDAR_REDIRECT_URI'));
-
-    // Load previously authorized token from a file, if it exists.
-    if (Storage::exists('google-calendar-token.json')) {
-      $accessToken = json_decode(Storage::get('google-calendar-token.json'), true);
-      $client->setAccessToken($accessToken);
-
-      if ($client->isAccessTokenExpired()) {
-        $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
-        Storage::put('google-calendar-token.json', json_encode($client->getAccessToken()));
-      }
-    } else {
-      // Generate the authentication URL
-      $authUrl = $client->createAuthUrl();
-
-      return redirect($authUrl);
-      // // Display the URL to the user
-      // echo "Open the following link in your browser:\n$authUrl\n";
-      // // Get the auth code from the user
-      // echo 'Enter verification code: ';
-      // $authCode = trim(fgets(\STDIN));
-
-      // Exchange authorization code for an access token
-      $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
-      $client->setAccessToken($accessToken);
-
-      // Store the credentials to disk.
-      Storage::put('google-calendar-token.json', json_encode($client->getAccessToken()));
-    }
-
-    return $client;
-  } */
 }

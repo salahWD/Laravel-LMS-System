@@ -21,16 +21,18 @@ use App\Models\GoogleCalendarToken;
 
 class GoogleCalendarController extends Controller {
 
-  public function getClient() {
+  public function getClient($user_id = 1) {
     $client = new Google_Client();
     $client->setApplicationName(env('APP_NAME'));
-    $client->setScopes(Google_Service_Calendar::CALENDAR);
+    $client->setScopes([Google_Service_Calendar::CALENDAR, Google_Service_Calendar::CALENDAR_EVENTS]);
     $client->setAuthConfig(storage_path('app/google-calendar/calendar-credentials.json'));
-    $client->setAccessType('offline');
-    $client->setPrompt('select_account consent');
+    // $client->setAccessType('offline');
+    // $client->setPrompt('select_account consent');
     $client->setRedirectUri(env('GOOGLE_CALENDAR_REDIRECT_URI'));
 
-    $tokenData = GoogleCalendarToken::where('user_id', auth()->user()->id)->first();
+    // dd($client->createAuthUrl());
+
+    $tokenData = GoogleCalendarToken::where('user_id', $user_id)->first();
 
     if ($tokenData) {
 
@@ -42,11 +44,12 @@ class GoogleCalendarController extends Controller {
         $tokenData->token = json_encode($client->getAccessToken());
         $tokenData->save();
       }
-    } else {
-      Log::info('No token found, redirecting to auth URL...');
-      $authUrl = $client->createAuthUrl();
-      return redirect()->away($authUrl);
     }
+    // else {
+    //   Log::info('No token found, redirecting to auth URL...');
+    //   $authUrl = $client->createAuthUrl();
+    //   return redirect($authUrl);
+    // }
 
     return $client;
   }
@@ -75,7 +78,8 @@ class GoogleCalendarController extends Controller {
         ['token' => json_encode($client->getAccessToken())]
       );
 
-      return redirect()->route('profile.meetings')->with('success', 'Google Calendar linked successfully.');
+      return redirect(url("/test"));
+      // return redirect()->route('profile.meetings')->with('success', 'Google Calendar linked successfully.');
     } catch (\Exception $e) {
       Log::error('Error during OAuth callback: ' . $e->getMessage());
 
@@ -83,11 +87,12 @@ class GoogleCalendarController extends Controller {
     }
   }
 
-  public function createGoogleCalendarEvent($startDateTime, $endDateTime, $summary, $description, $location) {
+  public function createGoogleCalendarEvent($startDateTime, $endDateTime, $summary, $description, $location, $admin_timezone, $user_email) {
     $client = $this->getClient();
-    if ($client instanceof \Illuminate\Http\RedirectResponse) {
-      return $client;
-    }
+    // if ($client instanceof \Illuminate\Http\RedirectResponse) {
+    //   echo "<a target='_blank' href=\"" . $client->t() . "\">link here</a>";
+    //   return $client;
+    // }
 
     $service = new Google_Service_Calendar($client);
 
@@ -97,11 +102,11 @@ class GoogleCalendarController extends Controller {
       'location' => $location,
       'start' => new Google_Service_Calendar_EventDateTime([
         'dateTime' => $startDateTime,
-        'timeZone' => 'Europe/Istanbul',
+        'timeZone' => $admin_timezone,
       ]),
       'end' => new Google_Service_Calendar_EventDateTime([
         'dateTime' => $endDateTime,
-        'timeZone' => 'Europe/Istanbul',
+        'timeZone' => $admin_timezone,
       ]),
       'conferenceData' => new Google_Service_Calendar_ConferenceData([
         'createRequest' => new Google_Service_Calendar_CreateConferenceRequest([
@@ -111,28 +116,29 @@ class GoogleCalendarController extends Controller {
           'requestId' => Str::random(16), // Make sure this is unique
         ]),
       ]),
+      'attendees' => array(
+        array(
+          'email' => $user_email,
+          'organizer' => false
+        ),
+      ),
+      "creator" => array(
+        "email" => "salahb170@gmail.com",
+        "displayName" => "the admin salah",
+        "self" => true
+      ),
+      "guestsCanInviteOthers" => false,
+      "guestsCanModify" => false,
+      "guestsCanSeeOtherGuests" => false,
     ]);
 
-    $calendarId = 'primary';
     try {
-      $event = $service->events->insert($calendarId, $event, ['conferenceDataVersion' => 1]);
+      $event = $service->events->insert('primary', $event, ['conferenceDataVersion' => 1]);
+      // echo '<a href="' . $event->htmlLink . '" target="_blank">' . $event->htmlLink . '</a>';
       return $event->htmlLink; // Return the event link
     } catch (\Exception $e) {
       Log::error('Error creating Google Calendar event: ' . $e->getMessage());
       return null;
     }
   }
-
-  // public function redirectToGoogle() {
-  //   $client = new Google_Client();
-  //   $client->setApplicationName(env('APP_NAME'));
-  //   $client->setScopes(Google_Service_Calendar::CALENDAR);
-  //   $client->setAuthConfig(storage_path('app/google-calendar/calendar-credentials.json'));
-  //   $client->setAccessType('offline');
-  //   $client->setPrompt('select_account consent');
-  //   $client->setRedirectUri(env('GOOGLE_CALENDAR_REDIRECT_URI'));
-
-  //   $authUrl = $client->createAuthUrl();
-  //   return redirect()->away($authUrl);
-  // }
 }

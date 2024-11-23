@@ -16,6 +16,12 @@ return new class extends Migration {
       $table->string("client_email")->nullable();
       $table->string("intent_id")->nullable();
       $table->string("address");
+      /*
+          1 => paid order and ready to be Processed (Processing)
+          2 => Done Processing and is being shipped to your country or city (shipping)
+          3 => arraived and is being delivered to the exact address (delivering)
+          4 => customer received the order and rated it (received)
+      */
       $table->tinyInteger("stage")->default(1);
       $table->timestamps();
       $table->foreign("user_id")->references("id")->on("users")->onDelete("cascade");

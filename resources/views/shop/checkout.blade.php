@@ -70,7 +70,7 @@
                 @foreach ($products as $product)
                   <div class="product">
                     <div class="image">
-                      <img src="{{ $product->options->image }}" alt="{{ $product->name }}">
+                      <img src="{{ $product->options->image }}" alt="{{ $product->name }}" style="object-fit: cover">
                       <div class="badge bg-dark">{{ $product->qty }}</div>
                     </div>
                     <div class="content">

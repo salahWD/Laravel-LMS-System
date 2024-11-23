@@ -89,12 +89,12 @@ function TimeRange(args) {
     name: null,
     count: 0,
     time: {
-      from_hour: "09",
-      from_minute: "00",
-      from_format: "am",
-      to_hour: "06",
-      to_minute: "00",
-      to_format: "pm",
+      fromHour: "09",
+      fromMinute: "00",
+      fromFormat: "am",
+      toHour: "06",
+      toMinute: "00",
+      toFormat: "pm",
     },
   };
   let params = { ...defaults, ...args };

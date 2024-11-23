@@ -50,7 +50,7 @@ return [
     |
     */
 
-  'url' => env('APP_URL', 'http://enwalid.test/'),
+  'url' => env('APP_URL', 'http://enwalid.com/'),
 
   'asset_url' => env('ASSET_URL'),
 
