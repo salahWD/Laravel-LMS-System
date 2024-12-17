@@ -5,7 +5,7 @@
     "isEntry": true
   },
   "public/js/appointment-dashboard.js": {
-    "file": "assets/appointment-dashboard-HsUDz_lx.js",
+    "file": "assets/appointment-dashboard-CRalAlM-.js",
     "src": "public/js/appointment-dashboard.js",
     "isEntry": true
   },
@@ -70,7 +70,7 @@
     "isEntry": true
   },
   "public/js/single-product.js": {
-    "file": "assets/single-product-BxVuMUkE.js",
+    "file": "assets/single-product-9JnrFlr5.js",
     "src": "public/js/single-product.js",
     "isEntry": true
   },
@@ -95,7 +95,7 @@
     "isEntry": true
   },
   "public/js/volt.js": {
-    "file": "assets/volt-D-B71Hl6.js",
+    "file": "assets/volt-CzSGoQTa.js",
     "src": "public/js/volt.js",
     "isEntry": true
   },
@@ -110,7 +110,7 @@
     "isEntry": true
   },
   "resources/css/app.css": {
-    "file": "assets/app-C7HLAlBn.css",
+    "file": "assets/app-Dt_bQihy.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -301,7 +301,7 @@
   },
   "resources/fonts/fa-brands-400.eot": {
     "file": "assets/fa-brands-400-CwrVPxwg.eot",
-    "src": "resources/fonts/fa-brands-400d41d.eot"
+    "src": "resources/fonts/fa-brands-400.eot"
   },
   "resources/fonts/fa-brands-400.svg": {
     "file": "assets/fa-brands-400-CdM8eWGt.svg",
@@ -321,7 +321,7 @@
   },
   "resources/fonts/fa-brands-400d41d.eot": {
     "file": "assets/fa-brands-400-CwrVPxwg.eot",
-    "src": "resources/fonts/fa-brands-400d41d.eot"
+    "src": "resources/fonts/fa-brands-400.eot"
   },
   "resources/fonts/fa-regular-400.eot": {
     "file": "assets/fa-regular-400-CdvVwXPA.eot",
@@ -349,7 +349,7 @@
   },
   "resources/fonts/fa-solid-900.eot": {
     "file": "assets/fa-solid-900-CcKsHZq-.eot",
-    "src": "resources/fonts/fa-solid-900d41d.eot"
+    "src": "resources/fonts/fa-solid-900.eot"
   },
   "resources/fonts/fa-solid-900.svg": {
     "file": "assets/fa-solid-900-WyjaTRVc.svg",
@@ -369,11 +369,11 @@
   },
   "resources/fonts/fa-solid-900d41d.eot": {
     "file": "assets/fa-solid-900-CcKsHZq-.eot",
-    "src": "resources/fonts/fa-solid-900d41d.eot"
+    "src": "resources/fonts/fa-solid-900.eot"
   },
   "resources/fonts/slick.eot": {
     "file": "assets/slick-Bi9J8BMx.eot",
-    "src": "resources/fonts/slick.eot"
+    "src": "resources/fonts/slickd41d.eot"
   },
   "resources/fonts/slick.svg": {
     "file": "assets/slick-BlzDm7g2.svg",
@@ -389,6 +389,6 @@
   },
   "resources/fonts/slickd41d.eot": {
     "file": "assets/slick-Bi9J8BMx.eot",
-    "src": "resources/fonts/slick.eot"
+    "src": "resources/fonts/slickd41d.eot"
   }
 }
