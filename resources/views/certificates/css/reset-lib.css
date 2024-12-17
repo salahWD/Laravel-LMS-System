@@ -1,11 +1,20 @@
-#certificate-preview {
+* {
   box-sizing: border-box;
 }
-#certificate-preview html {
+
+html {
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
+  padding: 0;
+  margin: 0;
 }
-#certificate-preview body {
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  min-width: 100dvw;
+  padding: 0;
   margin: 0;
 }
 #certificate-preview main {

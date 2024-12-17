@@ -89,10 +89,6 @@ class GoogleCalendarController extends Controller {
 
   public function createGoogleCalendarEvent($startDateTime, $endDateTime, $summary, $description, $location, $admin_timezone, $user_email) {
     $client = $this->getClient();
-    // if ($client instanceof \Illuminate\Http\RedirectResponse) {
-    //   echo "<a target='_blank' href=\"" . $client->t() . "\">link here</a>";
-    //   return $client;
-    // }
 
     $service = new Google_Service_Calendar($client);
 

@@ -1,9 +1,13 @@
 #certificate-preview {
   color: black;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   font-family: Georgia, serif;
   font-size: 24px;
   text-align: center;
+  max-width: calc(100vw - 80px);
 }
 #certificate-preview .container {
   border: 20px solid rgb(102, 185, 211);

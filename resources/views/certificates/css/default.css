@@ -1,16 +1,10 @@
-body,
-html {
-  margin: 0;
-  padding: 0;
-}
 #certificate-preview {
   overflow: hidden;
   color: black;
   font-family: Georgia, serif;
   font-size: 24px;
   text-align: center;
-  width: 100%;
-  max-width: 1200px;
+  max-width: calc(100% - 80px);
   margin: auto;
   border: 20px solid tan;
   display: grid;

@@ -30,9 +30,8 @@ class ProductController extends Controller {
 
   public function create() {
     $categories = Category::isProduct()->get();
-    $product = new Product();
 
-    return view("dashboard.products.create", compact("categories", "product"));
+    return view("dashboard.products.create", compact("categories"));
   }
 
   public function store(Request $request) {

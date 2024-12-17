@@ -40,14 +40,14 @@
               <div class="form-check">
                 <input class="form-check-input @error('product_type') is-invalid @enderror" type="radio"
                   name="product_type" id="dropshipping" value="1"
-                  @if ($product->type != null && $product->type == 1) checked @elseif($product->type == null) checked @endif>
+                  @if (isset($product) && $product->type != null && $product->type == 1) checked @elseif(isset($product) && $product->type == null) checked @endif>
                 <label class="form-check-label" for="dropshipping">
                   {{ __('dropshipping') }}
                 </label>
               </div>
               <div class="form-check">
                 <input class="form-check-input @error('product_type') is-invalid @enderror" type="radio"
-                  name="product_type" id="affiliate" value="2" @if ($product->type != null && $product->type == 2) checked @endif>
+                  name="product_type" id="affiliate" value="2" @if (isset($product) && $product->type != null && $product->type == 2) checked @endif>
                 <label class="form-check-label" for="affiliate">
                   {{ __('affiliate') }}
                 </label>
@@ -62,7 +62,7 @@
                 <label for="affiliate-link">{{ __('Affiliate Link') }}</label>
                 <input class="form-control @error('affiliate_link') is-invalid @enderror" id="affiliate-link"
                   name="affiliate_link" type="text"
-                  value="{{ old('affiliate_link') ?? ($product->get_link() !== null ? $product->get_link() : '') }}"
+                  value="{{ old('affiliate_link') ?? (isset($product) ? $product->get_link() : '') }}"
                   placeholder="{{ __('product link from affiliate store') }}">
                 @error('affiliate_link')
                   <div class="invalid-feedback">{{ $message }}</div>
@@ -148,10 +148,12 @@
               <div class="card shadow border-0 text-center p-0">
                 <div class="card-body pb-5">
                   <p class="lead mb-0 mt-2" style="font-size: 1rem;">{{ __('max size 2MB') }}</p>
-                  <img src="{{ $product->main_image_url() }}" id="productImagePreview"
-                    class="rounded mx-auto m-0 article-thumbnail" alt="{{ __('product Image') }}">
+                  <img
+                    src="{{ isset($product) ? $product->main_image_url() : url('images/products/default-product.svg') }}"
+                    id="productImagePreview" class="rounded mx-auto m-0 article-thumbnail"
+                    alt="{{ __('product Image') }}">
                   <div id="product-images-preview" class="product-preview mt-3">
-                    @if (isset($product->id) && $product->get_images() != null)
+                    @if (isset($product) && $product->get_images() != null)
                       @foreach ($product->get_images() as $i => $img)
                         <div class="product-img rounded">
                           <input type="hidden" class="d-none"
